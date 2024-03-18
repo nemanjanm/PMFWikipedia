@@ -1,0 +1,15 @@
+C:\Users\Nemanja\source\repos\PMFWikipedia\PMFWikipedia.InterfacesDAL\bin\Debug\net6.0\PMFWikipedia.InterfacesDAL.deps.json
+C:\Users\Nemanja\source\repos\PMFWikipedia\PMFWikipedia.InterfacesDAL\bin\Debug\net6.0\PMFWikipedia.InterfacesDAL.dll
+C:\Users\Nemanja\source\repos\PMFWikipedia\PMFWikipedia.InterfacesDAL\bin\Debug\net6.0\PMFWikipedia.InterfacesDAL.pdb
+C:\Users\Nemanja\source\repos\PMFWikipedia\PMFWikipedia.InterfacesDAL\bin\Debug\net6.0\PMFWikipedia.Models.dll
+C:\Users\Nemanja\source\repos\PMFWikipedia\PMFWikipedia.InterfacesDAL\bin\Debug\net6.0\PMFWikipedia.Models.pdb
+C:\Users\Nemanja\source\repos\PMFWikipedia\PMFWikipedia.InterfacesDAL\obj\Debug\net6.0\PMFWikipedia.InterfacesDAL.csproj.AssemblyReference.cache
+C:\Users\Nemanja\source\repos\PMFWikipedia\PMFWikipedia.InterfacesDAL\obj\Debug\net6.0\PMFWikipedia.InterfacesDAL.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Nemanja\source\repos\PMFWikipedia\PMFWikipedia.InterfacesDAL\obj\Debug\net6.0\PMFWikipedia.InterfacesDAL.AssemblyInfoInputs.cache
+C:\Users\Nemanja\source\repos\PMFWikipedia\PMFWikipedia.InterfacesDAL\obj\Debug\net6.0\PMFWikipedia.InterfacesDAL.AssemblyInfo.cs
+C:\Users\Nemanja\source\repos\PMFWikipedia\PMFWikipedia.InterfacesDAL\obj\Debug\net6.0\PMFWikipedia.InterfacesDAL.csproj.CoreCompileInputs.cache
+C:\Users\Nemanja\source\repos\PMFWikipedia\PMFWikipedia.InterfacesDAL\obj\Debug\net6.0\PMFWikipedia.InterfacesDAL.csproj.CopyComplete
+C:\Users\Nemanja\source\repos\PMFWikipedia\PMFWikipedia.InterfacesDAL\obj\Debug\net6.0\PMFWikipedia.InterfacesDAL.dll
+C:\Users\Nemanja\source\repos\PMFWikipedia\PMFWikipedia.InterfacesDAL\obj\Debug\net6.0\refint\PMFWikipedia.InterfacesDAL.dll
+C:\Users\Nemanja\source\repos\PMFWikipedia\PMFWikipedia.InterfacesDAL\obj\Debug\net6.0\PMFWikipedia.InterfacesDAL.pdb
+C:\Users\Nemanja\source\repos\PMFWikipedia\PMFWikipedia.InterfacesDAL\obj\Debug\net6.0\ref\PMFWikipedia.InterfacesDAL.dll

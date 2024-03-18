@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\PMFWikipedia.API.props" />
+</Project>

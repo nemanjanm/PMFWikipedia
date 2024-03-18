@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PMFWikipedia.Common\PMFWikipedia.Common.csproj" />
+    <ProjectReference Include="..\PMFWikipedia.InterfacesDAL\PMFWikipedia.InterfacesDAL.csproj" />
+    <ProjectReference Include="..\PMFWikipedia.Models\PMFWikipedia.Models.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.27" />
+  </ItemGroup>
+
+</Project>

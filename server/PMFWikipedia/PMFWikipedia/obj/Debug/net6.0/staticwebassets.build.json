@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "SFTWZk79zeLLBCPpiJmZAU5J+IxYt37smaTVkDL8p38=",
+  "Source": "PMFWikipedia.API",
+  "BasePath": "_content/PMFWikipedia.API",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

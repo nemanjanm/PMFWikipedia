@@ -1,0 +1,624 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia\\PMFWikipedia.API.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.Common\\PMFWikipedia.Common.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.Common\\PMFWikipedia.Common.csproj",
+        "projectName": "PMFWikipedia.Common",
+        "projectPath": "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.Common\\PMFWikipedia.Common.csproj",
+        "packagesPath": "C:\\Users\\Nemanja\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.Common\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Nemanja\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.Models\\PMFWikipedia.Models.csproj": {
+                "projectPath": "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.Models\\PMFWikipedia.Models.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[6.0.27, )"
+            },
+            "Microsoft.Extensions.Configuration.Abstractions": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.401\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.ImplementationsBL\\PMFWikipedia.ImplementationsBL.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.ImplementationsBL\\PMFWikipedia.ImplementationsBL.csproj",
+        "projectName": "PMFWikipedia.ImplementationsBL",
+        "projectPath": "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.ImplementationsBL\\PMFWikipedia.ImplementationsBL.csproj",
+        "packagesPath": "C:\\Users\\Nemanja\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.ImplementationsBL\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Nemanja\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.Common\\PMFWikipedia.Common.csproj": {
+                "projectPath": "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.Common\\PMFWikipedia.Common.csproj"
+              },
+              "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.InterfacesBL\\PMFWikipedia.InterfacesBL.csproj": {
+                "projectPath": "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.InterfacesBL\\PMFWikipedia.InterfacesBL.csproj"
+              },
+              "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.InterfacesDAL\\PMFWikipedia.InterfacesDAL.csproj": {
+                "projectPath": "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.InterfacesDAL\\PMFWikipedia.InterfacesDAL.csproj"
+              },
+              "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.Models\\PMFWikipedia.Models.csproj": {
+                "projectPath": "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.Models\\PMFWikipedia.Models.csproj"
+              },
+              "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.SignalR\\PMFWikipedia.SignalR.csproj": {
+                "projectPath": "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.SignalR\\PMFWikipedia.SignalR.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.401\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.ImplementationsDAL\\PMFWikipedia.ImplementationsDAL.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.ImplementationsDAL\\PMFWikipedia.ImplementationsDAL.csproj",
+        "projectName": "PMFWikipedia.ImplementationsDAL",
+        "projectPath": "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.ImplementationsDAL\\PMFWikipedia.ImplementationsDAL.csproj",
+        "packagesPath": "C:\\Users\\Nemanja\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.ImplementationsDAL\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Nemanja\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.Common\\PMFWikipedia.Common.csproj": {
+                "projectPath": "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.Common\\PMFWikipedia.Common.csproj"
+              },
+              "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.InterfacesDAL\\PMFWikipedia.InterfacesDAL.csproj": {
+                "projectPath": "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.InterfacesDAL\\PMFWikipedia.InterfacesDAL.csproj"
+              },
+              "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.Models\\PMFWikipedia.Models.csproj": {
+                "projectPath": "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.Models\\PMFWikipedia.Models.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[6.0.27, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.401\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.InterfacesBL\\PMFWikipedia.InterfacesBL.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.InterfacesBL\\PMFWikipedia.InterfacesBL.csproj",
+        "projectName": "PMFWikipedia.InterfacesBL",
+        "projectPath": "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.InterfacesBL\\PMFWikipedia.InterfacesBL.csproj",
+        "packagesPath": "C:\\Users\\Nemanja\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.InterfacesBL\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Nemanja\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.Models\\PMFWikipedia.Models.csproj": {
+                "projectPath": "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.Models\\PMFWikipedia.Models.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.401\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.InterfacesDAL\\PMFWikipedia.InterfacesDAL.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.InterfacesDAL\\PMFWikipedia.InterfacesDAL.csproj",
+        "projectName": "PMFWikipedia.InterfacesDAL",
+        "projectPath": "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.InterfacesDAL\\PMFWikipedia.InterfacesDAL.csproj",
+        "packagesPath": "C:\\Users\\Nemanja\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.InterfacesDAL\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Nemanja\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.Models\\PMFWikipedia.Models.csproj": {
+                "projectPath": "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.Models\\PMFWikipedia.Models.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.401\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.Models\\PMFWikipedia.Models.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.Models\\PMFWikipedia.Models.csproj",
+        "projectName": "PMFWikipedia.Models",
+        "projectPath": "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.Models\\PMFWikipedia.Models.csproj",
+        "packagesPath": "C:\\Users\\Nemanja\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.Models\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Nemanja\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[6.0.27, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.401\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.ServiceInitializer\\PMFWikipedia.ServiceInitializer.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.ServiceInitializer\\PMFWikipedia.ServiceInitializer.csproj",
+        "projectName": "PMFWikipedia.ServiceInitializer",
+        "projectPath": "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.ServiceInitializer\\PMFWikipedia.ServiceInitializer.csproj",
+        "packagesPath": "C:\\Users\\Nemanja\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.ServiceInitializer\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Nemanja\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.Common\\PMFWikipedia.Common.csproj": {
+                "projectPath": "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.Common\\PMFWikipedia.Common.csproj"
+              },
+              "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.ImplementationsBL\\PMFWikipedia.ImplementationsBL.csproj": {
+                "projectPath": "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.ImplementationsBL\\PMFWikipedia.ImplementationsBL.csproj"
+              },
+              "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.ImplementationsDAL\\PMFWikipedia.ImplementationsDAL.csproj": {
+                "projectPath": "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.ImplementationsDAL\\PMFWikipedia.ImplementationsDAL.csproj"
+              },
+              "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.InterfacesBL\\PMFWikipedia.InterfacesBL.csproj": {
+                "projectPath": "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.InterfacesBL\\PMFWikipedia.InterfacesBL.csproj"
+              },
+              "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.InterfacesDAL\\PMFWikipedia.InterfacesDAL.csproj": {
+                "projectPath": "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.InterfacesDAL\\PMFWikipedia.InterfacesDAL.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "Microsoft.Extensions.DependencyInjection.Abstractions": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.401\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.SignalR\\PMFWikipedia.SignalR.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.SignalR\\PMFWikipedia.SignalR.csproj",
+        "projectName": "PMFWikipedia.SignalR",
+        "projectPath": "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.SignalR\\PMFWikipedia.SignalR.csproj",
+        "packagesPath": "C:\\Users\\Nemanja\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.SignalR\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Nemanja\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.Common\\PMFWikipedia.Common.csproj": {
+                "projectPath": "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.Common\\PMFWikipedia.Common.csproj"
+              },
+              "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.InterfacesBL\\PMFWikipedia.InterfacesBL.csproj": {
+                "projectPath": "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.InterfacesBL\\PMFWikipedia.InterfacesBL.csproj"
+              },
+              "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.Models\\PMFWikipedia.Models.csproj": {
+                "projectPath": "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.Models\\PMFWikipedia.Models.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.401\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia\\PMFWikipedia.API.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia\\PMFWikipedia.API.csproj",
+        "projectName": "PMFWikipedia.API",
+        "projectPath": "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia\\PMFWikipedia.API.csproj",
+        "packagesPath": "C:\\Users\\Nemanja\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Nemanja\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.Common\\PMFWikipedia.Common.csproj": {
+                "projectPath": "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.Common\\PMFWikipedia.Common.csproj"
+              },
+              "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.InterfacesBL\\PMFWikipedia.InterfacesBL.csproj": {
+                "projectPath": "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.InterfacesBL\\PMFWikipedia.InterfacesBL.csproj"
+              },
+              "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.Models\\PMFWikipedia.Models.csproj": {
+                "projectPath": "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.Models\\PMFWikipedia.Models.csproj"
+              },
+              "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.ServiceInitializer\\PMFWikipedia.ServiceInitializer.csproj": {
+                "projectPath": "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.ServiceInitializer\\PMFWikipedia.ServiceInitializer.csproj"
+              },
+              "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.SignalR\\PMFWikipedia.SignalR.csproj": {
+                "projectPath": "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.SignalR\\PMFWikipedia.SignalR.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[6.0.27, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[6.5.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.401\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
