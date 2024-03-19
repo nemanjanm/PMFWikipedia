@@ -2,6 +2,52 @@
   "version": 3,
   "targets": {
     "net6.0": {
+      "AutoMapper/13.0.1": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.Options": "6.0.0"
+        },
+        "compile": {
+          "lib/net6.0/AutoMapper.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/AutoMapper.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "BCrypt.Net-Next/4.0.3": {
+        "type": "package",
+        "compile": {
+          "lib/net6.0/BCrypt.Net-Next.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/BCrypt.Net-Next.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Microsoft.AspNetCore.Http.Features/5.0.17": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.Primitives": "5.0.1",
+          "System.IO.Pipelines": "5.0.2"
+        },
+        "compile": {
+          "lib/net5.0/Microsoft.AspNetCore.Http.Features.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net5.0/Microsoft.AspNetCore.Http.Features.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "Microsoft.CSharp/4.5.0": {
         "type": "package",
         "compile": {
@@ -647,6 +693,19 @@
           }
         }
       },
+      "System.IO.Pipelines/5.0.2": {
+        "type": "package",
+        "compile": {
+          "ref/netcoreapp2.0/System.IO.Pipelines.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netcoreapp3.0/System.IO.Pipelines.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "System.Runtime.Caching/4.7.0": {
         "type": "package",
         "dependencies": {
@@ -847,6 +906,8 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
         "dependencies": {
+          "AutoMapper": "13.0.1",
+          "BCrypt.Net-Next": "4.0.3",
           "PMFWikipedia.Common": "1.0.0",
           "PMFWikipedia.InterfacesBL": "1.0.0",
           "PMFWikipedia.InterfacesDAL": "1.0.0",
@@ -906,6 +967,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
         "dependencies": {
+          "Microsoft.AspNetCore.Http.Features": "5.0.17",
           "Microsoft.EntityFrameworkCore.SqlServer": "6.0.27"
         },
         "compile": {
@@ -951,6 +1013,71 @@
     }
   },
   "libraries": {
+    "AutoMapper/13.0.1": {
+      "sha512": "/Fx1SbJ16qS7dU4i604Sle+U9VLX+WSNVJggk6MupKVkYvvBm4XqYaeFuf67diHefHKHs50uQIS2YEDFhPCakQ==",
+      "type": "package",
+      "path": "automapper/13.0.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "automapper.13.0.1.nupkg.sha512",
+        "automapper.nuspec",
+        "icon.png",
+        "lib/net6.0/AutoMapper.dll",
+        "lib/net6.0/AutoMapper.xml"
+      ]
+    },
+    "BCrypt.Net-Next/4.0.3": {
+      "sha512": "W+U9WvmZQgi5cX6FS5GDtDoPzUCV4LkBLkywq/kRZhuDwcbavOzcDAr3LXJFqHUi952Yj3LEYoWW0jbEUQChsA==",
+      "type": "package",
+      "path": "bcrypt.net-next/4.0.3",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "bcrypt.net-next.4.0.3.nupkg.sha512",
+        "bcrypt.net-next.nuspec",
+        "ico.png",
+        "lib/net20/BCrypt.Net-Next.dll",
+        "lib/net20/BCrypt.Net-Next.xml",
+        "lib/net35/BCrypt.Net-Next.dll",
+        "lib/net35/BCrypt.Net-Next.xml",
+        "lib/net462/BCrypt.Net-Next.dll",
+        "lib/net462/BCrypt.Net-Next.xml",
+        "lib/net472/BCrypt.Net-Next.dll",
+        "lib/net472/BCrypt.Net-Next.xml",
+        "lib/net48/BCrypt.Net-Next.dll",
+        "lib/net48/BCrypt.Net-Next.xml",
+        "lib/net5.0/BCrypt.Net-Next.dll",
+        "lib/net5.0/BCrypt.Net-Next.xml",
+        "lib/net6.0/BCrypt.Net-Next.dll",
+        "lib/net6.0/BCrypt.Net-Next.xml",
+        "lib/netstandard2.0/BCrypt.Net-Next.dll",
+        "lib/netstandard2.0/BCrypt.Net-Next.xml",
+        "lib/netstandard2.1/BCrypt.Net-Next.dll",
+        "lib/netstandard2.1/BCrypt.Net-Next.xml",
+        "readme.md"
+      ]
+    },
+    "Microsoft.AspNetCore.Http.Features/5.0.17": {
+      "sha512": "3jG2xS+dx8DDCGV/F+STdPTg89lX3ao3dF/VEPvJaz3wzBIjuadipTtYNEXDIVuOPZwb6jdmhrX9jkzOIBm5cw==",
+      "type": "package",
+      "path": "microsoft.aspnetcore.http.features/5.0.17",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "THIRD-PARTY-NOTICES.TXT",
+        "lib/net461/Microsoft.AspNetCore.Http.Features.dll",
+        "lib/net461/Microsoft.AspNetCore.Http.Features.xml",
+        "lib/net5.0/Microsoft.AspNetCore.Http.Features.dll",
+        "lib/net5.0/Microsoft.AspNetCore.Http.Features.xml",
+        "lib/netstandard2.0/Microsoft.AspNetCore.Http.Features.dll",
+        "lib/netstandard2.0/Microsoft.AspNetCore.Http.Features.xml",
+        "microsoft.aspnetcore.http.features.5.0.17.nupkg.sha512",
+        "microsoft.aspnetcore.http.features.nuspec"
+      ]
+    },
     "Microsoft.CSharp/4.5.0": {
       "sha512": "kaj6Wb4qoMuH3HySFJhxwQfe8R/sJsNJnANrvv8WdFPMoNbKY5htfNscv+LHCu5ipz+49m2e+WQXpLXr9XYemQ==",
       "type": "package",
@@ -2117,6 +2244,32 @@
         "system.identitymodel.tokens.jwt.nuspec"
       ]
     },
+    "System.IO.Pipelines/5.0.2": {
+      "sha512": "Iew+dfa6FFiyvWBdRmXApixRY1db+beyutpIck4SOSe0NLM8FD/7AD54MscqVLhvfSMLHO7KadjTRT7fqxOGTA==",
+      "type": "package",
+      "path": "system.io.pipelines/5.0.2",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "LICENSE.TXT",
+        "THIRD-PARTY-NOTICES.TXT",
+        "lib/net461/System.IO.Pipelines.dll",
+        "lib/net461/System.IO.Pipelines.xml",
+        "lib/netcoreapp3.0/System.IO.Pipelines.dll",
+        "lib/netcoreapp3.0/System.IO.Pipelines.xml",
+        "lib/netstandard1.3/System.IO.Pipelines.dll",
+        "lib/netstandard1.3/System.IO.Pipelines.xml",
+        "lib/netstandard2.0/System.IO.Pipelines.dll",
+        "lib/netstandard2.0/System.IO.Pipelines.xml",
+        "ref/netcoreapp2.0/System.IO.Pipelines.dll",
+        "ref/netcoreapp2.0/System.IO.Pipelines.xml",
+        "system.io.pipelines.5.0.2.nupkg.sha512",
+        "system.io.pipelines.nuspec",
+        "useSharedDesignerContext.txt",
+        "version.txt"
+      ]
+    },
     "System.Runtime.Caching/4.7.0": {
       "sha512": "NdvNRjTPxYvIEhXQszT9L9vJhdQoX6AQ0AlhjTU+5NqFQVuacJTfhPVAvtGWNA2OJCqRiR/okBcZgMwI6MqcZg==",
       "type": "package",
@@ -2532,11 +2685,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia\\PMFWikipedia.API.csproj",
+      "projectUniqueName": "C:\\Projects\\Diplomski\\server\\PMFWikipedia\\PMFWikipedia\\PMFWikipedia.API.csproj",
       "projectName": "PMFWikipedia.API",
-      "projectPath": "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia\\PMFWikipedia.API.csproj",
+      "projectPath": "C:\\Projects\\Diplomski\\server\\PMFWikipedia\\PMFWikipedia\\PMFWikipedia.API.csproj",
       "packagesPath": "C:\\Users\\Nemanja\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia\\obj\\",
+      "outputPath": "C:\\Projects\\Diplomski\\server\\PMFWikipedia\\PMFWikipedia\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Nemanja\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -2553,20 +2706,20 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.Common\\PMFWikipedia.Common.csproj": {
-              "projectPath": "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.Common\\PMFWikipedia.Common.csproj"
+            "C:\\Projects\\Diplomski\\server\\PMFWikipedia\\PMFWikipedia.Common\\PMFWikipedia.Common.csproj": {
+              "projectPath": "C:\\Projects\\Diplomski\\server\\PMFWikipedia\\PMFWikipedia.Common\\PMFWikipedia.Common.csproj"
             },
-            "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.InterfacesBL\\PMFWikipedia.InterfacesBL.csproj": {
-              "projectPath": "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.InterfacesBL\\PMFWikipedia.InterfacesBL.csproj"
+            "C:\\Projects\\Diplomski\\server\\PMFWikipedia\\PMFWikipedia.InterfacesBL\\PMFWikipedia.InterfacesBL.csproj": {
+              "projectPath": "C:\\Projects\\Diplomski\\server\\PMFWikipedia\\PMFWikipedia.InterfacesBL\\PMFWikipedia.InterfacesBL.csproj"
             },
-            "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.Models\\PMFWikipedia.Models.csproj": {
-              "projectPath": "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.Models\\PMFWikipedia.Models.csproj"
+            "C:\\Projects\\Diplomski\\server\\PMFWikipedia\\PMFWikipedia.Models\\PMFWikipedia.Models.csproj": {
+              "projectPath": "C:\\Projects\\Diplomski\\server\\PMFWikipedia\\PMFWikipedia.Models\\PMFWikipedia.Models.csproj"
             },
-            "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.ServiceInitializer\\PMFWikipedia.ServiceInitializer.csproj": {
-              "projectPath": "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.ServiceInitializer\\PMFWikipedia.ServiceInitializer.csproj"
+            "C:\\Projects\\Diplomski\\server\\PMFWikipedia\\PMFWikipedia.ServiceInitializer\\PMFWikipedia.ServiceInitializer.csproj": {
+              "projectPath": "C:\\Projects\\Diplomski\\server\\PMFWikipedia\\PMFWikipedia.ServiceInitializer\\PMFWikipedia.ServiceInitializer.csproj"
             },
-            "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.SignalR\\PMFWikipedia.SignalR.csproj": {
-              "projectPath": "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.SignalR\\PMFWikipedia.SignalR.csproj"
+            "C:\\Projects\\Diplomski\\server\\PMFWikipedia\\PMFWikipedia.SignalR\\PMFWikipedia.SignalR.csproj": {
+              "projectPath": "C:\\Projects\\Diplomski\\server\\PMFWikipedia\\PMFWikipedia.SignalR\\PMFWikipedia.SignalR.csproj"
             }
           }
         }

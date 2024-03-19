@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "ZD57NftlkJoYc/xUaKCKTkDVU77nefj0Sp/ThHe1vlTV01xfS9Eo8vEdHxJXf2jl3ruQEHCMBh6BExfsph26Hw==",
+  "dgSpecHash": "BQvSC2UsHAF3pKE8hxizC8/bs/E8HBUaY1iSK8FRNKGgidGOugv4lp2LNv6K/1mLH0hAr9eKs3tGEdQAtq2zUQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.Models\\PMFWikipedia.Models.csproj",
+  "projectFilePath": "C:\\Projects\\Diplomski\\server\\PMFWikipedia\\PMFWikipedia.Models\\PMFWikipedia.Models.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\Nemanja\\.nuget\\packages\\microsoft.aspnetcore.http.features\\5.0.17\\microsoft.aspnetcore.http.features.5.0.17.nupkg.sha512",
     "C:\\Users\\Nemanja\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",
     "C:\\Users\\Nemanja\\.nuget\\packages\\microsoft.data.sqlclient\\2.1.7\\microsoft.data.sqlclient.2.1.7.nupkg.sha512",
     "C:\\Users\\Nemanja\\.nuget\\packages\\microsoft.data.sqlclient.sni.runtime\\2.1.1\\microsoft.data.sqlclient.sni.runtime.2.1.1.nupkg.sha512",
@@ -35,6 +36,7 @@
     "C:\\Users\\Nemanja\\.nuget\\packages\\system.diagnostics.diagnosticsource\\6.0.1\\system.diagnostics.diagnosticsource.6.0.1.nupkg.sha512",
     "C:\\Users\\Nemanja\\.nuget\\packages\\system.drawing.common\\4.7.0\\system.drawing.common.4.7.0.nupkg.sha512",
     "C:\\Users\\Nemanja\\.nuget\\packages\\system.identitymodel.tokens.jwt\\6.8.0\\system.identitymodel.tokens.jwt.6.8.0.nupkg.sha512",
+    "C:\\Users\\Nemanja\\.nuget\\packages\\system.io.pipelines\\5.0.2\\system.io.pipelines.5.0.2.nupkg.sha512",
     "C:\\Users\\Nemanja\\.nuget\\packages\\system.runtime.caching\\4.7.0\\system.runtime.caching.4.7.0.nupkg.sha512",
     "C:\\Users\\Nemanja\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\6.0.0\\system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512",
     "C:\\Users\\Nemanja\\.nuget\\packages\\system.security.accesscontrol\\4.7.0\\system.security.accesscontrol.4.7.0.nupkg.sha512",

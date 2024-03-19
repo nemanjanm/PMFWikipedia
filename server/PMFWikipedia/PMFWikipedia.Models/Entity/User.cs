@@ -16,5 +16,6 @@ namespace PMFWikipedia.ImplementationsDAL.PMFWikipedia.Models
         public DateTime DateCreated { get; set; }
         public DateTime DateModified { get; set; }
         public long LastModifiedBy { get; set; }
+        public string Program { get; set; }
     }
 }

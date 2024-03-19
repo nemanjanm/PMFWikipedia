@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.SignalR\\PMFWikipedia.SignalR.csproj": {}
+    "C:\\Projects\\Diplomski\\server\\PMFWikipedia\\PMFWikipedia.SignalR\\PMFWikipedia.SignalR.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.Common\\PMFWikipedia.Common.csproj": {
+    "C:\\Projects\\Diplomski\\server\\PMFWikipedia\\PMFWikipedia.Common\\PMFWikipedia.Common.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.Common\\PMFWikipedia.Common.csproj",
+        "projectUniqueName": "C:\\Projects\\Diplomski\\server\\PMFWikipedia\\PMFWikipedia.Common\\PMFWikipedia.Common.csproj",
         "projectName": "PMFWikipedia.Common",
-        "projectPath": "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.Common\\PMFWikipedia.Common.csproj",
+        "projectPath": "C:\\Projects\\Diplomski\\server\\PMFWikipedia\\PMFWikipedia.Common\\PMFWikipedia.Common.csproj",
         "packagesPath": "C:\\Users\\Nemanja\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.Common\\obj\\",
+        "outputPath": "C:\\Projects\\Diplomski\\server\\PMFWikipedia\\PMFWikipedia.Common\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Nemanja\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -28,8 +28,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.Models\\PMFWikipedia.Models.csproj": {
-                "projectPath": "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.Models\\PMFWikipedia.Models.csproj"
+              "C:\\Projects\\Diplomski\\server\\PMFWikipedia\\PMFWikipedia.Models\\PMFWikipedia.Models.csproj": {
+                "projectPath": "C:\\Projects\\Diplomski\\server\\PMFWikipedia\\PMFWikipedia.Models\\PMFWikipedia.Models.csproj"
               }
             }
           }
@@ -73,14 +73,14 @@
         }
       }
     },
-    "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.InterfacesBL\\PMFWikipedia.InterfacesBL.csproj": {
+    "C:\\Projects\\Diplomski\\server\\PMFWikipedia\\PMFWikipedia.InterfacesBL\\PMFWikipedia.InterfacesBL.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.InterfacesBL\\PMFWikipedia.InterfacesBL.csproj",
+        "projectUniqueName": "C:\\Projects\\Diplomski\\server\\PMFWikipedia\\PMFWikipedia.InterfacesBL\\PMFWikipedia.InterfacesBL.csproj",
         "projectName": "PMFWikipedia.InterfacesBL",
-        "projectPath": "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.InterfacesBL\\PMFWikipedia.InterfacesBL.csproj",
+        "projectPath": "C:\\Projects\\Diplomski\\server\\PMFWikipedia\\PMFWikipedia.InterfacesBL\\PMFWikipedia.InterfacesBL.csproj",
         "packagesPath": "C:\\Users\\Nemanja\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.InterfacesBL\\obj\\",
+        "outputPath": "C:\\Projects\\Diplomski\\server\\PMFWikipedia\\PMFWikipedia.InterfacesBL\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Nemanja\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -97,8 +97,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.Models\\PMFWikipedia.Models.csproj": {
-                "projectPath": "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.Models\\PMFWikipedia.Models.csproj"
+              "C:\\Projects\\Diplomski\\server\\PMFWikipedia\\PMFWikipedia.Models\\PMFWikipedia.Models.csproj": {
+                "projectPath": "C:\\Projects\\Diplomski\\server\\PMFWikipedia\\PMFWikipedia.Models\\PMFWikipedia.Models.csproj"
               }
             }
           }
@@ -132,14 +132,14 @@
         }
       }
     },
-    "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.Models\\PMFWikipedia.Models.csproj": {
+    "C:\\Projects\\Diplomski\\server\\PMFWikipedia\\PMFWikipedia.Models\\PMFWikipedia.Models.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.Models\\PMFWikipedia.Models.csproj",
+        "projectUniqueName": "C:\\Projects\\Diplomski\\server\\PMFWikipedia\\PMFWikipedia.Models\\PMFWikipedia.Models.csproj",
         "projectName": "PMFWikipedia.Models",
-        "projectPath": "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.Models\\PMFWikipedia.Models.csproj",
+        "projectPath": "C:\\Projects\\Diplomski\\server\\PMFWikipedia\\PMFWikipedia.Models\\PMFWikipedia.Models.csproj",
         "packagesPath": "C:\\Users\\Nemanja\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.Models\\obj\\",
+        "outputPath": "C:\\Projects\\Diplomski\\server\\PMFWikipedia\\PMFWikipedia.Models\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Nemanja\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -168,6 +168,10 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "Microsoft.AspNetCore.Http.Features": {
+              "target": "Package",
+              "version": "[5.0.17, )"
+            },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
               "version": "[6.0.27, )"
@@ -193,14 +197,14 @@
         }
       }
     },
-    "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.SignalR\\PMFWikipedia.SignalR.csproj": {
+    "C:\\Projects\\Diplomski\\server\\PMFWikipedia\\PMFWikipedia.SignalR\\PMFWikipedia.SignalR.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.SignalR\\PMFWikipedia.SignalR.csproj",
+        "projectUniqueName": "C:\\Projects\\Diplomski\\server\\PMFWikipedia\\PMFWikipedia.SignalR\\PMFWikipedia.SignalR.csproj",
         "projectName": "PMFWikipedia.SignalR",
-        "projectPath": "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.SignalR\\PMFWikipedia.SignalR.csproj",
+        "projectPath": "C:\\Projects\\Diplomski\\server\\PMFWikipedia\\PMFWikipedia.SignalR\\PMFWikipedia.SignalR.csproj",
         "packagesPath": "C:\\Users\\Nemanja\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.SignalR\\obj\\",
+        "outputPath": "C:\\Projects\\Diplomski\\server\\PMFWikipedia\\PMFWikipedia.SignalR\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Nemanja\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -217,14 +221,14 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.Common\\PMFWikipedia.Common.csproj": {
-                "projectPath": "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.Common\\PMFWikipedia.Common.csproj"
+              "C:\\Projects\\Diplomski\\server\\PMFWikipedia\\PMFWikipedia.Common\\PMFWikipedia.Common.csproj": {
+                "projectPath": "C:\\Projects\\Diplomski\\server\\PMFWikipedia\\PMFWikipedia.Common\\PMFWikipedia.Common.csproj"
               },
-              "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.InterfacesBL\\PMFWikipedia.InterfacesBL.csproj": {
-                "projectPath": "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.InterfacesBL\\PMFWikipedia.InterfacesBL.csproj"
+              "C:\\Projects\\Diplomski\\server\\PMFWikipedia\\PMFWikipedia.InterfacesBL\\PMFWikipedia.InterfacesBL.csproj": {
+                "projectPath": "C:\\Projects\\Diplomski\\server\\PMFWikipedia\\PMFWikipedia.InterfacesBL\\PMFWikipedia.InterfacesBL.csproj"
               },
-              "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.Models\\PMFWikipedia.Models.csproj": {
-                "projectPath": "C:\\Users\\Nemanja\\source\\repos\\PMFWikipedia\\PMFWikipedia.Models\\PMFWikipedia.Models.csproj"
+              "C:\\Projects\\Diplomski\\server\\PMFWikipedia\\PMFWikipedia.Models\\PMFWikipedia.Models.csproj": {
+                "projectPath": "C:\\Projects\\Diplomski\\server\\PMFWikipedia\\PMFWikipedia.Models\\PMFWikipedia.Models.csproj"
               }
             }
           }

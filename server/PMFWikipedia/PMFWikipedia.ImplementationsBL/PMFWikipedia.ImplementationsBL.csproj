@@ -14,4 +14,9 @@
     <ProjectReference Include="..\PMFWikipedia.SignalR\PMFWikipedia.SignalR.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
+    <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
+  </ItemGroup>
+
 </Project>

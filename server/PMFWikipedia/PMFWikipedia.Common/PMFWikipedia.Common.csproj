@@ -15,4 +15,9 @@
     <ProjectReference Include="..\PMFWikipedia.Models\PMFWikipedia.Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="AutoMapper\" />
+    <Folder Include="EmailService\" />
+  </ItemGroup>
+
 </Project>

@@ -8,4 +8,4 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = PMFWikipedia.Common
-build_property.ProjectDir = C:\Users\Nemanja\source\repos\PMFWikipedia\PMFWikipedia.Common\
+build_property.ProjectDir = C:\Projects\Diplomski\server\PMFWikipedia\PMFWikipedia.Common\
