@@ -1,4 +1,5 @@
-﻿using PMFWikipedia.ImplementationsDAL.PMFWikipedia.ImplementationsDAL;
+﻿using Microsoft.EntityFrameworkCore;
+using PMFWikipedia.ImplementationsDAL.PMFWikipedia.ImplementationsDAL;
 using PMFWikipedia.ImplementationsDAL.PMFWikipedia.Models;
 using PMFWikipedia.InterfacesDAL;
 
@@ -8,6 +9,11 @@ namespace PMFWikipedia.ImplementationsDAL
     {
         public UserDAL(PMFWikiContext context) : base(context)
         {
+        }
+
+        public async Task<bool> CheckEmail(string email)
+        {
+            return await table.AnyAsync(x=> x.Email == email && x.IsDeleted == 0);
         }
     }
 }

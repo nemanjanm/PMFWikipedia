@@ -53,9 +53,41 @@ namespace PMFWikipedia.ImplementationsDAL
             await table.AddAsync(item);
         }
 
-        public Task SaveChangesAsync(int? id = -1)
+        public async Task SaveChangesAsync(int? id = -1)
         {
-            throw new NotImplementedException();
+            _context.ChangeTracker.DetectChanges();
+
+            foreach (var entry in _context.ChangeTracker.Entries())
+            {
+                switch (entry.State)
+                {
+                    case EntityState.Modified:
+                        if (id != -1 && entry.Property("LastModifiedBy") != null)
+                        {
+                            entry.Property("LastModifiedBy").CurrentValue = id!;
+                        }
+
+                        if (entry.Property("DateModified") != null)
+                        {
+                            entry.Property("DateModified").CurrentValue = DateTime.Now;
+                        }
+                        break;
+
+                    case EntityState.Added:
+                        if (entry.Property("DateCreated") != null)
+                        {
+                            entry.Property("DateCreated").CurrentValue = DateTime.Now;
+                        }
+
+                        if (entry.Property("DateModified") != null)
+                        {
+                            entry.Property("DateModified").CurrentValue = DateTime.Now;
+                        }
+                        break;
+                }
+            }
+
+            await _context.SaveChangesAsync();
         }
 
         public async Task Update(T item)

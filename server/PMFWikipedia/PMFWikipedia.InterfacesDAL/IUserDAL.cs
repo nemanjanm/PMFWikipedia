@@ -1,6 +1,9 @@
-﻿namespace PMFWikipedia.InterfacesDAL
+﻿using PMFWikipedia.ImplementationsDAL.PMFWikipedia.Models;
+
+namespace PMFWikipedia.InterfacesDAL
 {
-    public interface IUserDAL
+    public interface IUserDAL : IBaseDAL<User>
     {
+        public Task<bool> CheckEmail(string email);
     }
 }

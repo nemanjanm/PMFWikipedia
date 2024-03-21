@@ -8,6 +8,6 @@ namespace PMFWikipedia.Models
         public string LastName { get; set; }
         public string Email { get; set; }   
         public string Password { get; set; }
-        public int Program { get; set; }
+        public string Program { get; set; }
     }
 }
