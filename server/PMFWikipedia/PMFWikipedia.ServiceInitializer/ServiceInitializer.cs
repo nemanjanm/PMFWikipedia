@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using PMFWikipedia.Common;
+using PMFWikipedia.Common.AutoMapper;
 using PMFWikipedia.ImplementationsBL;
 using PMFWikipedia.ImplementationsDAL;
 using PMFWikipedia.ImplementationsDAL.PMFWikipedia.ImplementationsDAL;
@@ -31,6 +32,13 @@ namespace PMFWikipedia.ServiceInitializer
         {
             services.initializeBL();
             services.InitializeDAL();
+            services.InitializeMapper();
+            return services;
+        }
+
+        private static IServiceCollection InitializeMapper(this IServiceCollection services)
+        {
+            services.AddAutoMapper(typeof(MappingProfile));
             return services;
         }
     }

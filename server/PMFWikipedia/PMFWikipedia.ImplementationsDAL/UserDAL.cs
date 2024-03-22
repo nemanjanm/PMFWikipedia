@@ -13,7 +13,7 @@ namespace PMFWikipedia.ImplementationsDAL
 
         public async Task<bool> CheckEmail(string email)
         {
-            return await table.AnyAsync(x=> x.Email == email && x.IsDeleted == 0);
+            return await table.AnyAsync(x=> x.Email == email && x.IsDeleted == false);
         }
     }
 }

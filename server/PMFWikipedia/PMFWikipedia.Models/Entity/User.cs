@@ -12,10 +12,10 @@ namespace PMFWikipedia.ImplementationsDAL.PMFWikipedia.Models
         public string LastName { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
-        public byte IsDeleted { get; set; }
+        public string Program { get; set; }
+        public bool IsDeleted { get; set; }
         public DateTime DateCreated { get; set; }
         public DateTime DateModified { get; set; }
         public long LastModifiedBy { get; set; }
-        public string Program { get; set; }
     }
 }

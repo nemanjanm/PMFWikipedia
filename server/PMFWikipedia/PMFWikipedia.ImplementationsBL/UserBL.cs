@@ -11,12 +11,12 @@ namespace PMFWikipedia.ImplementationsBL
     public class UserBL : IUserBL
     {
         public readonly IUserDAL _userDAL;
-        //private readonly IMapper _mapper;
+        private readonly IMapper _mapper;
         
-        public UserBL(IUserDAL userDAL/*, IMapper mapper*/)
+        public UserBL(IUserDAL userDAL, IMapper mapper)
         {
             _userDAL = userDAL;
-            //_mapper = mapper;
+            _mapper = mapper;
         }
         public async Task<ActionResultResponse<User>> Register(RegisterInfo registerInfo)
         {
@@ -31,12 +31,7 @@ namespace PMFWikipedia.ImplementationsBL
                 return new ActionResultResponse<User>(null, false, "Email Invalid");
             }
 
-            //User newUser = _mapper.Map<User>(registerInfo);
-            User newUser = new User();
-            newUser.Email = registerInfo.Email;
-            newUser.Program = registerInfo.Program;
-            newUser.FirstName = registerInfo.FirstName; 
-            newUser.LastName = registerInfo.LastName;
+            User newUser = _mapper.Map<User>(registerInfo);
             newUser.Password = PasswordService.HashPass(registerInfo.Password);
 
             await _userDAL.Insert(newUser);
