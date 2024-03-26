@@ -20,5 +20,11 @@ namespace PMFWikipedia.API.Controllers
         {
             return Ok(await _userBL.Register(registerInfo));
         }
+
+        [HttpPost("ConfirmRegistration")]
+        public async Task<IActionResult> Register(string registrationToken)
+        {
+            return Ok(await _userBL.ValidateUser(registrationToken));
+        }
     }
 }

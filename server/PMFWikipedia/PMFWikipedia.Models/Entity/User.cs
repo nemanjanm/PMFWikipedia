@@ -17,5 +17,8 @@ namespace PMFWikipedia.ImplementationsDAL.PMFWikipedia.Models
         public DateTime DateCreated { get; set; }
         public DateTime DateModified { get; set; }
         public long LastModifiedBy { get; set; }
+        public bool Verified { get; set; }
+        public string RegisterToken { get; set; }
+        public DateTime RegisterTokenExpirationTime { get; set; }
     }
 }

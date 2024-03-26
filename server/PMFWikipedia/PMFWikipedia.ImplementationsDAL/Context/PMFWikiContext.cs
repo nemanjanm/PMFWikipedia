@@ -55,6 +55,13 @@ namespace PMFWikipedia.ImplementationsDAL.PMFWikipedia.ImplementationsDAL
                     .IsRequired()
                     .HasMaxLength(100)
                     .IsUnicode(false);
+
+                entity.Property(e => e.RegisterToken)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.RegisterTokenExpirationTime).HasColumnType("datetime");
             });
 
             OnModelCreatingPartial(modelBuilder);
