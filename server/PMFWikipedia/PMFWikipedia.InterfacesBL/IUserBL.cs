@@ -7,5 +7,6 @@ namespace PMFWikipedia.InterfacesBL
     {
         public Task<ActionResultResponse<User>> Register(RegisterInfo registerInfo);
         public Task<ActionResultResponse<string>> ValidateUser(string registrationToken);
+        public Task<ActionResultResponse<LoginResponse>> Login(LoginInfo loginInfo);
     }
 }

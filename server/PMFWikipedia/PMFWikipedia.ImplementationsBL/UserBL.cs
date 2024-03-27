@@ -6,6 +6,7 @@ using PMFWikipedia.ImplementationsDAL.PMFWikipedia.Models;
 using PMFWikipedia.InterfacesBL;
 using PMFWikipedia.InterfacesDAL;
 using PMFWikipedia.Models;
+using PMFWikipedia.Models.ViewModels;
 using System.Text.RegularExpressions;
 
 namespace PMFWikipedia.ImplementationsBL
@@ -22,6 +23,7 @@ namespace PMFWikipedia.ImplementationsBL
             _mapper = mapper;
             _emailService = emailService;
         }
+
         public async Task<ActionResultResponse<User>> Register(RegisterInfo registerInfo)
         {
             string pattern = @"@pmf\.kg\.ac\.rs$";
@@ -72,6 +74,31 @@ namespace PMFWikipedia.ImplementationsBL
             await _userDAL.SaveChangesAsync();
 
             return new ActionResultResponse<string>("Successfully Verified", true, "");
+        }
+
+        public async Task<ActionResultResponse<LoginResponse>> Login(LoginInfo loginInfo)
+        {
+            if (loginInfo == null) 
+            {
+                return new ActionResultResponse<LoginResponse>(null, false, "Credentials not sent");
+            }
+
+            var user = await _userDAL.GetUserByEmail(loginInfo.Email);
+            if (user == null)
+            {
+                return new ActionResultResponse<LoginResponse>(null, false, "Wrong credentials");
+            }
+
+            if(!PasswordService.VerifyPassword(user.Password, loginInfo.Password))
+            {
+                return new ActionResultResponse<LoginResponse>(null, false, "Wrong credentials");
+            }
+
+            LoginResponse loginResponse = new LoginResponse();
+            loginResponse.User = _mapper.Map<UserViewModel>(user);
+            loginResponse.Token = AuthService.GetJWT(loginResponse.User);
+
+            return new ActionResultResponse<LoginResponse>(loginResponse, true, "Successfully login");
         }
     }
 }

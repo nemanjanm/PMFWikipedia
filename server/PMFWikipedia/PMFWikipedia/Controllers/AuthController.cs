@@ -26,5 +26,11 @@ namespace PMFWikipedia.API.Controllers
         {
             return Ok(await _userBL.ValidateUser(registrationToken));
         }
+
+        [HttpPost("Login")]
+        public async Task<IActionResult> Login([FromBody] LoginInfo loginInfo)
+        {
+            return Ok(await _userBL.Login(loginInfo));
+        }
     }
 }

@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-
-namespace PMFWikipedia.Models
+﻿namespace PMFWikipedia.Models
 {
     public class RegisterInfo
     {
