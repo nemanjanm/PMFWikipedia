@@ -32,5 +32,17 @@ namespace PMFWikipedia.API.Controllers
         {
             return Ok(await _userBL.Login(loginInfo));
         }
+
+        [HttpPost("ForgotPassword")]
+        public async Task<IActionResult> SendResetPasswordEmail(string email)
+        {
+            return Ok(await _userBL.CreateResetToken(email));
+        }
+
+        [HttpPost("ChangePassword")]
+        public async Task<IActionResult> ChangePassword(ResetPasswordInfo info)
+        {
+            return Ok(await _userBL.ResetPassword(info));
+        }
     }
 }

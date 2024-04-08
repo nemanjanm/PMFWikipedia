@@ -21,6 +21,11 @@ namespace PMFWikipedia.ImplementationsDAL
             return await table.Where(x=>x.Email.Equals(email) && x.Verified).FirstOrDefaultAsync();
         }
 
+        public async Task<User?> GetUserByResetToken(string token)
+        {
+            return await table.Where(x => x.ResetToken == token && x.Verified && x.ResetTokenExpirationTime > DateTime.Now).FirstOrDefaultAsync();
+        }
+
         public async Task<User?> GetUserByToken(string registrationToken)
         {
             return await table.Where(x => x.RegisterToken==registrationToken && x.Verified == false && x.RegisterTokenExpirationTime > DateTime.Now).FirstOrDefaultAsync();

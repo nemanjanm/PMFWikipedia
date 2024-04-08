@@ -40,5 +40,16 @@ namespace PMFWikipedia.Common.EmailService
                 "</body>" +
                 "</html>";
         }
+
+        public string GetInitTemplate(string title, string token)
+        {
+            string body = "" +
+                "<h1 style=\"color: #333333;  margin-bottom: 20px;\">"+title+"</h1>" +
+                " <p style=\"color: #333333;  line-height: 1.5; margin-bottom: 20px;\">Click the button below to take action:</p> " +
+                "<a href=\"" + ConfigProvider.ChangePasswordPage + "?token=" + token + "\" style=\"background-color: #4CAF50; display: inline-block; color: #ffffff; " +
+                "padding: 10px 20px;text-decoration: none;border-radius: 5px;\">Click</a>";
+
+            return body;
+        }
     }
 }
