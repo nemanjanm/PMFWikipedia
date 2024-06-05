@@ -1,4 +1,5 @@
 {
+  "proxy": "https://awww.api.com",
   "name": "pmfwiki",
   "private": true,
   "version": "0.0.0",
@@ -11,6 +12,7 @@
   },
   "dependencies": {
     "bootstrap": "5.3",
+    "cors": "^2.8.5",
     "primeicons": "^7.0.0",
     "primereact": "^10.6.6",
     "react": "^18.2.0",

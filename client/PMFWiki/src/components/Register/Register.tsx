@@ -2,36 +2,111 @@ import "../../index.css"
 import { Card } from 'primereact/card';
 import "./Register.css"
 import { InputText } from "primereact/inputtext";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Dropdown } from 'primereact/dropdown';
+import { programmes } from "../Programme";
+import { Password } from 'primereact/password';
+import { Button } from 'primereact/button';
+import { UserRegister } from "../../models/UserRegister";
+import { registerService } from "./Service";
 
 function Register(){
 
-    const programmes = [
-        {name: "Informatika"},
-        {name: "Matematika"},
-        {name: "Biologija"},
-        {name: "Ekologija"},
-        {name: "Fizika"},
-        {name: "Hemija"},
-        {name: "Psigologija"}
-    ]
     const [name, setName] = useState<string>("");
-    const [surname, setSurname] = useState<string>("");
+    const [lastname, setLastname] = useState<string>("");
     const [email, setEmail] = useState<string>("");
-    //const [password, setPassword] = useState<string>("");
+    const [isValidMail, setIsValidMail] = useState<boolean>(false);
+    const [password, setPassword] = useState<string>("");
+    const [isValidPassword, setIsValidPassword] = useState<boolean>(false);
+    const [repeatedPassword, setRepeatedPassword] = useState<string>("");
+    const [isValidRepeatedPassword, setIsValidRepeatedPassword] = useState<boolean>(false);
     const [program, setProgram] = useState<string>("");
+    const [submit, setSubmit] = useState<boolean>(true);
 
+    useEffect(() => {
+        if(!isValidMail && !isValidRepeatedPassword && name !== "" && lastname !== "" && email !== ""  && repeatedPassword === password && repeatedPassword !== "" && program !== "")
+            setSubmit(submit => submit = false)
+        else
+            setSubmit(submit => submit = true)
+    },[name, lastname, email, password, repeatedPassword, program])
+
+    function checkEmail(event: any){
+        const tempEmail = event.target.value;
+        setEmail(e => e = tempEmail);
+        const regex = /@pmf\.kg\.ac\.rs$/;
+        setIsValidMail(i=> i = !regex.test(tempEmail));
+    }
+
+    function handleProgram(e: any){
+        console.log(e.name);
+        setProgram(e.name);
+    }
+    function checkPassword(event: any){
+        const tempPassword = event.target.value;
+        setPassword(password => password=tempPassword);
+        const regex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{5,}$/;
+        setIsValidPassword(!regex.test(tempPassword));        
+    }
+
+    function submited()
+    {   
+        const user: UserRegister = {
+            firstName: name,
+            lastName: lastname,
+            email: email,
+            password: password,
+            program: program
+        };
+
+        registerService.addUser(user);
+    }
+
+    function checkPasses(event: any, sign: number){
+        let tempPassword = "";
+        let tempRealPassword = "";
+        if(sign === 2)
+        {
+            tempPassword = event.target.value;
+            setRepeatedPassword(r => r = tempPassword);
+
+            if(tempPassword === password)
+                setIsValidRepeatedPassword(i => i = false);
+            else
+                setIsValidRepeatedPassword(i => i = true);
+        }
+        else
+        {
+            tempRealPassword = event.target.value;
+            
+            if(tempRealPassword === repeatedPassword)
+                setIsValidRepeatedPassword(i => i = false);
+            else
+                setIsValidRepeatedPassword(i => i = true);
+        }
+    }
+
+    function checkBothPass(event: any){
+        checkPassword(event);
+        checkPasses(event, 1);
+    }
+
+    function checkBothRepeated(event: any){
+        checkPasses(event, 2);
+    }
     return (
         <div className="d-flex justify-content-center">
-            <div className="card">
+            <div className="card" >
                 <Card title="Registracija">
                     <div className="w-100 d-flex align-items-center justify-content-between">
                         <InputText className="w-100" value={name} placeholder="Ime" onChange={(e: React.ChangeEvent<HTMLInputElement>) => setName(e.target.value)} />
-                        <InputText className="w-100" value={surname} placeholder="Prezime" onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSurname(e.target.value)} />
+                        <InputText className="w-100" value={lastname} placeholder="Prezime" onChange={(e: React.ChangeEvent<HTMLInputElement>) => setLastname(e.target.value)} />
                     </div>
-                    <InputText className="w-100" value={email} placeholder="Email" onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)} />
-                        <Dropdown value={program} onChange={(e) => setProgram(e.value)} options={programmes} optionLabel="name" showClear placeholder="Studijski program" className="w-100 md:w-14rem" style={{textAlign: "left"}}/>
+                    <InputText className="w-100 mt-1" value={email} placeholder="primer@pmf.kg.ac.rs" invalid={isValidMail}  onChange={(e: React.ChangeEvent<HTMLInputElement>) => checkEmail(e)} />
+                    <Dropdown value={program} onChange={(e) => handleProgram(e.value)} options={programmes} optionLabel="name" placeholder="Izaberi studijski program" className="w-100 md:w-14rem mt-1" style={{textAlign: "left"}}/>
+                    <label className="m-1" style={{color: "#a0a3a9", fontSize: "small", textAlign: "left", lineHeight: "1"}}>*Lozinka mora sadržati minimum 5 karaktera i to jedno veliko slovo, jedno malo slovo i jedan broj.</label>
+                    <Password placeholder="Primer1" value={password} onChange={(e) => checkBothPass(e)} invalid={isValidPassword} feedback={false} tabIndex={1} toggleMask className="w-100 mt-1"/>
+                    <Password placeholder="Primer1" value={repeatedPassword} onChange={(e) => checkBothRepeated(e)} invalid={isValidRepeatedPassword} disabled={isValidPassword} feedback={false} tabIndex={1} toggleMask className="w-100 mt-1"/>
+                    <Button label="Submit" disabled={submit} onClick={() => submited()} icon="pi pi-check" className="mt-1" />
                 </Card>
             </div>
         </div>
