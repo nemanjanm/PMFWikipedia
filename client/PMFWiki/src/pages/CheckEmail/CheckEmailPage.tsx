@@ -1,5 +1,5 @@
-import "../index.css"
-import MenuBar from "../components/MenuBar/MenuBar";
+import "../../index.css"
+import MenuBar from "../../components/MenuBar/MenuBar";
 
 function ChceckEmailPage(){
     return (<>

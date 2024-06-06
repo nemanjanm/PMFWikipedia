@@ -26,16 +26,16 @@ namespace PMFWikipedia.ImplementationsBL
 
         public async Task<ActionResultResponse<User>> Register(RegisterInfo registerInfo)
         {
-            string pattern = @"@pmf\.kg\.ac\.rs$";
+            //string pattern = @"@pmf\.kg\.ac\.rs$";
 
             if (await _userDAL.CheckEmail(registerInfo.Email))
             {
                 return new ActionResultResponse<User>(null, false, "Email Taken");
             }
-            else if (!Regex.IsMatch(registerInfo.Email, pattern))
+            /*else if (!Regex.IsMatch(registerInfo.Email, pattern))
             {
                 return new ActionResultResponse<User>(null, false, "Email Invalid");
-            }
+            }*/
 
             User newUser = _mapper.Map<User>(registerInfo);
             newUser.Password = PasswordService.HashPass(registerInfo.Password);

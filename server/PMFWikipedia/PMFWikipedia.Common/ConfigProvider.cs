@@ -16,7 +16,7 @@ namespace PMFWikipedia.Common
         public static int TokenExpirationTime { get; private set; } = int.MaxValue;
         public static string Issuer { get; private set; } = string.Empty;
         public static string Audience { get; private set; } = string.Empty;
-
+        public static string ConfirmEmail { get; private set; } = string.Empty;
         public static void Setup(this IConfigurationRoot configuration)
         {
             ConnectionString = configuration["ConnectionStrings:DefaultConnection"];
@@ -31,6 +31,7 @@ namespace PMFWikipedia.Common
             EmailHost = configuration["EmailInfo:EmailHost"];
             ChangePasswordPage = configuration["ChangePasswordPageUrl"];
             Port = configuration["EmailInfo:Port"];
+            ConfirmEmail = configuration["ConfirmEmail"];
             TokenExpirationTime = int.Parse(configuration["TokenExpirationTime"] ?? "0");
         }
     }

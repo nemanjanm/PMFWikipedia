@@ -35,7 +35,7 @@ namespace PMFWikipedia.Common.EmailService
                 "<body style=\"margin: 100px; padding: 0; font-family: Arial, sans-serif; text-align: center;\">  " +
                 "<div style=\"max-width: 600px; margin: 0 auto; background-color: #ffffff;  padding: 40px;  border-radius: 10px;  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);\">" +
                 body +
-                "<footer> &copy; <em id=\"date\"></em>Inovatec </footer>" +
+                "<footer> &copy; <em id=\"date\"></em>PMFWikipedia</footer>" +
                 "</div>" +
                 "</body>" +
                 "</html>";
@@ -46,7 +46,7 @@ namespace PMFWikipedia.Common.EmailService
             string body = "" +
                 "<h1 style=\"color: #333333;  margin-bottom: 20px;\">"+title+"</h1>" +
                 " <p style=\"color: #333333;  line-height: 1.5; margin-bottom: 20px;\">Click the button below to take action:</p> " +
-                "<a href=\"" + ConfigProvider.ChangePasswordPage + "?token=" + token + "\" style=\"background-color: #4CAF50; display: inline-block; color: #ffffff; " +
+                "<a href=\"" + ConfigProvider.ConfirmEmail + token + "\" style=\"background-color: #4CAF50; display: inline-block; color: #ffffff; " +
                 "padding: 10px 20px;text-decoration: none;border-radius: 5px;\">Click</a>";
 
             return body;

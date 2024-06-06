@@ -39,7 +39,7 @@ function Register(){
 
     function checkEmail(event: any){
         const tempEmail = event.target.value;
-        setEmail(e => e = tempEmail);
+        setEmail(tempEmail);
         const regex = /@pmf\.kg\.ac\.rs$/;
         setIsValidMail(!regex.test(tempEmail));
     }
@@ -65,22 +65,15 @@ function Register(){
             program: sentProgram
         };
         setLoader(true);
-            const response = await registerService.addUser(user);
-            setName("");
-            setLastname("");
-            setProgram("");
-            setPassword("");
-            setEmail("");
-            setRepeatedPassword("");
+            const response = await registerService.addUser(user);            
         setLoader(false);
         if(!response.status){
-            toast.current?.show({severity:'error', summary: 'Greška', detail:"Neispravni kredencijali", life: 3000});
+            toast.current?.show({severity:'error', summary: 'Greška', detail:"Email je već iskorišćen", life: 3000});
+            setEmail("");
+            setIsValidMail(true);
         }
         else{
-            toast.current?.show({severity:'success', summary: 'Uspešna registracija', detail:"Uspešna registracija", life: 5000});
-            setTimeout(() => {
-                navigate("/email");
-            }, 3000);
+            navigate("/email");
         }
     }
 
@@ -118,6 +111,7 @@ function Register(){
     }
 
     return (
+        <>
         <div className="d-flex justify-content-center">
             {!loader && <div className="card" >
                 <Card title="Registracija">
@@ -134,9 +128,11 @@ function Register(){
                 </Card>
             </div>}
             {loader && <div style={{marginTop: "50px"}}><ClipLoader color="#111827" loading={loader} size={150}></ClipLoader></div>}
+        </div>
+        <div >
             <Toast ref={toast}></Toast>
         </div>
-        
+        </>
     )
 }
 

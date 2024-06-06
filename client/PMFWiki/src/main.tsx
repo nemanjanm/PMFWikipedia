@@ -1,4 +1,3 @@
-import React from 'react'
 import ReactDOM from 'react-dom/client'
 import 'bootstrap/dist/css/bootstrap.css'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
@@ -7,7 +6,7 @@ import Proba from './components/Proba'
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
 import Register from './components/Register/Register'
 import Login from './components/Login/Login'
-import ChceckEmailPage from './pages/CheckEmailPage'
+import ChceckEmailPage from './pages/CheckEmail/CheckEmailPage'
 import ConfirmRegisration from './pages/ConfirmRegistration'
 
 const router = createBrowserRouter([
