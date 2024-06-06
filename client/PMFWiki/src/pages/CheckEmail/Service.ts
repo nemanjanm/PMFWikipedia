@@ -1,18 +1,17 @@
 import { enviorment } from "../../enviorment";
-import { UserRegister } from "../../models/UserRegister";
 
-const url = `${enviorment.serverUrl}Auth/Register`
+const url = `${enviorment.serverUrl}Auth/ConfirmRegistration`
 const headers = {
 	"Content-Type": "application/json",
 };
 
-class RegisterService {
-    
-    async addUser(user: UserRegister){
+class CheckEmailService{
+
+    async checkEmail(registrationToken: string){
         const response = await fetch(url ,{
             method: "POST",
             headers: headers,
-            body: JSON.stringify(user)
+            body: JSON.stringify(registrationToken)
         });
 
         const data = await response.json();
@@ -20,4 +19,4 @@ class RegisterService {
     }
 }
 
-export const registerService = new RegisterService();
+export const checkEmailService = new CheckEmailService()

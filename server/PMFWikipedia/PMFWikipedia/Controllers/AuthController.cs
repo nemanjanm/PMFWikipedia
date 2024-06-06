@@ -22,7 +22,7 @@ namespace PMFWikipedia.API.Controllers
         }
 
         [HttpPost("ConfirmRegistration")]
-        public async Task<IActionResult> Register(string registrationToken)
+        public async Task<IActionResult> Register([FromBody] string registrationToken)
         {
             return Ok(await _userBL.ValidateUser(registrationToken));
         }

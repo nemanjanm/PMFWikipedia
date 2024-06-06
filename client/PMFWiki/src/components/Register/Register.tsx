@@ -2,16 +2,21 @@ import "../../index.css"
 import { Card } from 'primereact/card';
 import "./Register.css"
 import { InputText } from "primereact/inputtext";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Dropdown } from 'primereact/dropdown';
 import { programmes } from "../Programme";
 import { Password } from 'primereact/password';
 import { Button } from 'primereact/button';
 import { UserRegister } from "../../models/UserRegister";
 import { registerService } from "./Service";
+import { Toast } from 'primereact/toast';
+import { useNavigate } from "react-router-dom";
+import { ClipLoader } from "react-spinners";
 
 function Register(){
 
+    const toast = useRef<Toast>(null);
+    const navigate = useNavigate();
     const [name, setName] = useState<string>("");
     const [lastname, setLastname] = useState<string>("");
     const [email, setEmail] = useState<string>("");
@@ -21,44 +26,62 @@ function Register(){
     const [repeatedPassword, setRepeatedPassword] = useState<string>("");
     const [isValidRepeatedPassword, setIsValidRepeatedPassword] = useState<boolean>(false);
     const [program, setProgram] = useState<string>("");
+    const [sentProgram, setSentProgram] = useState<string>("");
     const [submit, setSubmit] = useState<boolean>(true);
+    const [loader, setLoader] = useState<boolean>(false);
 
     useEffect(() => {
         if(!isValidMail && !isValidRepeatedPassword && name !== "" && lastname !== "" && email !== ""  && repeatedPassword === password && repeatedPassword !== "" && program !== "")
-            setSubmit(submit => submit = false)
+            setSubmit(false)
         else
-            setSubmit(submit => submit = true)
+            setSubmit(true)
     },[name, lastname, email, password, repeatedPassword, program])
 
     function checkEmail(event: any){
         const tempEmail = event.target.value;
         setEmail(e => e = tempEmail);
         const regex = /@pmf\.kg\.ac\.rs$/;
-        setIsValidMail(i=> i = !regex.test(tempEmail));
+        setIsValidMail(!regex.test(tempEmail));
     }
 
     function handleProgram(e: any){
-        console.log(e.name);
-        setProgram(e.name);
+        setProgram(e);
+        setSentProgram(e.name);
     }
     function checkPassword(event: any){
         const tempPassword = event.target.value;
-        setPassword(password => password=tempPassword);
+        setPassword(tempPassword);
         const regex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{5,}$/;
         setIsValidPassword(!regex.test(tempPassword));        
     }
 
-    function submited()
+    async function submited()
     {   
         const user: UserRegister = {
             firstName: name,
             lastName: lastname,
             email: email,
             password: password,
-            program: program
+            program: sentProgram
         };
-
-        registerService.addUser(user);
+        setLoader(true);
+            const response = await registerService.addUser(user);
+            setName("");
+            setLastname("");
+            setProgram("");
+            setPassword("");
+            setEmail("");
+            setRepeatedPassword("");
+        setLoader(false);
+        if(!response.status){
+            toast.current?.show({severity:'error', summary: 'Greška', detail:"Neispravni kredencijali", life: 3000});
+        }
+        else{
+            toast.current?.show({severity:'success', summary: 'Uspešna registracija', detail:"Uspešna registracija", life: 5000});
+            setTimeout(() => {
+                navigate("/email");
+            }, 3000);
+        }
     }
 
     function checkPasses(event: any, sign: number){
@@ -70,18 +93,18 @@ function Register(){
             setRepeatedPassword(r => r = tempPassword);
 
             if(tempPassword === password)
-                setIsValidRepeatedPassword(i => i = false);
+                setIsValidRepeatedPassword(false);
             else
-                setIsValidRepeatedPassword(i => i = true);
+                setIsValidRepeatedPassword(true);
         }
         else
         {
             tempRealPassword = event.target.value;
             
             if(tempRealPassword === repeatedPassword)
-                setIsValidRepeatedPassword(i => i = false);
+                setIsValidRepeatedPassword(false);
             else
-                setIsValidRepeatedPassword(i => i = true);
+                setIsValidRepeatedPassword(true);
         }
     }
 
@@ -93,9 +116,10 @@ function Register(){
     function checkBothRepeated(event: any){
         checkPasses(event, 2);
     }
+
     return (
         <div className="d-flex justify-content-center">
-            <div className="card" >
+            {!loader && <div className="card" >
                 <Card title="Registracija">
                     <div className="w-100 d-flex align-items-center justify-content-between">
                         <InputText className="w-100" value={name} placeholder="Ime" onChange={(e: React.ChangeEvent<HTMLInputElement>) => setName(e.target.value)} />
@@ -108,8 +132,11 @@ function Register(){
                     <Password placeholder="Primer1" value={repeatedPassword} onChange={(e) => checkBothRepeated(e)} invalid={isValidRepeatedPassword} disabled={isValidPassword} feedback={false} tabIndex={1} toggleMask className="w-100 mt-1"/>
                     <Button label="Submit" disabled={submit} onClick={() => submited()} icon="pi pi-check" className="mt-1" />
                 </Card>
-            </div>
+            </div>}
+            {loader && <div style={{marginTop: "50px"}}><ClipLoader color="#111827" loading={loader} size={150}></ClipLoader></div>}
+            <Toast ref={toast}></Toast>
         </div>
+        
     )
 }
 
