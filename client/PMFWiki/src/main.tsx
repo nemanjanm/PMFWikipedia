@@ -8,7 +8,16 @@ import Register from './components/Register/Register'
 import Login from './components/Login/Login'
 import ChceckEmailPage from './pages/CheckEmail/CheckEmailPage'
 import ConfirmRegisration from './pages/ConfirmRegistration'
+import AuthProvider from 'react-auth-kit';
+import createStore from 'react-auth-kit/createStore';
+import { UserInfo } from './models/UserInfo'
 
+export const store = createStore<UserInfo>({
+  authName: "_auth",
+  authType: "cookie",
+  cookieDomain: window.location.hostname,
+  cookieSecure: false
+})
 const router = createBrowserRouter([
   {
     path: "/",
@@ -39,5 +48,8 @@ const router = createBrowserRouter([
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-    <RouterProvider router={router}></RouterProvider>
+    
+  <AuthProvider store={store}>
+      <RouterProvider router={router}></RouterProvider>
+  </AuthProvider>
 )

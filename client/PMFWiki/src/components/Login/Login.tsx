@@ -9,16 +9,19 @@ import { Button } from "primereact/button";
 import { ClipLoader } from "react-spinners";
 import { Toast } from 'primereact/toast';
 import { loginService } from "./Service";
-
+import useSignIn from "react-auth-kit/hooks/useSignIn";
+import { useNavigate } from "react-router-dom";
 
 function Login(){
+
+    const signIn = useSignIn();
     const toast = useRef<Toast>(null);
     const [password, setPassword] = useState<string>("");
     const [email, setEmail] = useState<string>("");
-    const [submit, setSubmit] = useState<boolean>(true);
     const [loader, setLoader] = useState<boolean>(false);
     const [isValidMail, setIsValidMail] = useState<boolean>(false);
     const [isValidPassword, setIsValidPassword] = useState<boolean>(false);
+    const navigate = useNavigate();
 
     function handleEmail(email: string)
     {
@@ -42,11 +45,22 @@ function Login(){
 
         if(!isValidMail && !isValidPassword){
             setLoader(true)
-            const response = await loginService.login(user);
+            const response : any = await loginService.login(user);
             setLoader(false)
             
             if(response.status){
-
+                signIn({
+                    auth: {
+                        token: response.data.token,
+                        type: "Bearer"
+                    },
+                    userState: {
+                        email: response.data.user.email,
+                        id: response.data.user.id
+                        //ovde pakujem sta se cuva u kukiju
+                    }
+                })
+                navigate("/");
             }
             else{
                 setIsValidMail(true);
