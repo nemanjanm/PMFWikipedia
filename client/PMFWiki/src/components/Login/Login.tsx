@@ -11,6 +11,7 @@ import { Toast } from 'primereact/toast';
 import { loginService } from "./Service";
 import useSignIn from "react-auth-kit/hooks/useSignIn";
 import { useNavigate } from "react-router-dom";
+import { storageService } from "../StorageService";
 
 function Login(){
 
@@ -19,6 +20,7 @@ function Login(){
     const [password, setPassword] = useState<string>("");
     const [email, setEmail] = useState<string>("");
     const [loader, setLoader] = useState<boolean>(false);
+    const [wrong, setWrong] = useState<boolean>(false);
     const [isValidMail, setIsValidMail] = useState<boolean>(false);
     const [isValidPassword, setIsValidPassword] = useState<boolean>(false);
     const navigate = useNavigate();
@@ -46,25 +48,13 @@ function Login(){
         if(!isValidMail && !isValidPassword){
             setLoader(true)
             const response : any = await loginService.login(user);
-            setLoader(false)
-            
+
             if(response.status){
-                signIn({
-                    auth: {
-                        token: response.data.token,
-                        type: "Bearer"
-                    },
-                    userState: {
-                        email: response.data.user.email,
-                        id: response.data.user.id
-                        //ovde pakujem sta se cuva u kukiju
-                    }
-                })
-                navigate("/");
+                storageService.setCredentials(response.data) 
+                navigate(0);
             }
             else{
-                setIsValidMail(true);
-                setIsValidPassword(true);
+                setLoader(false)
                 console.log(response.error)
                 toast.current?.show({severity:'error', summary: 'Greška', detail: "Pogrešni kredencijali", life: 3000});
             }
@@ -75,6 +65,7 @@ function Login(){
             <div className="d-flex justify-content-center">
                 {!loader && <div className="card">
                 <Card title="Prijava">
+                    {wrong && <label style={{color: "red", fontWeight: "bold", textAlign: "start"}}>Pogrešan email ili lozinka</label>}
                     <InputText className="w-100 mt-1" value={email} placeholder="primer@pmf.kg.ac.rs" invalid={isValidMail}  onChange={(e) => handleEmail(e.target.value)} />
                     <Password placeholder="Primer1" value={password} onChange={(e) => handlePassword(e.target.value)} invalid={isValidPassword} feedback={false} tabIndex={1} toggleMask className="w-100 mt-1"/>
                     <Button label="Submit" onClick={() => submited()} icon="pi pi-check" className="mt-1" />

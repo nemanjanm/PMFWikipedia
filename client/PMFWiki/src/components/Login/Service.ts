@@ -1,6 +1,6 @@
 import { enviorment } from "../../enviorment";
 import { UserLogin } from "../../models/UserLogin";
-
+import { storageService } from "../StorageService";
 const url = `${enviorment.serverUrl}Auth/Login`
 const headers = {
 	"Content-Type": "application/json",
@@ -16,6 +16,14 @@ class LoginService{
 
         const data = await response.json();
         return(data);
+    }
+
+    logout(){
+        storageService.deleteCredentials();
+    }
+
+    isLoggedIn(): boolean{
+        return storageService.getToken() != null;
     }
 }
 

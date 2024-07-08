@@ -18,7 +18,6 @@ namespace PMFWikipedia.ImplementationsBL.Helpers
                 {
                     new Claim("Id", user.Id.ToString()),
                     new Claim(JwtRegisteredClaimNames.Email, user.Email),
-                    new Claim("Program", user.Program)
                 }),
                 Expires = DateTime.UtcNow.AddDays(ConfigProvider.TokenLifetimeHours),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha512Signature)
