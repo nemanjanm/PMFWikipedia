@@ -34,7 +34,7 @@ namespace PMFWikipedia.API.Controllers
         }
 
         [HttpPost("ForgotPassword")]
-        public async Task<IActionResult> SendResetPasswordEmail(string email)
+        public async Task<IActionResult> SendResetPasswordEmail([FromBody] string email)
         {
             return Ok(await _userBL.CreateResetToken(email));
         }

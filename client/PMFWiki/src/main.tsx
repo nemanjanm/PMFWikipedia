@@ -13,6 +13,7 @@ import createStore from 'react-auth-kit/createStore';
 import { UserInfo } from './models/UserInfo'
 import StartPage from './pages/StartPage'
 import { storageService } from './components/StorageService'
+import EmailForResetPassword from './pages/EmailForResetPassword'
 
 export const store = createStore<UserInfo>({
   authName: "_auth",
@@ -43,6 +44,10 @@ const router = createBrowserRouter([
         element: <Login/>
       }
     ]
+  },
+  {
+    path: "/email/reset",
+    element: <EmailForResetPassword/>
   },
   {
     path: "/email",

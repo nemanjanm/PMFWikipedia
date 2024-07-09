@@ -43,7 +43,7 @@ namespace PMFWikipedia.ImplementationsBL
 
             string token = Guid.NewGuid().ToString();
 
-            string body = _emailService.GetInitTemplate("Register", token);
+            string body = _emailService.GetInitTemplate("Register", token, ConfigProvider.ConfirmEmail);
 
             await _emailService.SendEmail(registerInfo.Email, "Registration", body, "Registration");
             
@@ -61,12 +61,12 @@ namespace PMFWikipedia.ImplementationsBL
             var user = await _userDAL.GetUserByEmail(email);
             if (user == null)
             {
-                return new ActionResultResponse<string>(null, false, "Email Taken");
+                return new ActionResultResponse<string>(null, false, "Email Doesn't exists");
             }
 
             string token = Guid.NewGuid().ToString();
 
-            string body = _emailService.GetInitTemplate("Change Password", token);
+            string body = _emailService.GetInitTemplate("Change Password", token, ConfigProvider.ChangePasswordPage);
 
             await _emailService.SendEmail(email, "Change Password", body, "Change Password");
 

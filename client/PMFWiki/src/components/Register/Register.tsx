@@ -27,7 +27,7 @@ function Register(){
     const [isValidRepeatedPassword, setIsValidRepeatedPassword] = useState<boolean>(false);
     const [program, setProgram] = useState<string>("");
     const [sentProgram, setSentProgram] = useState<string>("");
-    const [submit, setSubmit] = useState<boolean>(true);
+    const [submit, setSubmit] = useState<boolean>(false);
     const [loader, setLoader] = useState<boolean>(false);
 
     useEffect(() => {
