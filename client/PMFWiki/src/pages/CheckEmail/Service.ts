@@ -1,7 +1,9 @@
 import { enviorment } from "../../enviorment";
+import { ResetPasswordInfo } from "../../models/ResetPasswordInfo";
 
 const registrationUrl = `${enviorment.serverUrl}Auth/ConfirmRegistration`
 const resetPasswordUrl = `${enviorment.serverUrl}Auth/ForgotPassword`
+const changePasswordUrl = `${enviorment.serverUrl}Auth/ChangePassword`
 const headers = {
 	"Content-Type": "application/json",
 };
@@ -24,6 +26,16 @@ class CheckEmailService{
             method: "POST",
             headers: headers,
             body: JSON.stringify(email)
+        });
+
+        const data = await response.json();
+        return(data);
+    }
+    async changePassword(info: ResetPasswordInfo){
+        const response = await fetch(changePasswordUrl ,{
+            method: "POST",
+            headers: headers,
+            body: JSON.stringify(info)
         });
 
         const data = await response.json();

@@ -14,7 +14,6 @@ function ConfirmRegisration(){
     const params = useParams();
     const token = params.registrationToken;
     useEffect(() => {
-        console.log(token);
         async function checkEmail(){
             const response = await checkEmailService.checkEmail(token as string)
             setConfirmed(true);

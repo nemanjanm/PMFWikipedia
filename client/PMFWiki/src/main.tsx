@@ -14,6 +14,7 @@ import { UserInfo } from './models/UserInfo'
 import StartPage from './pages/StartPage'
 import { storageService } from './components/StorageService'
 import EmailForResetPassword from './pages/EmailForResetPassword'
+import PasswordChange from './pages/PasswordChange'
 
 export const store = createStore<UserInfo>({
   authName: "_auth",
@@ -56,6 +57,10 @@ const router = createBrowserRouter([
   {
     path: "/confirm/:registrationToken",
     element: <ConfirmRegisration/>
+  },
+  {
+    path: "/promena-lozinke/:resetToken",
+    element: <PasswordChange/>
   },
   {
     path: "/pocetna",

@@ -134,7 +134,7 @@ namespace PMFWikipedia.ImplementationsBL
             await _userDAL.Update(user);
             await _userDAL.SaveChangesAsync();
 
-            return new ActionResultResponse<User>(user, false, "Successfullt changed password");
+            return new ActionResultResponse<User>(user, true, "Successfullt changed password");
         }
     }
 }
