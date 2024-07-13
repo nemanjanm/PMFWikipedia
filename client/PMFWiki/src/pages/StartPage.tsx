@@ -1,3 +1,4 @@
+import NavBar from "../components/NavBar/NavBar";
 import { storageService } from "../components/StorageService";
 import { useNavigate } from "react-router-dom";
 function StartPage(){
@@ -9,7 +10,9 @@ function StartPage(){
         navigate(0);
     }
 
-    return <>POCETNA STRANA
+    return <>
+    <NavBar></NavBar>
+    POCETNA STRANA
             <button onClick={handle}> Odjava </button></>
 }
 

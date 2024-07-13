@@ -1,4 +1,5 @@
-﻿using PMFWikipedia.ImplementationsDAL.PMFWikipedia.Models;
+﻿using Microsoft.AspNetCore.Http;
+using PMFWikipedia.ImplementationsDAL.PMFWikipedia.Models;
 using PMFWikipedia.Models;
 
 namespace PMFWikipedia.InterfacesBL
@@ -10,5 +11,6 @@ namespace PMFWikipedia.InterfacesBL
         public Task<ActionResultResponse<LoginResponse>> Login(LoginInfo loginInfo);
         public Task<ActionResultResponse<string>> CreateResetToken(string email);
         public Task<ActionResultResponse<User>> ResetPassword(ResetPasswordInfo info);
+        public Task<ActionResultResponse<string>> ChangePhoto(long id, IFormFile photo);
     }
 }

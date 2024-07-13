@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using PMFWikipedia.Common;
 using PMFWikipedia.Common.EmailService;
+using PMFWikipedia.Common.StorageService;
 using PMFWikipedia.ImplementationsBL.Helpers;
 using PMFWikipedia.ImplementationsDAL.PMFWikipedia.Models;
 using PMFWikipedia.InterfacesBL;
@@ -16,26 +18,28 @@ namespace PMFWikipedia.ImplementationsBL
         public readonly IUserDAL _userDAL;
         private readonly IMapper _mapper;
         private readonly IEmailService _emailService;
-        
-        public UserBL(IUserDAL userDAL, IMapper mapper, IEmailService emailService)
+        private readonly IStorageService _storageService;
+
+        public UserBL(IUserDAL userDAL, IMapper mapper, IEmailService emailService, IStorageService storageService)
         {
             _userDAL = userDAL;
             _mapper = mapper;
             _emailService = emailService;
+            _storageService = storageService;
         }
 
         public async Task<ActionResultResponse<User>> Register(RegisterInfo registerInfo)
         {
-            //string pattern = @"@pmf\.kg\.ac\.rs$";
+            string pattern = @"@pmf\.kg\.ac\.rs$";
 
             if (await _userDAL.CheckEmail(registerInfo.Email))
             {
                 return new ActionResultResponse<User>(null, false, "Email Taken");
             }
-            /*else if (!Regex.IsMatch(registerInfo.Email, pattern))
+            else if (!Regex.IsMatch(registerInfo.Email, pattern))
             {
                 return new ActionResultResponse<User>(null, false, "Email Invalid");
-            }*/
+            }
 
             User newUser = _mapper.Map<User>(registerInfo);
             newUser.Password = PasswordService.HashPass(registerInfo.Password);
@@ -135,6 +139,35 @@ namespace PMFWikipedia.ImplementationsBL
             await _userDAL.SaveChangesAsync();
 
             return new ActionResultResponse<User>(user, true, "Successfullt changed password");
+        }
+
+        public async Task<ActionResultResponse<string>> ChangePhoto(long id, IFormFile photo)
+        {
+            var user = await _userDAL.GetById(id);
+            if(user == null)
+                return new ActionResultResponse<string>("user not found", false, "Failed to change photo");
+
+            string path = _storageService.CreatePhotoPath();
+            if (!Directory.Exists(path))
+                Directory.CreateDirectory(path);
+
+            string photoName = "user" + id + ".jpg";
+            path = Path.Combine(path, photoName);
+
+            if (File.Exists(path))
+                System.IO.File.Delete(path);
+            
+            //user.photopath = path;
+            await _userDAL.SaveChangesAsync();
+
+            using (FileStream stream = System.IO.File.Create(path))
+            {
+                photo.CopyTo(stream);
+                stream.Flush();
+            }
+
+            return new ActionResultResponse<string>("Success", true, "Successfully changed photo");
+
         }
     }
 }

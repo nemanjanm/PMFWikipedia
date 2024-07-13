@@ -6,10 +6,10 @@ namespace PMFWikipedia.InterfacesDAL
     {
         public Task<List<T>> GetAll();
         public Task<List<T>> GetAllByFilter(Expression<Func<T, bool>> filter);
-        public Task<T?> GetById(int id);
+        public Task<T?> GetById(long id);
         public Task Insert (T item);
         public Task Update (T item);
-        public Task Delete(int Id);
-        public Task SaveChangesAsync(int? id = -1);
+        public Task Delete(long Id);
+        public Task SaveChangesAsync(long? id = -1);
     }
 }

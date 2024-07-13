@@ -17,7 +17,7 @@ namespace PMFWikipedia.ImplementationsDAL
             table = _context.Set<T>();
         }
 
-        public async Task Delete(int id)
+        public async Task Delete(long id)
         {
             T? item = await GetById(id);
             if(item != null)
@@ -43,7 +43,7 @@ namespace PMFWikipedia.ImplementationsDAL
             return await table.Where(filter).ToListAsync();
         }
 
-        public async Task<T?> GetById(int id)
+        public async Task<T?> GetById(long id)
         {
             return await table.FindAsync(id);
         }
@@ -53,7 +53,7 @@ namespace PMFWikipedia.ImplementationsDAL
             await table.AddAsync(item);
         }
 
-        public async Task SaveChangesAsync(int? id = -1)
+        public async Task SaveChangesAsync(long? id = -1)
         {
             _context.ChangeTracker.DetectChanges();
 

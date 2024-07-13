@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using PMFWikipedia.Common;
 using PMFWikipedia.Common.AutoMapper;
 using PMFWikipedia.Common.EmailService;
+using PMFWikipedia.Common.StorageService;
 using PMFWikipedia.ImplementationsBL;
 using PMFWikipedia.ImplementationsDAL;
 using PMFWikipedia.ImplementationsDAL.PMFWikipedia.ImplementationsDAL;
@@ -47,6 +48,7 @@ namespace PMFWikipedia.ServiceInitializer
         private static IServiceCollection InitializeCommonServices(this IServiceCollection services)
         {
             services.AddScoped<IEmailService, EmailService>();
+            services.AddScoped<IStorageService, StorageService>();
             return services;
         }
     }

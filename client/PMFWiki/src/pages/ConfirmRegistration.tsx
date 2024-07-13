@@ -21,7 +21,7 @@ function ConfirmRegisration(){
             if(!response.status){
                 toast.current?.show({severity:'error', summary: 'Greška', detail:response.error, life: 3000});
                 setTimeout(() => {
-                    navigate("/Prijava");
+                    navigate("/Registracija");
                 }, 3000);
             }
             else{

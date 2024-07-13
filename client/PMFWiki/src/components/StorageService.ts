@@ -1,5 +1,5 @@
+import { LoginInfo } from "../models/LoginInfo";
 import { LoginResponse } from "../models/LoginResponse";
-import { UserInfo } from "../models/UserInfo";
 
 class StorageService{
 
@@ -7,11 +7,11 @@ class StorageService{
         return localStorage.getItem("token");
     }
 
-    getUserInfo(): UserInfo|null {
+    getUserInfo(): LoginInfo|null {
         let userInfo = localStorage.getItem("userInfo");
     
         if(userInfo != null){
-          return JSON.parse(userInfo!) as UserInfo;
+          return JSON.parse(userInfo!) as LoginInfo;
         }
     
         return null;
@@ -22,7 +22,7 @@ class StorageService{
         localStorage.setItem("userInfo", JSON.stringify(info.user));
     }
 
-    setUserInfo(userInfo: UserInfo): void {
+    setUserInfo(userInfo: LoginInfo): void {
         localStorage.setItem("userInfo", JSON.stringify(userInfo));
     }
     deleteCredentials(): void {

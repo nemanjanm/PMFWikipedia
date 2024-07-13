@@ -1,7 +1,7 @@
 export interface LoginInfo {
-    Id: number,
-    FirstName: string,
-    LastName: string,
-    Email: string,
-    Program: string,
+    id: number,
+    firstName: string,
+    lastName: string,
+    email: string,
+    program: string,
 }

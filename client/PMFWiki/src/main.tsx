@@ -13,8 +13,9 @@ import createStore from 'react-auth-kit/createStore';
 import { UserInfo } from './models/UserInfo'
 import StartPage from './pages/StartPage'
 import { storageService } from './components/StorageService'
-import EmailForResetPassword from './pages/EmailForResetPassword'
+import EmailForResetPassword from './components/EmailForResetPassword'
 import PasswordChange from './pages/PasswordChange'
+import ProfilePage from './pages/ProfilePage'
 
 export const store = createStore<UserInfo>({
   authName: "_auth",
@@ -64,7 +65,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/pocetna",
-    element: isAuthenticated() ? <StartPage/> : <Navigate to="/Prijava"/>
+    element: isAuthenticated() ? <StartPage/> : <Navigate to="/Prijava"/>,
+  },
+  {
+    path: "/profilna-strana",
+    element: isAuthenticated() ? <ProfilePage/> : <Navigate to="/Prijava"/>
   }
 ]);
 

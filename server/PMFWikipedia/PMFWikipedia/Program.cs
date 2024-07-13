@@ -27,6 +27,8 @@ app.UseCors(builder => builder
 
 app.UseHttpsRedirection();
 
+app.UseStaticFiles();
+
 app.UseAuthorization();
 
 app.MapControllers();
