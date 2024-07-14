@@ -40,6 +40,9 @@ public partial class PMFWikiContext : DbContext
                 .IsRequired()
                 .HasMaxLength(100)
                 .IsUnicode(false);
+            entity.Property(e => e.PhotoPath)
+                .HasMaxLength(50)
+                .IsUnicode(false);
             entity.Property(e => e.Program)
                 .IsRequired()
                 .HasMaxLength(100)

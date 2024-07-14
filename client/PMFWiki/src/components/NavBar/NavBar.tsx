@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { storageService } from "../StorageService";
 import { Avatar } from 'primereact/avatar';  
 import { MenuItem } from "primereact/menuitem";
+import { enviorment } from "../../enviorment";
 
 function NavBar(){
 
@@ -17,10 +18,12 @@ function NavBar(){
     console.log(userInfo?.firstName);
     const username = userInfo?.firstName + " " + userInfo?.lastName;
     const navigate = useNavigate();
-
+    const avatar = enviorment.port + userInfo?.photoPath;
+    console.log(avatar);
+    
     const itemRenderer = (item : any) => (
         <span className="flex align-items-center p-menuitem-link">
-            <Avatar image="https://localhost:7101//images/defaultAvatar.jpg" shape="circle" />
+            <Avatar image={avatar} shape="circle" />
             <span className="mx-2">{item.label}</span>
         </span>
     );

@@ -36,4 +36,6 @@ public partial class User
     public string ResetToken { get; set; }
 
     public DateTime? ResetTokenExpirationTime { get; set; }
+
+    public string PhotoPath { get; set; }
 }

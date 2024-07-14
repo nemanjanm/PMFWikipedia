@@ -1,19 +1,17 @@
 import NavBar from "../components/NavBar/NavBar";
+import SideBar from "../components/SideBar/SideBar";
 import { storageService } from "../components/StorageService";
 import { useNavigate } from "react-router-dom";
 function StartPage(){
 
     const navigate = useNavigate();
 
-    function handle(){
-        storageService.deleteCredentials();
-        navigate(0);
-    }
 
+    ///LISTBOX, ORDERLIST
     return <>
-    <NavBar></NavBar>
-    POCETNA STRANA
-            <button onClick={handle}> Odjava </button></>
+        <NavBar></NavBar>
+        <SideBar></SideBar>
+    </>
 }
 
 export default StartPage;

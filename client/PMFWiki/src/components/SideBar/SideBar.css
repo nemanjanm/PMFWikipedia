@@ -1,0 +1,13 @@
+.div{
+    height: 100vh;
+}
+ol, ul {
+    padding-left: 0;
+    
+}
+#pr_id_6_list {
+    padding: 10px;
+}
+.p-menu .p-menuitem > .p-menuitem-content {
+    padding: 10px;
+}

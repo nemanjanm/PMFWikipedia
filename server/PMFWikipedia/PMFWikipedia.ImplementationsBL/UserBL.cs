@@ -43,6 +43,7 @@ namespace PMFWikipedia.ImplementationsBL
 
             User newUser = _mapper.Map<User>(registerInfo);
             newUser.Password = PasswordService.HashPass(registerInfo.Password);
+            newUser.PhotoPath = _storageService.GetDefaultPath();
             newUser.Verified = false;
 
             string token = Guid.NewGuid().ToString();
@@ -157,7 +158,7 @@ namespace PMFWikipedia.ImplementationsBL
             if (File.Exists(path))
                 System.IO.File.Delete(path);
             
-            //user.photopath = path;
+            user.PhotoPath = Path.Combine("Images", photoName);
             await _userDAL.SaveChangesAsync();
 
             using (FileStream stream = System.IO.File.Create(path))

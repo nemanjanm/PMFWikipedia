@@ -3,5 +3,6 @@
     public interface IStorageService
     {
         public string CreatePhotoPath();
+        public string GetDefaultPath();
     }
 }

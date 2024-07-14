@@ -4,4 +4,5 @@ export interface LoginInfo {
     lastName: string,
     email: string,
     program: string,
+    photoPath: string
 }
