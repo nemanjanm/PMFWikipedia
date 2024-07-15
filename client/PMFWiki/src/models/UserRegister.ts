@@ -3,5 +3,5 @@ export interface UserRegister{
     lastName: string;
     email: string;
     password: string;
-    program: string;
+    program: number;
 }

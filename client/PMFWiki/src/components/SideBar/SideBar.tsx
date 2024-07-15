@@ -2,11 +2,19 @@ import { Menu } from 'primereact/menu';
 import { Link, Outlet } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
 import '../SideBar/SideBar.css'
+import { storageService } from '../StorageService';
+import { getName, programmes } from '../Programme';
+import { useState } from 'react';
+
 function SideBar(){
     const navigate = useNavigate();
+    const programNumber = storageService.getUserInfo()?.program;
+
+    const program = getName(programNumber);
+
     const items = [
         {
-            label: "Informatika",
+            label: program,
             icon: 'pi pi-book',
             command: () => {
                 navigate("/")
@@ -37,7 +45,7 @@ function SideBar(){
     ];
     return (
         <>
-            <Menu className="" style={{height: "100vh", borderRadius: "0", padding: "0", width: "fit-content"}} model={items}/>    
+            <Menu className="" style={{height: "100%", borderRadius: "0", padding: "0", width: "fit-content"}} model={items}/>    
             <Outlet></Outlet>
         </>
     )

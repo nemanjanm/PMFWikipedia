@@ -14,10 +14,39 @@ public partial class PMFWikiContext : DbContext
     {
     }
 
+    public virtual DbSet<FavoriteSubject> FavoriteSubjects { get; set; }
+
+    public virtual DbSet<Subject> Subjects { get; set; }
+
     public virtual DbSet<User> Users { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<FavoriteSubject>(entity =>
+        {
+            entity.ToTable("FavoriteSubject");
+
+            entity.HasOne(d => d.Subject).WithMany(p => p.FavoriteSubjects)
+                .HasForeignKey(d => d.SubjectId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_FavoriteSubject_SubjectId");
+
+            entity.HasOne(d => d.User).WithMany(p => p.FavoriteSubjects)
+                .HasForeignKey(d => d.UserId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_FavoriteSubject_UserId");
+        });
+
+        modelBuilder.Entity<Subject>(entity =>
+        {
+            entity.ToTable("Subject");
+
+            entity.Property(e => e.Name)
+                .IsRequired()
+                .HasMaxLength(100)
+                .IsUnicode(false);
+        });
+
         modelBuilder.Entity<User>(entity =>
         {
             entity.ToTable("User");
@@ -42,10 +71,6 @@ public partial class PMFWikiContext : DbContext
                 .IsUnicode(false);
             entity.Property(e => e.PhotoPath)
                 .HasMaxLength(50)
-                .IsUnicode(false);
-            entity.Property(e => e.Program)
-                .IsRequired()
-                .HasMaxLength(100)
                 .IsUnicode(false);
             entity.Property(e => e.RegisterToken)
                 .IsRequired()

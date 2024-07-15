@@ -17,7 +17,7 @@ public partial class User
 
     public string Password { get; set; }
 
-    public string Program { get; set; }
+    public int Program { get; set; }
 
     public bool IsDeleted { get; set; }
 
@@ -38,4 +38,6 @@ public partial class User
     public DateTime? ResetTokenExpirationTime { get; set; }
 
     public string PhotoPath { get; set; }
+
+    public virtual ICollection<FavoriteSubject> FavoriteSubjects { get; set; } = new List<FavoriteSubject>();
 }

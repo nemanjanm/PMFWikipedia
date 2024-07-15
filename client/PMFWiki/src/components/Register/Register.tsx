@@ -26,7 +26,7 @@ function Register(){
     const [repeatedPassword, setRepeatedPassword] = useState<string>("");
     const [isValidRepeatedPassword, setIsValidRepeatedPassword] = useState<boolean>(false);
     const [program, setProgram] = useState<string>("");
-    const [sentProgram, setSentProgram] = useState<string>("");
+    const [sentProgram, setSentProgram] = useState<number>(-1);
     const [submit, setSubmit] = useState<boolean>(false);
     const [loader, setLoader] = useState<boolean>(false);
 
@@ -45,8 +45,10 @@ function Register(){
     }
 
     function handleProgram(e: any){
+        console.log(e);
+        console.log(e.id);
         setProgram(e);
-        setSentProgram(e.name);
+        setSentProgram(e.id);
     }
     function checkPassword(event: any){
         const tempPassword = event.target.value;

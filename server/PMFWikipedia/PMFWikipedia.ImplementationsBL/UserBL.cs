@@ -19,19 +19,21 @@ namespace PMFWikipedia.ImplementationsBL
         private readonly IMapper _mapper;
         private readonly IEmailService _emailService;
         private readonly IStorageService _storageService;
+        private readonly ISubjectDAL _subjectDAL;
 
-        public UserBL(IUserDAL userDAL, IMapper mapper, IEmailService emailService, IStorageService storageService)
+        public UserBL(ISubjectDAL subjectDAL, IUserDAL userDAL, IMapper mapper, IEmailService emailService, IStorageService storageService)
         {
             _userDAL = userDAL;
             _mapper = mapper;
             _emailService = emailService;
             _storageService = storageService;
+            _subjectDAL = subjectDAL;
         }
 
         public async Task<ActionResultResponse<User>> Register(RegisterInfo registerInfo)
         {
             string pattern = @"@pmf\.kg\.ac\.rs$";
-
+            
             if (await _userDAL.CheckEmail(registerInfo.Email))
             {
                 return new ActionResultResponse<User>(null, false, "Email Taken");
@@ -116,6 +118,9 @@ namespace PMFWikipedia.ImplementationsBL
             }
 
             LoginResponse loginResponse = new LoginResponse();
+            List<SubjectViewModel> subjects = new List<SubjectViewModel>();
+            //subjects = _subjectDAL.GetAllByFilter()
+
             loginResponse.User = _mapper.Map<UserViewModel>(user);
             loginResponse.Token = AuthService.GetJWT(loginResponse.User);
 

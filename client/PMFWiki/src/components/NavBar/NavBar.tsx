@@ -15,11 +15,9 @@ import { enviorment } from "../../enviorment";
 function NavBar(){
 
     const userInfo = storageService.getUserInfo();
-    console.log(userInfo?.firstName);
     const username = userInfo?.firstName + " " + userInfo?.lastName;
     const navigate = useNavigate();
     const avatar = enviorment.port + userInfo?.photoPath;
-    console.log(avatar);
     
     const itemRenderer = (item : any) => (
         <span className="flex align-items-center p-menuitem-link">

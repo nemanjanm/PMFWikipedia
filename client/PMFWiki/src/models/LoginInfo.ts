@@ -3,6 +3,6 @@ export interface LoginInfo {
     firstName: string,
     lastName: string,
     email: string,
-    program: string,
+    program: number,
     photoPath: string
 }

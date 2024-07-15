@@ -21,6 +21,7 @@ namespace PMFWikipedia.ServiceInitializer
                 options => options.UseSqlServer(ConfigProvider.ConnectionString)
             );
             services.AddScoped<IUserDAL, UserDAL>();
+            services.AddScoped<ISubjectDAL, SubjectDAL>();  
             return services;
         }
 

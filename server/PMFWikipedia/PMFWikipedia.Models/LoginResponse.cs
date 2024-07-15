@@ -6,5 +6,6 @@ namespace PMFWikipedia.Models
     {
         public string Token { get; set; }
         public UserViewModel User { get; set; }
+        public List<SubjectViewModel> Subjects { get; set; }
     }
 }
