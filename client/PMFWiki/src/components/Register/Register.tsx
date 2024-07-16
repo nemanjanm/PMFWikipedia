@@ -45,8 +45,6 @@ function Register(){
     }
 
     function handleProgram(e: any){
-        console.log(e);
-        console.log(e.id);
         setProgram(e);
         setSentProgram(e.id);
     }

@@ -1,7 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using PMFWikipedia.InterfacesBL;
-using PMFWikipedia.Models;
 
 namespace PMFWikipedia.API.Controllers
 {

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
-using PMFWikipedia.ImplementationsDAL.PMFWikipedia.Models;
 using PMFWikipedia.Models;
+using PMFWikipedia.Models.Entity;
 
 namespace PMFWikipedia.InterfacesBL
 {

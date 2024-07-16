@@ -1,13 +1,10 @@
 .div{
-    height: 100vh;
+    height: 100em;
 }
 ol, ul {
     padding-left: 0;
     
 }
-#pr_id_6_list {
-    padding: 10px;
-}
 .p-menu .p-menuitem > .p-menuitem-content {
-    padding: 10px;
+    padding: 3vh;
 }

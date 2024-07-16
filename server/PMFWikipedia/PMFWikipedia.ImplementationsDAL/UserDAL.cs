@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using PMFWikipedia.ImplementationsDAL.PMFWikipedia.ImplementationsDAL;
-using PMFWikipedia.ImplementationsDAL.PMFWikipedia.Models;
+using PMFWikipedia.Models.Entity;
 using PMFWikipedia.InterfacesDAL;
 
 namespace PMFWikipedia.ImplementationsDAL

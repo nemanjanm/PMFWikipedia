@@ -4,7 +4,7 @@ using PMFWikipedia.Common;
 using PMFWikipedia.Common.EmailService;
 using PMFWikipedia.Common.StorageService;
 using PMFWikipedia.ImplementationsBL.Helpers;
-using PMFWikipedia.ImplementationsDAL.PMFWikipedia.Models;
+using PMFWikipedia.Models.Entity;
 using PMFWikipedia.InterfacesBL;
 using PMFWikipedia.InterfacesDAL;
 using PMFWikipedia.Models;
@@ -19,14 +19,16 @@ namespace PMFWikipedia.ImplementationsBL
         private readonly IMapper _mapper;
         private readonly IEmailService _emailService;
         private readonly IStorageService _storageService;
+        private readonly IFavoriteSubjectDAL _favoriteSubjectDAL;
         private readonly ISubjectDAL _subjectDAL;
 
-        public UserBL(ISubjectDAL subjectDAL, IUserDAL userDAL, IMapper mapper, IEmailService emailService, IStorageService storageService)
+        public UserBL(ISubjectDAL subjectDAL, IFavoriteSubjectDAL favoriteSubjectDAL, IUserDAL userDAL, IMapper mapper, IEmailService emailService, IStorageService storageService)
         {
             _userDAL = userDAL;
             _mapper = mapper;
             _emailService = emailService;
             _storageService = storageService;
+            _favoriteSubjectDAL = favoriteSubjectDAL;
             _subjectDAL = subjectDAL;
         }
 
@@ -118,9 +120,7 @@ namespace PMFWikipedia.ImplementationsBL
             }
 
             LoginResponse loginResponse = new LoginResponse();
-            List<SubjectViewModel> subjects = new List<SubjectViewModel>();
-            //subjects = _subjectDAL.GetAllByFilter()
-
+            
             loginResponse.User = _mapper.Map<UserViewModel>(user);
             loginResponse.Token = AuthService.GetJWT(loginResponse.User);
 

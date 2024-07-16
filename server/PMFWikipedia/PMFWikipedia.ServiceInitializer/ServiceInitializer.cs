@@ -6,7 +6,6 @@ using PMFWikipedia.Common.EmailService;
 using PMFWikipedia.Common.StorageService;
 using PMFWikipedia.ImplementationsBL;
 using PMFWikipedia.ImplementationsDAL;
-using PMFWikipedia.ImplementationsDAL.PMFWikipedia.ImplementationsDAL;
 using PMFWikipedia.InterfacesBL;
 using PMFWikipedia.InterfacesDAL;
 
@@ -22,12 +21,14 @@ namespace PMFWikipedia.ServiceInitializer
             );
             services.AddScoped<IUserDAL, UserDAL>();
             services.AddScoped<ISubjectDAL, SubjectDAL>();  
+            services.AddScoped<IFavoriteSubjectDAL, FavoriteSubjectDAL>();
             return services;
         }
 
         private static IServiceCollection initializeBL(this IServiceCollection services)
         {
             services.AddScoped<IUserBL, UserBL>();
+            services.AddScoped<IFavoriteSubjectBL, FavoriteSubjectBL>();
             return services;
         }
 

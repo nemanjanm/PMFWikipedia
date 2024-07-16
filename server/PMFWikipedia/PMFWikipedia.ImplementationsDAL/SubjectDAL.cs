@@ -1,6 +1,5 @@
-﻿using PMFWikipedia.ImplementationsDAL.PMFWikipedia.ImplementationsDAL;
-using PMFWikipedia.ImplementationsDAL.PMFWikipedia.Models;
-using PMFWikipedia.InterfacesDAL;
+﻿using PMFWikipedia.InterfacesDAL;
+using PMFWikipedia.Models.Entity;
 
 namespace PMFWikipedia.ImplementationsDAL
 {

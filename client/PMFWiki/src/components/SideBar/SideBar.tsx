@@ -45,7 +45,9 @@ function SideBar(){
     ];
     return (
         <>
-            <Menu className="" style={{height: "100%", borderRadius: "0", padding: "0", width: "fit-content"}} model={items}/>    
+            <div>
+                <Menu className="" style={{height: "100vh", borderRadius: "0", padding: "0", width: "fit-content"}} model={items}/>    
+            </div>
             <Outlet></Outlet>
         </>
     )
