@@ -16,6 +16,7 @@ import { storageService } from './components/StorageService'
 import EmailForResetPassword from './components/EmailForResetPassword'
 import PasswordChange from './pages/PasswordChange'
 import ProfilePage from './pages/ProfilePage'
+import SubjectsPage from './pages/SubjectsPage'
 
 export const store = createStore<UserInfo>({
   authName: "_auth",
@@ -66,6 +67,10 @@ const router = createBrowserRouter([
   {
     path: "/pocetna",
     element: isAuthenticated() ? <StartPage/> : <Navigate to="/Prijava"/>,
+  },
+  {
+    path: "/predmeti",
+    element: isAuthenticated() ? <SubjectsPage/> : <Navigate to="/Prijava"/>,
   },
   {
     path: "/profilna-strana",

@@ -10,25 +10,19 @@ import { ClipLoader } from "react-spinners";
 
 function StartPage(){
 
-    const [empty, setEmpty] = useState<boolean>(false);
     const [favoriteSubjects, setFavoriteSubjcets] = useState<Array<FavoriteSubject>>();
     const [temp, setTemp] = useState(false)
     const [loader, setLoader] = useState<boolean>(false);
-    const navigate = useNavigate();
     const id = storageService.getUserInfo()?.id;
-    useEffect(() => {
-        setLoader(true)
+    useEffect(() => {  
         async function getFavoriteSubjects(){
+            setLoader(true);
             const response = await favoriteSubjectService.getFavoriteSubjects(id as number);
-
-            if(!response.status)
-                setEmpty(false);
-            else
+            if(response.status)
                 setFavoriteSubjcets(response.data);
-
+            setLoader(false);
         }
-        setLoader(false);
-        getFavoriteSubjects();
+        getFavoriteSubjects()
     }, [temp])
 
     const [selectedSubject, setSelectedSubject] = useState<FavoriteSubject | null>(null);
@@ -38,16 +32,14 @@ function StartPage(){
         //U ZAVISNOSTI STA MI TREBA
     }
     return <>
-    <div className="celina" style={{overflow: "auto"}}>
+    <div className="celina" style={{height: "fit-content"}}>
         <NavBar></NavBar>
         <div className="d-flex justify-content-between" style={{height: "100vh"}}>
             <SideBar></SideBar>
-            {!loader && <div>
-                <h1 style={{textAlign: "center", fontWeight: "bold", marginTop: "7vh", color:"#111827"}}>Moji predmeti</h1>
-                <div className="" >  
-                    {favoriteSubjects && <ListBox value={selectedSubject} onChange={(e: ListBoxChangeEvent) => handleSubject(e)} options={favoriteSubjects} optionLabel="name" className="w-full md:w-14rem" listStyle={{maxHeight: "70vh"}}/>}
-                    {!favoriteSubjects && <p style={{fontSize: "30em", color: "#ffffffde"}}>Trenutno nemate omiljene predmete</p>}
-                </div>
+            {!loader && <div style={{width: "100vh"}}>
+                <h1 style={{textAlign: "center", fontWeight: "bold", marginTop: "10px"}}>Moji predmeti</h1>
+                {favoriteSubjects && <ListBox value={selectedSubject} onChange={(e: ListBoxChangeEvent) => handleSubject(e)} options={favoriteSubjects} optionLabel="name" className="w-full md:w-14rem" listStyle={{maxHeight: "70vh"}}/>}
+                {!favoriteSubjects && <p style={{fontSize: "30px", color: "#ffffffde"}}>Trenutno nemate omiljene predmete</p>}
             </div>}
             {loader && <div style={{marginTop: "50px"}}><ClipLoader color="#111827" loading={loader} size={150}></ClipLoader></div>}
             <div></div>

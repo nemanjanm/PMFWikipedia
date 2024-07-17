@@ -1,14 +1,14 @@
 import { storageService } from "../components/StorageService";
 import { enviorment } from "../enviorment";
 
-const getUrl = `${enviorment.serverUrl}FavoriteSubject/GetFavoriteSubjects`
+const getUrl = `${enviorment.serverUrl}`
 const headers = {
 	"Content-Type": "application/json",
     "Authorization" : "Bearer "+ storageService.getToken()
 };
-class FavoriteSubjectService{
-    async getFavoriteSubjects(id: number){
-        const realUrl = `${getUrl}?id=${id}`
+class UserService{
+    async getAllUsers(){
+        const realUrl = `${getUrl}User/GetAllUsers`
         const response = await fetch(realUrl, {
             method: "GET",
             headers: headers
@@ -20,4 +20,4 @@ class FavoriteSubjectService{
     }
 }
 
-export const favoriteSubjectService = new FavoriteSubjectService();
+export const userService = new UserService();

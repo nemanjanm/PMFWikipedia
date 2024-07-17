@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PMFWikipedia.InterfacesBL;
 
 namespace PMFWikipedia.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class FavoriteSubject : ControllerBase
     {
         private readonly IFavoriteSubjectBL _favoriteSubjectBL;

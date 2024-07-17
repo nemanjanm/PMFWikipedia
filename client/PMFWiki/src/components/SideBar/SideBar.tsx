@@ -17,7 +17,7 @@ function SideBar(){
             label: program,
             icon: 'pi pi-book',
             command: () => {
-                navigate("/")
+                navigate("/predmeti")
             }
         },
         {
@@ -45,8 +45,8 @@ function SideBar(){
     ];
     return (
         <>
-            <div>
-                <Menu className="" style={{height: "100vh", borderRadius: "0", padding: "0", width: "fit-content"}} model={items}/>    
+            <div style={{height: "100vh", backgroundColor: "#374151"}}>
+                <Menu style={{border: 0, height: "fit-content", borderRadius: "0", padding: "0", width: "fit-content", fontSize: "12px"}} model={items}/>    
             </div>
             <Outlet></Outlet>
         </>

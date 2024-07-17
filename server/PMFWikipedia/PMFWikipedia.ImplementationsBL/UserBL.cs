@@ -4,10 +4,10 @@ using PMFWikipedia.Common;
 using PMFWikipedia.Common.EmailService;
 using PMFWikipedia.Common.StorageService;
 using PMFWikipedia.ImplementationsBL.Helpers;
-using PMFWikipedia.Models.Entity;
 using PMFWikipedia.InterfacesBL;
 using PMFWikipedia.InterfacesDAL;
 using PMFWikipedia.Models;
+using PMFWikipedia.Models.Entity;
 using PMFWikipedia.Models.ViewModels;
 using System.Text.RegularExpressions;
 
@@ -15,14 +15,14 @@ namespace PMFWikipedia.ImplementationsBL
 {
     public class UserBL : IUserBL
     {
+        private readonly IJWTService _jwtService;
         public readonly IUserDAL _userDAL;
         private readonly IMapper _mapper;
         private readonly IEmailService _emailService;
         private readonly IStorageService _storageService;
         private readonly IFavoriteSubjectDAL _favoriteSubjectDAL;
         private readonly ISubjectDAL _subjectDAL;
-
-        public UserBL(ISubjectDAL subjectDAL, IFavoriteSubjectDAL favoriteSubjectDAL, IUserDAL userDAL, IMapper mapper, IEmailService emailService, IStorageService storageService)
+        public UserBL(IJWTService jwtService, ISubjectDAL subjectDAL, IFavoriteSubjectDAL favoriteSubjectDAL, IUserDAL userDAL, IMapper mapper, IEmailService emailService, IStorageService storageService)
         {
             _userDAL = userDAL;
             _mapper = mapper;
@@ -30,6 +30,7 @@ namespace PMFWikipedia.ImplementationsBL
             _storageService = storageService;
             _favoriteSubjectDAL = favoriteSubjectDAL;
             _subjectDAL = subjectDAL;
+            _jwtService = jwtService;
         }
 
         public async Task<ActionResultResponse<User>> Register(RegisterInfo registerInfo)
@@ -147,8 +148,9 @@ namespace PMFWikipedia.ImplementationsBL
             return new ActionResultResponse<User>(user, true, "Successfullt changed password");
         }
 
-        public async Task<ActionResultResponse<string>> ChangePhoto(long id, IFormFile photo)
+        public async Task<ActionResultResponse<string>> ChangePhoto(IFormFile photo)
         {
+            var id = long.Parse(_jwtService.GetUserId());
             var user = await _userDAL.GetById(id);
             if(user == null)
                 return new ActionResultResponse<string>("user not found", false, "Failed to change photo");
@@ -174,6 +176,26 @@ namespace PMFWikipedia.ImplementationsBL
 
             return new ActionResultResponse<string>("Success", true, "Successfully changed photo");
 
+        }
+
+        public async Task<ActionResultResponse<List<UserViewModel>>> GetUsers()
+        {
+            var id = long.Parse(_jwtService.GetUserId());
+            var program = int.Parse(_jwtService.GetUserProgram());
+
+            List<UserViewModel> users = new List<UserViewModel>();
+            var realUsers = await _userDAL.GetAllByFilter(x => x.Program == program && x.Id != id);
+            if(realUsers == null)
+                return new ActionResultResponse<List<UserViewModel>>(null, false, "There aro no useres yet");
+
+            foreach (var user in realUsers)
+            {
+                UserViewModel uvm = new UserViewModel();
+                uvm = _mapper.Map<UserViewModel>(user);
+                users.Add(uvm);
+            }
+
+            return new ActionResultResponse<List<UserViewModel>> (users, true, "All users");
         }
     }
 }

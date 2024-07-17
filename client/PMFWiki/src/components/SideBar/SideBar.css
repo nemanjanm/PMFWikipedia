@@ -1,10 +1,10 @@
 .div{
-    height: 100em;
+    height: 100vh;
 }
 ol, ul {
     padding-left: 0;
-    
+    text-align: left;
 }
 .p-menu .p-menuitem > .p-menuitem-content {
-    padding: 3vh;
+    padding: vh;
 }

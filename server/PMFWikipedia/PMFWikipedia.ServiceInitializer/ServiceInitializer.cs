@@ -1,13 +1,17 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using PMFWikipedia.Common;
 using PMFWikipedia.Common.AutoMapper;
 using PMFWikipedia.Common.EmailService;
 using PMFWikipedia.Common.StorageService;
 using PMFWikipedia.ImplementationsBL;
+using PMFWikipedia.ImplementationsBL.Helpers;
 using PMFWikipedia.ImplementationsDAL;
 using PMFWikipedia.InterfacesBL;
 using PMFWikipedia.InterfacesDAL;
+using System.Text;
 
 namespace PMFWikipedia.ServiceInitializer
 {
@@ -29,6 +33,39 @@ namespace PMFWikipedia.ServiceInitializer
         {
             services.AddScoped<IUserBL, UserBL>();
             services.AddScoped<IFavoriteSubjectBL, FavoriteSubjectBL>();
+            services.AddScoped<IJWTService, JWTService>();
+            return services;
+        }
+
+        private static IServiceCollection InitializeCors(this IServiceCollection services)
+        {
+            services.AddCors(options => options.AddPolicy(name: "OfficeOrigins",
+                policy =>
+                {
+                    policy.WithOrigins(ConfigProvider.ClientUrl).AllowAnyMethod().AllowAnyHeader().AllowCredentials();
+                })
+            );
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(o =>
+            {
+                o.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidIssuer = ConfigProvider.Issuer,
+                    ValidAudience = ConfigProvider.Audience,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(ConfigProvider.JwtKey)),
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ClockSkew = TimeSpan.Zero
+                };
+            });
+
             return services;
         }
 
@@ -38,6 +75,8 @@ namespace PMFWikipedia.ServiceInitializer
             services.InitializeDAL();
             services.InitializeMapper();
             services.InitializeCommonServices();
+            services.InitializeCors();
+            services.AddHttpContextAccessor();
             return services;
         }
 
