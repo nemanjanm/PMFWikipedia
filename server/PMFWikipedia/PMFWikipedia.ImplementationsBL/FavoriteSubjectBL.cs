@@ -30,7 +30,6 @@ namespace PMFWikipedia.ImplementationsBL
 
             foreach (FavoriteSubject s in favorites)
             {
-                Console.WriteLine(s.Subject);
                 FavoriteSubjectViewModel f = new FavoriteSubjectViewModel();
                 f = _mapper.Map<FavoriteSubjectViewModel>(s);
                 favoriteSubjects.Add(f);

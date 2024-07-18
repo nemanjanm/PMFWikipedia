@@ -10,12 +10,14 @@ namespace PMFWikipedia.Common.AutoMapper
         public MappingProfile() 
         {
             CreateMap<RegisterInfo, User>();
-            CreateMap<User, UserViewModel>();
+            CreateMap<User, UserViewModel>()
+                .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => src.FirstName + " " + src.LastName));
             CreateMap<FavoriteSubject, FavoriteSubjectViewModel>()
                 .ForMember(
                     dest => dest.name,
                     opt => opt.MapFrom(src => src.Subject.Name)
                 );
+            CreateMap<Subject, SubjectViewModel>();
         }
     }
 }

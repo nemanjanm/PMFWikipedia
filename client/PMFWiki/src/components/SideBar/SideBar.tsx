@@ -45,7 +45,7 @@ function SideBar(){
     ];
     return (
         <>
-            <div style={{height: "100vh", backgroundColor: "#374151"}}>
+            <div style={{overflowY: 'auto', top: 0, bottom: 0,height: "100%", backgroundColor: "#374151"}}>
                 <Menu style={{border: 0, height: "fit-content", borderRadius: "0", padding: "0", width: "fit-content", fontSize: "12px"}} model={items}/>    
             </div>
             <Outlet></Outlet>

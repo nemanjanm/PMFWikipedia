@@ -1,0 +1,13 @@
+button.p-tree-toggler.p-link{
+    background: inherit;
+    margin: 5px;
+    padding: 0%;
+}
+
+.p-treenode-children{
+    padding-left: 10px;
+}
+
+h1, h2{
+    color: #111827;
+}

@@ -19,8 +19,6 @@ namespace PMFWikipedia.ImplementationsBL.Helpers
 
         public static string GetJWT(UserViewModel user)
         {
-
-
             var key = Encoding.UTF8.GetBytes(ConfigProvider.JwtKey);
             var tokenDescriptor = new SecurityTokenDescriptor
             {

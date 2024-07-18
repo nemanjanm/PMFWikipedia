@@ -15,6 +15,8 @@ namespace PMFWikipedia.Models.Entity
         public long Id { get; set; }
         public int ProgramId { get; set; }
         public string Name { get; set; } = null!;
+        public int Year { get; set; }
+        public int Semester { get; set; }
 
         public virtual ICollection<FavoriteSubject> FavoriteSubjects { get; set; }
     }

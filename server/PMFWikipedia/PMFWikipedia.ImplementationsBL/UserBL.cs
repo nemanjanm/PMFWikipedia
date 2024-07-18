@@ -184,7 +184,7 @@ namespace PMFWikipedia.ImplementationsBL
             var program = int.Parse(_jwtService.GetUserProgram());
 
             List<UserViewModel> users = new List<UserViewModel>();
-            var realUsers = await _userDAL.GetAllByFilter(x => x.Program == program && x.Id != id);
+            var realUsers = await _userDAL.GetAllByFilter(x => x.Program == program && x.Id != id && x.Verified);
             if(realUsers == null)
                 return new ActionResultResponse<List<UserViewModel>>(null, false, "There aro no useres yet");
 
@@ -192,6 +192,7 @@ namespace PMFWikipedia.ImplementationsBL
             {
                 UserViewModel uvm = new UserViewModel();
                 uvm = _mapper.Map<UserViewModel>(user);
+                uvm.FullName = user.FirstName + " " + user.LastName;
                 users.Add(uvm);
             }
 

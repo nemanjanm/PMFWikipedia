@@ -32,6 +32,7 @@ namespace PMFWikipedia.ServiceInitializer
         private static IServiceCollection initializeBL(this IServiceCollection services)
         {
             services.AddScoped<IUserBL, UserBL>();
+            services.AddScoped<ISubjectBL, SubjectBL>();
             services.AddScoped<IFavoriteSubjectBL, FavoriteSubjectBL>();
             services.AddScoped<IJWTService, JWTService>();
             return services;

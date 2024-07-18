@@ -4,5 +4,6 @@ export interface LoginInfo {
     lastName: string,
     email: string,
     program: number,
-    photoPath: string
+    photoPath: string,
+    fullName: string
 }

@@ -39,9 +39,9 @@ function StartPage(){
             {!loader && <div style={{width: "100vh"}}>
                 <h1 style={{textAlign: "center", fontWeight: "bold", marginTop: "10px"}}>Moji predmeti</h1>
                 {favoriteSubjects && <ListBox value={selectedSubject} onChange={(e: ListBoxChangeEvent) => handleSubject(e)} options={favoriteSubjects} optionLabel="name" className="w-full md:w-14rem" listStyle={{maxHeight: "70vh"}}/>}
-                {!favoriteSubjects && <p style={{fontSize: "30px", color: "#ffffffde"}}>Trenutno nemate omiljene predmete</p>}
+                {!favoriteSubjects && <p style={{fontSize: "30px", color: "#374151", textAlign: "center"}}>Trenutno nemate omiljene predmete</p>}
             </div>}
-            {loader && <div style={{marginTop: "50px"}}><ClipLoader color="#111827" loading={loader} size={150}></ClipLoader></div>}
+            {loader && <div style={{marginTop: "50px"}}><ClipLoader color="#374151" loading={loader} size={150}></ClipLoader></div>}
             <div></div>
         </div>
         </div>
