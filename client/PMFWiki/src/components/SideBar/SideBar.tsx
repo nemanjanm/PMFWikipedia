@@ -2,8 +2,8 @@ import { Menu } from 'primereact/menu';
 import { Link, Outlet } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
 import '../SideBar/SideBar.css'
-import { storageService } from '../StorageService';
-import { getName, programmes } from '../Programme';
+import { storageService } from '../../services/StorageService';
+import { getName, programmes } from '../../models/Programme';
 import { useState } from 'react';
 
 function SideBar(){

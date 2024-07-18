@@ -4,7 +4,7 @@ import { InputText } from "primereact/inputtext";
 import { Toast } from "primereact/toast";
 import { useRef, useState } from "react";
 import { ClipLoader } from "react-spinners";
-import { checkEmailService } from "../pages/CheckEmail/Service";
+import { checkEmailService } from "../services/CheckEmailService";
 import { useNavigate } from "react-router-dom";
 import MenuBar from "./MenuBar/MenuBar";
 

@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import "../index.css"
 import { useState, useRef, useEffect } from "react";
 import { ClipLoader } from "react-spinners";
-import { checkEmailService } from "./CheckEmail/Service";
+import { checkEmailService } from "../services/CheckEmailService";
 import { useNavigate } from "react-router-dom";
 import { Toast } from 'primereact/toast';
 

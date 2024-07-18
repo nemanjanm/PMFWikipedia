@@ -8,9 +8,9 @@ import { Password } from "primereact/password";
 import { Button } from "primereact/button";
 import { ClipLoader } from "react-spinners";
 import { Toast } from 'primereact/toast';
-import { loginService } from "./Service";
+import { loginService } from "../../services/LoginService";
 import { Link, useNavigate } from "react-router-dom";
-import { storageService } from "../StorageService";
+import { storageService } from "../../services/StorageService";
 import { FaArrowRight } from "react-icons/fa";
 
 

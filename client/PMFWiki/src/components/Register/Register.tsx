@@ -4,11 +4,11 @@ import "./Register.css"
 import { InputText } from "primereact/inputtext";
 import { useEffect, useState, useRef } from "react";
 import { Dropdown } from 'primereact/dropdown';
-import { programmes } from "../Programme";
+import { programmes } from "../../models/Programme";
 import { Password } from 'primereact/password';
 import { Button } from 'primereact/button';
 import { UserRegister } from "../../models/UserRegister";
-import { registerService } from "./Service";
+import { registerService } from "../../services/RegisterService";
 import { Toast } from 'primereact/toast';
 import { useNavigate } from "react-router-dom";
 import { ClipLoader } from "react-spinners";

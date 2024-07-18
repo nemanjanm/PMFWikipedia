@@ -1,5 +1,5 @@
-import { enviorment } from "../../enviorment";
-import { ResetPasswordInfo } from "../../models/ResetPasswordInfo";
+import { enviorment } from "../enviorment";
+import { ResetPasswordInfo } from "../models/ResetPasswordInfo";
 
 const registrationUrl = `${enviorment.serverUrl}Auth/ConfirmRegistration`
 const resetPasswordUrl = `${enviorment.serverUrl}Auth/ForgotPassword`

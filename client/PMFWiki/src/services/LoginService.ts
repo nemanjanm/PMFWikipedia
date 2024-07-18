@@ -1,6 +1,6 @@
-import { enviorment } from "../../enviorment";
-import { UserLogin } from "../../models/UserLogin";
-import { storageService } from "../StorageService";
+import { enviorment } from "../enviorment";
+import { UserLogin } from "../models/UserLogin";
+import { storageService } from "./StorageService";
 const url = `${enviorment.serverUrl}Auth/Login`
 const headers = {
 	"Content-Type": "application/json",

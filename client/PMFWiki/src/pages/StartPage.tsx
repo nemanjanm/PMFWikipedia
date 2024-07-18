@@ -3,8 +3,8 @@ import NavBar from "../components/NavBar/NavBar";
 import SideBar from "../components/SideBar/SideBar";
 import { useNavigate } from "react-router-dom";
 import { ListBox, ListBoxChangeEvent } from 'primereact/listbox';
-import { favoriteSubjectService } from "./FavoriteSubjectService";
-import { storageService } from "../components/StorageService";
+import { favoriteSubjectService } from "../services/FavoriteSubjectService";
+import { storageService } from "../services/StorageService";
 import { FavoriteSubject } from "../models/FavoriteSubject";
 import { ClipLoader } from "react-spinners";
 

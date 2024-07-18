@@ -6,7 +6,7 @@ import { useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
 import { ResetPasswordInfo } from "../models/ResetPasswordInfo";
-import { checkEmailService } from "./CheckEmail/Service";
+import { checkEmailService } from "../services/CheckEmailService";
 
 function PasswordChange(){
 

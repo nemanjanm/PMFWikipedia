@@ -2,10 +2,10 @@ import { useEffect, useState } from "react";
 import NavBar from "../components/NavBar/NavBar";
 import SideBar from "../components/SideBar/SideBar";
 import { ClipLoader } from "react-spinners";
-import { storageService } from "../components/StorageService";
-import { getName } from "../components/Programme";
+import { storageService } from "../services/StorageService";
+import { getName } from "../models/Programme";
 import { ListBox, ListBoxChangeEvent } from "primereact/listbox";
-import { years } from "../components/Years";
+import { years } from "../models/Years";
 import { userService } from "./UserService";
 import { LoginInfo } from "../models/LoginInfo";
 import { enviorment } from "../enviorment";
@@ -16,7 +16,7 @@ import { Dialog } from "primereact/dialog";
 import { TreeHelper } from "../components/TreeHelper/TreeHelper";
 import "./SubjectPage.css"
 import { SubjectInfo } from "../models/SubjectInfo";
-import { subjectService } from "../components/SubjectService";
+import { subjectService } from "../services/SubjectService";
 function SubjectsPage(){
 
     const programNumber = storageService.getUserInfo()?.program;

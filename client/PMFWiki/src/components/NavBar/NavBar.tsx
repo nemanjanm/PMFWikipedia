@@ -7,7 +7,7 @@ import '../MenuBar/MenuBar.css'
 import { Menubar } from 'primereact/menubar';
 import { Outlet, Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { storageService } from "../StorageService";
+import { storageService } from "../../services/StorageService";
 import { Avatar } from 'primereact/avatar';  
 import { MenuItem } from "primereact/menuitem";
 import { enviorment } from "../../enviorment";

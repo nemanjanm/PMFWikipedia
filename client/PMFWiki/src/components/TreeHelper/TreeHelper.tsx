@@ -1,5 +1,5 @@
-import { years } from "../Years";
-import { semestars } from "../Years";
+import { years } from "../../models/Years";
+import { semestars } from "../../models/Years";
 import "./TreeHelper.css"
 
 export function TreeHelper(props : [])

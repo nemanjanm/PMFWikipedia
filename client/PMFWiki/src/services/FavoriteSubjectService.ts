@@ -1,4 +1,4 @@
-import { storageService } from "../components/StorageService";
+import { storageService } from "./StorageService";
 import { enviorment } from "../enviorment";
 
 const getUrl = `${enviorment.serverUrl}FavoriteSubject/GetFavoriteSubjects`

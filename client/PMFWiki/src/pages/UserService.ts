@@ -1,4 +1,4 @@
-import { storageService } from "../components/StorageService";
+import { storageService } from "../services/StorageService";
 import { enviorment } from "../enviorment";
 
 const getUrl = `${enviorment.serverUrl}`

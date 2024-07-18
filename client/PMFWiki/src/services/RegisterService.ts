@@ -1,5 +1,5 @@
-import { enviorment } from "../../enviorment";
-import { UserRegister } from "../../models/UserRegister";
+import { enviorment } from "../enviorment";
+import { UserRegister } from "../models/UserRegister";
 
 const url = `${enviorment.serverUrl}Auth/Register`
 const headers = {
