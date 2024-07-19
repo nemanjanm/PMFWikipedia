@@ -70,21 +70,21 @@ function SubjectsPage(){
     };
 
     return <>
-    <div className="celina" style={{height: "fit-content"}}>
+    <div className="celina" style={{height: ""}}>
         <NavBar></NavBar>
         <div className="d-flex justify-content-between" style={{height: "100vh"}}>
             <SideBar></SideBar>
                 {!loader && <div>
-                    <h1 style={{textAlign: "center", fontWeight: "bold", margin: "10px"}}>{program}</h1>
-                    <div className="d-flex justify-content-around">
+                    <h1 style={{textAlign: "center", fontWeight: "bold", margin: "10px", width: "100%", height: "auto"}}>{program}</h1>
+                    <div className="d-flex justify-content-around" style={{width: "100%", height: "auto"}}>
                         <div style={{width: "70vh"}}>
                             <h2 style={{textAlign: "center", fontWeight: "bold"}}>Predmeti</h2>
-                            <Tree style={{maxHeight: "70vh", overflowY: "scroll"}} value={tree} filterPlaceholder="Lenient Filter" className="w-full md:w-14rem" />
+                            <Tree style={{maxHeight: "70vh", overflowY: "scroll", fontSize: "2vw"}} value={tree} filterPlaceholder="Lenient Filter" className="w-full md:w-14rem" />
                         </div>
                         <div style={{width: "30vh"}}></div>
                         <div style={{width: "70vh"}}>
                             <h2 style={{textAlign: "center", fontWeight: "bold"}}>Kolege</h2>
-                            <ListBox filter itemTemplate={userTemplate} value={selectedUser} onChange={(e: ListBoxChangeEvent) => handleUser(e.value)} options={users} optionLabel="fullName" className="w-full md:w-14rem" listStyle={{maxHeight: "50vh", fontSize: "3.5vh"}}/>
+                            <ListBox filter itemTemplate={userTemplate} value={selectedUser} onChange={(e: ListBoxChangeEvent) => handleUser(e.value)} options={users} optionLabel="fullName" className="w-full md:w-14rem" listStyle={{maxHeight: "50vh"}}/>
                         </div>
                             {visible && <Dialog visible={visible} header={previewUser?.fullName + ""} onHide={() => {if (!visible) return; setVisible(false); }}
                             style={{ width: '50vw', textAlign: "center"}}>

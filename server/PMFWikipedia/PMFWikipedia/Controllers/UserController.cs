@@ -18,7 +18,7 @@ namespace PMFWikipedia.API.Controllers
         }
 
         [HttpPost("ChangePhoto")]
-        public async Task<IActionResult> ChangePhoto(IFormFile photo)
+        public async Task<IActionResult> ChangePhoto([FromForm]IFormFile photo)
         {
             return Ok(await _userBL.ChangePhoto(photo));
         }

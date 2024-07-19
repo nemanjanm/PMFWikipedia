@@ -45,8 +45,8 @@ function SideBar(){
     ];
     return (
         <>
-            <div style={{overflowY: 'auto', top: 0, bottom: 0,height: "100%", backgroundColor: "#374151"}}>
-                <Menu style={{border: 0, height: "fit-content", borderRadius: "0", padding: "0", width: "fit-content", fontSize: "12px"}} model={items}/>    
+            <div className='d-flex justify-content-centar' style={{width: "fit-content", position: "relative", overflowY: 'auto', top: 0, bottom: 0, height: "100vw", backgroundColor: "#374151"}}>
+                <Menu style={{width:"fit-content", border: 0, borderRadius: "0", padding: "0", fontSize: "1vw"}} model={items}/>    
             </div>
             <Outlet></Outlet>
         </>

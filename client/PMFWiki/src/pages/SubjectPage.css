@@ -8,6 +8,17 @@ button.p-tree-toggler.p-link{
     padding-left: 10px;
 }
 
-h1, h2{
+h1, h2, p{
     color: #111827;
+    width: "100%";
+    height: "auto";
+    font-size: 3vw;
+}
+
+h1{
+    font-size: 4vw;
+}
+
+i{
+    width: 0.5vw;
 }

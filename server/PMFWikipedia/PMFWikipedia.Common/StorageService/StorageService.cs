@@ -16,5 +16,17 @@
             var image = Path.Combine(path, "defaultAvatar.jpg");
             return image;
         }
+
+        public string SetDefaultPhoto(long id)
+        {
+            var imagePath = Path.Combine(CreatePhotoPath(), "user" + id + ".jpg");
+            var copyPath = Path.Combine(CreatePhotoPath(), "defaultAvatar.jpg");
+            if (File.Exists(copyPath))
+            {
+                System.IO.File.Copy(copyPath, imagePath);
+            }
+            var returnPath = Path.Combine("Images", "user" + id + ".jpg");
+            return returnPath;
+        }
     }
 }

@@ -7,7 +7,7 @@ class StorageService{
         return localStorage.getItem("token");
     }
 
-    getUserInfo(): LoginInfo|null {
+    getUserInfo(): LoginInfo | null {
         let userInfo = localStorage.getItem("userInfo");
     
         if(userInfo != null){

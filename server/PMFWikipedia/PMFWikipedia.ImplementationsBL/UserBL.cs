@@ -48,7 +48,6 @@ namespace PMFWikipedia.ImplementationsBL
 
             User newUser = _mapper.Map<User>(registerInfo);
             newUser.Password = PasswordService.HashPass(registerInfo.Password);
-            newUser.PhotoPath = _storageService.GetDefaultPath();
             newUser.Verified = false;
 
             string token = Guid.NewGuid().ToString();
@@ -62,6 +61,13 @@ namespace PMFWikipedia.ImplementationsBL
 
             await _userDAL.Insert(newUser);
             await _userDAL.SaveChangesAsync();
+
+            var photoChangeUser = await _userDAL.GetUserForPhoto(newUser.Email);
+            if(photoChangeUser != null)
+            {
+                photoChangeUser.PhotoPath = _storageService.SetDefaultPhoto(photoChangeUser.Id);
+                await _userDAL.SaveChangesAsync();
+            }
 
             return new ActionResultResponse<User>(newUser, true, "");
         }
@@ -163,7 +169,9 @@ namespace PMFWikipedia.ImplementationsBL
             path = Path.Combine(path, photoName);
 
             if (File.Exists(path))
+            {
                 System.IO.File.Delete(path);
+            }
             
             user.PhotoPath = Path.Combine("Images", photoName);
             await _userDAL.SaveChangesAsync();

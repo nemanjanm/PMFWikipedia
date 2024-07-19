@@ -73,7 +73,7 @@ const router = createBrowserRouter([
     element: isAuthenticated() ? <SubjectsPage/> : <Navigate to="/Prijava"/>,
   },
   {
-    path: "/profilna-strana",
+    path: "/profilna-strana/:id?",
     element: isAuthenticated() ? <ProfilePage/> : <Navigate to="/Prijava"/>
   }
 ]);

@@ -1,0 +1,26 @@
+div.p-fileupload.p-fileupload-basic.p-component{
+    width: fit-content;
+}
+span.p-button.p-component.p-fileupload-choose{
+    background-color: #374151;
+    color: #ffffffde;
+    width: 15vw;
+    text-align: center;
+}
+
+div.p-fileupload.p-fileupload-basic.p-component{
+    width: 100%;
+}
+
+img{
+    border-style: solid;
+    border-color: #374151;
+    
+}
+
+.svg.p-icon.p-button-icon.p-button-icon-left{
+    width: 1vw;
+}
+span.p-button-label.p-clickable{
+    font-size: 1vw;
+}

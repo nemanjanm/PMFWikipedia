@@ -10,3 +10,7 @@ ol, ul {
 div.p-menu.p-component.p-ripple-disabled{
     height: 100vh;
 }
+
+a.p-menuitem-link{
+    size: 1vw;
+}
