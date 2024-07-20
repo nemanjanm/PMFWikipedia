@@ -22,6 +22,17 @@ class UserService{
         
     }
 
+    async getUser(id: number){
+        const realUrl = `${getUrl}User/GetUser?id=${id}`
+        const response = await fetch(realUrl, {
+            method: "GET",
+            headers: headers
+        });
+
+        const data = await response.json();
+        return(data);
+    }
+
     async changePhoto(photo: any){
 
         const formData = new FormData();
@@ -35,7 +46,6 @@ class UserService{
 
         const data = await response.json();
         return(data);
-        
     }
 }
 

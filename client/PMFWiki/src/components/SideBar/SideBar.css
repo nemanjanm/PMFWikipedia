@@ -14,3 +14,28 @@ div.p-menu.p-component.p-ripple-disabled{
 a.p-menuitem-link{
     size: 1vw;
 }
+.p-panelmenu .p-menuitem-text{
+    font-size: 1vw;
+}
+
+div.p-panelmenu-header-content{
+    background: inherit;
+}
+
+div.p-panelmenu-content{
+    background: inherit;
+}
+div.p-panelmenu-content :hover{
+    background: inherit;
+}
+div.p-menuitem-content:hover.p-menuitem-link {
+    color: #60a5fa !important;
+}
+
+.p-menuitem-content:hover .p-menuitem-link .p-menuitem-text {
+    color: #60a5fa !important;
+}
+
+.p-menuitem-content:hover .p-menuitem-link .p-menuitem-icon {
+       color: #60a5fa !important;
+}

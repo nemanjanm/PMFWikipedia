@@ -206,5 +206,15 @@ namespace PMFWikipedia.ImplementationsBL
 
             return new ActionResultResponse<List<UserViewModel>> (users, true, "All users");
         }
+
+        public async Task<ActionResultResponse<UserViewModel>> GetUser(long id)
+        {
+            var user = await _userDAL.GetById(id);
+            if(user == null)
+                return new ActionResultResponse<UserViewModel>(null, false, "User doesnt exists");
+
+            var uvm = _mapper.Map<UserViewModel>(user);
+            return new ActionResultResponse<UserViewModel>(uvm, true, "Success");
+        }
     }
 }

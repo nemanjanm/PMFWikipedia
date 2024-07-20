@@ -1,10 +1,10 @@
-import { Menu } from 'primereact/menu';
-import { Link, Outlet } from 'react-router-dom';
+import { PanelMenu } from 'primereact/panelmenu';
+import { Outlet } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
-import '../SideBar/SideBar.css'
+import './SideBar.css'
 import { storageService } from '../../services/StorageService';
 import { getName, programmes } from '../../models/Programme';
-import { useState } from 'react';
+import { PanelHelper } from '../PanelHelper';
 
 function SideBar(){
     const navigate = useNavigate();
@@ -12,13 +12,13 @@ function SideBar(){
 
     const program = getName(programNumber);
 
-    const items = [
+    const items  = [
         {
             label: program,
             icon: 'pi pi-book',
             command: () => {
                 navigate("/predmeti")
-            }
+            },
         },
         {
             label: 'Obaveštenja',
@@ -37,16 +37,13 @@ function SideBar(){
         },
         {
             label: 'Ostale oblasti',
-            icon: 'pi pi-list',
-            command: () => {
-                navigate("/")
-            }
+            items: PanelHelper(),
         }
     ];
     return (
         <>
-            <div className='d-flex justify-content-centar' style={{width: "fit-content", position: "relative", overflowY: 'auto', top: 0, bottom: 0, height: "100vw", backgroundColor: "#374151"}}>
-                <Menu style={{width:"fit-content", border: 0, borderRadius: "0", padding: "0", fontSize: "1vw"}} model={items}/>    
+            <div className='d-flex justify-content-centar' style={{width: "15vw", position: "relative", overflow: 'auto', top: 0, bottom: 0, height: "100vw", backgroundColor: "#374151"}}>
+                <PanelMenu style={{height:"100%", width:"100%", border: 0, borderRadius: "0", padding: "0", fontSize: "1vw"}} model={items}/>    
             </div>
             <Outlet></Outlet>
         </>

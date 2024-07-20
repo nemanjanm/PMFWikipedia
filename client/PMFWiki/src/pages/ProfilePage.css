@@ -15,12 +15,45 @@ div.p-fileupload.p-fileupload-basic.p-component{
 img{
     border-style: solid;
     border-color: #374151;
-    
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
 }
 
 .svg.p-icon.p-button-icon.p-button-icon-left{
     width: 1vw;
+    height: 1vh;
 }
 span.p-button-label.p-clickable{
     font-size: 1vw;
+}
+
+span.p-button.p-component.p-fileupload-choose{
+    height: 3vw;
+}
+div.d-flex.flex-column > div > div:nth-child(1) > div > div > span > svg{
+    display: none;
+}
+
+.slika1{
+    width: 100vw;
+    background-image: url("../assets/logopmf.png");
+    background-repeat: no-repeat;
+    background-position: top;
+}
+
+.slika2{
+    background-color: rgb(81, 94, 211, 0.8);
+}
+
+button.p-image-preview-indicator{
+    background-color: #60a5fa6e;
+}
+span.p-image.p-component.p-image-preview-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
 }

@@ -18,7 +18,14 @@ h1, h2, p{
 h1{
     font-size: 4vw;
 }
-
-i{
-    width: 0.5vw;
+div.p-treenode-content{
+    justify-content: left;
+}
+svg.p-icon.p-tree-toggler-icon
+{
+    width: 40vh;
+    height: 40vh;
+}
+path{
+    width: 40vw;
 }

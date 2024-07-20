@@ -17,6 +17,7 @@ import { TreeHelper } from "../components/TreeHelper/TreeHelper";
 import "./SubjectPage.css"
 import { SubjectInfo } from "../models/SubjectInfo";
 import { subjectService } from "../services/SubjectService";
+import { useNavigate } from "react-router-dom";
 function SubjectsPage(){
 
     const programNumber = storageService.getUserInfo()?.program;
@@ -30,7 +31,7 @@ function SubjectsPage(){
     const [selectedUser, setSelectedUser] = useState<string>("");
     const [subjects, setSubjects] = useState<Array<SubjectInfo>>();
     const [tree, setTree] = useState<Array<any>>();
-
+    const navigate = useNavigate();
     useEffect(() => {  
         async function getUsers(){
             setLoader(true);
@@ -60,10 +61,14 @@ function SubjectsPage(){
         setVisible(true);
     }
 
+    function showProfile(e: any){
+        navigate("/profilna-strana/"+e.id);
+    }
+
     const userTemplate = (option: LoginInfo) => {
         return (
             <div className="d-flex align-items-center">
-                <img alt={option.photoPath} src={enviorment.port + option.photoPath} style={{ width: '2rem', marginRight: '1rem', borderRadius: "50%"}}/>
+                <img alt={option.photoPath} src={enviorment.port + option.photoPath} style={{ width: '5vh', height: "5vh", marginRight: '1rem', borderRadius: "50%"}}/>
                 <div>{option.fullName}</div>
             </div>
         );
@@ -79,20 +84,20 @@ function SubjectsPage(){
                     <div className="d-flex justify-content-around" style={{width: "100%", height: "auto"}}>
                         <div style={{width: "70vh"}}>
                             <h2 style={{textAlign: "center", fontWeight: "bold"}}>Predmeti</h2>
-                            <Tree style={{maxHeight: "70vh", overflowY: "scroll", fontSize: "2vw"}} value={tree} filterPlaceholder="Lenient Filter" className="w-full md:w-14rem" />
+                            <Tree style={{maxHeight: "70vh", overflowY: "scroll", fontSize: "3vh"}} value={tree} filterPlaceholder="Lenient Filter" className="w-full md:w-14rem" />
                         </div>
                         <div style={{width: "30vh"}}></div>
                         <div style={{width: "70vh"}}>
                             <h2 style={{textAlign: "center", fontWeight: "bold"}}>Kolege</h2>
-                            <ListBox filter itemTemplate={userTemplate} value={selectedUser} onChange={(e: ListBoxChangeEvent) => handleUser(e.value)} options={users} optionLabel="fullName" className="w-full md:w-14rem" listStyle={{maxHeight: "50vh"}}/>
+                            <ListBox filter emptyFilterMessage={"Nema rezultata"} itemTemplate={userTemplate} value={selectedUser} onChange={(e: ListBoxChangeEvent) => handleUser(e.value)} options={users} optionLabel="fullName" className="w-full md:w-14rem" listStyle={{maxHeight: "50vh", fontSize: "3vh"}}/>
                         </div>
                             {visible && <Dialog visible={visible} header={previewUser?.fullName + ""} onHide={() => {if (!visible) return; setVisible(false); }}
                             style={{ width: '50vw', textAlign: "center"}}>
                                 <div className="d-flex align-items-center flex-column">
-                                    <img src={enviorment.port + previewUser?.photoPath} style={{borderRadius: "50%", height: "30vh", marginBottom: "2vh"}}></img>
+                                    <img src={enviorment.port + previewUser?.photoPath} style={{borderRadius: "50%", height: "40vh", width: "40vh", marginBottom: "2vh"}}></img>
                                     <div>
                                         <Button label="Pošalji poruku" icon="pi pi-send" iconPos="right" style={{marginRight: "1vh"}}/>
-                                        <Button label="Prikaži profil" icon="pi pi-user" iconPos="right" style={{marginLeft: "1vh"}}/>
+                                        <Button onClick={() => showProfile(previewUser)} label="Prikaži profil" icon="pi pi-user" iconPos="right" style={{marginLeft: "1vh"}}/>
                                     </div>
                                 </div>
                         </Dialog>}
