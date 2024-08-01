@@ -1,6 +1,6 @@
 button.p-tree-toggler.p-link{
     background: inherit;
-    margin: 5px;
+    margin: 0.5rem;
     padding: 0%;
 }
 
@@ -28,4 +28,13 @@ svg.p-icon.p-tree-toggler-icon
 }
 path{
     width: 40vw;
+}
+div.p-listbox-header{
+    height: 12vh;
+}
+div.p-listbox-filter-container{
+    height: 8vh;
+}
+input.p-listbox-filter.p-inputtext.p-component{
+    height: 8vh;
 }

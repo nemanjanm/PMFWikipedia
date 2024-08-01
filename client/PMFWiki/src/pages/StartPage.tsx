@@ -32,14 +32,14 @@ function StartPage(){
         //U ZAVISNOSTI STA MI TREBA
     }
     return <>
-    <div className="celina" style={{height: "fit-content"}}>
+    <div className="celina" style={{ display: "flex", flexDirection: "column", height: "100vh" }}>
         <NavBar></NavBar>
-        <div className="d-flex justify-content-between" style={{height: "100vh"}}>
+        <div className="d-flex justify-content-between" style={{flex: 1}}>
             <SideBar></SideBar>
             {!loader && <div style={{width: "100vh"}}>
                 <h1 style={{textAlign: "center", fontWeight: "bold", marginTop: "10px"}}>Moji predmeti</h1>
                 {favoriteSubjects && <ListBox value={selectedSubject} onChange={(e: ListBoxChangeEvent) => handleSubject(e)} options={favoriteSubjects} optionLabel="name" className="w-full md:w-14rem" listStyle={{maxHeight: "70vh"}}/>}
-                {!favoriteSubjects && <p style={{fontSize: "30px", color: "#374151", textAlign: "center"}}>Trenutno nemate omiljene predmete</p>}
+                {!favoriteSubjects && <p style={{fontSize: "3vw", color: "#374151", textAlign: "center"}}>Trenutno nemate omiljene predmete</p>}
             </div>}
             {loader && <div style={{marginTop: "50px"}}><ClipLoader color="#374151" loading={loader} size={150}></ClipLoader></div>}
             <div></div>

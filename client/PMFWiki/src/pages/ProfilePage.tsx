@@ -46,12 +46,12 @@ function ProfilePage(){
     };
     
     return<>
-    <div className="celina" style={{height: "fit-content"}}>
+    <div className="celina" style={{ display: "flex", flexDirection: "column", height: "100vh" }}>
         <NavBar></NavBar>
-        <div className="slika1 d-flex justify-content-center">
+        <div className="slika1 d-flex justify-content-between" style={{height: "auto", flex: 1}}>
             <SideBar></SideBar>
-            <div className="slika2 d-flex flex-column" style={{width: "100vw", height: "auto"}}>
-                <h1 style={{fontSize: '5vw', textAlign: "center", width: "100%", height: "auto", fontWeight: "bold"}}>{user?.fullName}</h1>
+            <div className="slika2 d-flex flex-column" style={{flexGrow: 1, height: "auto"}}>
+                <h1 style={{fontSize: '5vw', textAlign: "center", height: "auto", fontWeight: "bold"}}>{user?.fullName}</h1>
                 <div className="d-flex justify-content-around">
                     <div className="d-flex justify-content-center" style={{width: "100%", height: "auto"}}>
                         <div>
@@ -66,7 +66,6 @@ function ProfilePage(){
                     <div className="d-flex justify-content-center" style={{width: "100%", height: "auto"}}>
                         <div className="">
                             <h2>Interesovanja</h2>
-
                         </div>
                     </div>
                 </div>

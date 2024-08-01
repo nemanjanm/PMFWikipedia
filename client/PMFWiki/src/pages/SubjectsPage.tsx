@@ -65,6 +65,10 @@ function SubjectsPage(){
         navigate("/profilna-strana/"+e.id);
     }
 
+    function sendMessage(e: any)
+    {
+        navigate("/poruke-1/", {state: e});
+    }
     const userTemplate = (option: LoginInfo) => {
         return (
             <div className="d-flex align-items-center">
@@ -80,23 +84,23 @@ function SubjectsPage(){
         <div className="d-flex justify-content-between" style={{height: "100vh"}}>
             <SideBar></SideBar>
                 {!loader && <div>
-                    <h1 style={{textAlign: "center", fontWeight: "bold", margin: "10px", width: "100%", height: "auto"}}>{program}</h1>
-                    <div className="d-flex justify-content-around" style={{width: "100%", height: "auto"}}>
+                    <h1 style={{textAlign: "center", fontWeight: "bold", margin: "1vh", width: "100%", height: "auto"}}>{program}</h1>
+                    <div className="d-flex justify-content-around" style={{width: "100%", height: "auto", flexGrow: 1}}>
                         <div style={{width: "70vh"}}>
                             <h2 style={{textAlign: "center", fontWeight: "bold"}}>Predmeti</h2>
                             <Tree style={{maxHeight: "70vh", overflowY: "scroll", fontSize: "3vh"}} value={tree} filterPlaceholder="Lenient Filter" className="w-full md:w-14rem" />
                         </div>
                         <div style={{width: "30vh"}}></div>
-                        <div style={{width: "70vh"}}>
+                        <div style={{width: "70vh", position: "relative", overflow: 'inherit', top: 0, bottom: 0}}>
                             <h2 style={{textAlign: "center", fontWeight: "bold"}}>Kolege</h2>
-                            <ListBox filter emptyFilterMessage={"Nema rezultata"} itemTemplate={userTemplate} value={selectedUser} onChange={(e: ListBoxChangeEvent) => handleUser(e.value)} options={users} optionLabel="fullName" className="w-full md:w-14rem" listStyle={{maxHeight: "50vh", fontSize: "3vh"}}/>
+                            <ListBox filter emptyFilterMessage={"Nema rezultata"} emptyMessage={"Nema rezultata"} itemTemplate={userTemplate} value={selectedUser} onChange={(e: ListBoxChangeEvent) => handleUser(e.value)} options={users} optionLabel="fullName" listStyle={{maxHeight: "50vh", fontSize: "3vh"}}/>
                         </div>
                             {visible && <Dialog visible={visible} header={previewUser?.fullName + ""} onHide={() => {if (!visible) return; setVisible(false); }}
                             style={{ width: '50vw', textAlign: "center"}}>
                                 <div className="d-flex align-items-center flex-column">
                                     <img src={enviorment.port + previewUser?.photoPath} style={{borderRadius: "50%", height: "40vh", width: "40vh", marginBottom: "2vh"}}></img>
                                     <div>
-                                        <Button label="Pošalji poruku" icon="pi pi-send" iconPos="right" style={{marginRight: "1vh"}}/>
+                                        <Button onClick={() => sendMessage(previewUser)}  label="Pošalji poruku" icon="pi pi-send" iconPos="right" style={{marginRight: "1vh"}}/>
                                         <Button onClick={() => showProfile(previewUser)} label="Prikaži profil" icon="pi pi-user" iconPos="right" style={{marginLeft: "1vh"}}/>
                                     </div>
                                 </div>
