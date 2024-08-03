@@ -28,6 +28,7 @@ namespace PMFWikipedia.Models.Entity
         public string? ResetToken { get; set; }
         public DateTime? ResetTokenExpirationTime { get; set; }
         public string? PhotoPath { get; set; }
+        public string? ConnectionId { get; set; }
 
         public virtual ICollection<FavoriteSubject> FavoriteSubjects { get; set; }
     }

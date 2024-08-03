@@ -17,13 +17,10 @@ import EmailForResetPassword from './components/EmailForResetPassword'
 import PasswordChange from './pages/PasswordChange'
 import ProfilePage from './pages/ProfilePage'
 import SubjectsPage from './pages/SubjectsPage'
-
-export const store = createStore<UserInfo>({
-  authName: "_auth",
-  authType: "cookie",
-  cookieDomain: window.location.hostname,
-  cookieSecure: false
-})
+import Message from './pages/Message'
+import Messages from './pages/Messages'
+import React from 'react'
+import App from './App'
 
 const isAuthenticated = () => {
   return storageService.getToken();
@@ -53,6 +50,14 @@ const router = createBrowserRouter([
     element: <EmailForResetPassword/>
   },
   {
+    path: "/poruke-1",
+    element: <Messages/>
+  },
+  {
+    path: "/poruke",
+    element: <Message/>
+  },
+  {
     path: "/email",
     element: <ChceckEmailPage/>
   },
@@ -79,8 +84,5 @@ const router = createBrowserRouter([
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-    
-  <AuthProvider store={store}>
-      <RouterProvider router={router}></RouterProvider>
-  </AuthProvider>
-)
+  <RouterProvider router={router}/>
+);

@@ -7,6 +7,7 @@ import { favoriteSubjectService } from "../services/FavoriteSubjectService";
 import { storageService } from "../services/StorageService";
 import { FavoriteSubject } from "../models/FavoriteSubject";
 import { ClipLoader } from "react-spinners";
+import { socketService } from "../services/SocketService";
 
 function StartPage(){
 
@@ -14,6 +15,10 @@ function StartPage(){
     const [temp, setTemp] = useState(false)
     const [loader, setLoader] = useState<boolean>(false);
     const id = storageService.getUserInfo()?.id;
+    useEffect(() => {
+        socketService.reconnect();
+    }, []);
+    
     useEffect(() => {  
         async function getFavoriteSubjects(){
             setLoader(true);

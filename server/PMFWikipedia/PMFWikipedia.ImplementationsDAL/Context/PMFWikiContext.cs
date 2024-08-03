@@ -55,6 +55,11 @@ namespace PMFWikipedia.ImplementationsDAL
             {
                 entity.ToTable("User");
 
+                entity.Property(e => e.ConnectionId)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("ConnectionID");
+
                 entity.Property(e => e.DateCreated).HasColumnType("datetime");
 
                 entity.Property(e => e.DateModified).HasColumnType("datetime");

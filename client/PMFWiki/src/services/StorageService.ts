@@ -7,6 +7,10 @@ class StorageService{
         return localStorage.getItem("token");
     }
 
+    getConnId(): string | null {
+        return localStorage.getItem("connectionId");
+    }
+    
     getUserInfo(): LoginInfo | null {
         let userInfo = localStorage.getItem("userInfo");
     
@@ -22,6 +26,10 @@ class StorageService{
         localStorage.setItem("userInfo", JSON.stringify(info.user));
     }
 
+    setConnId(id: string){
+        localStorage.setItem("connectionId", id);
+    }
+    
     setUserInfo(userInfo: LoginInfo): void {
         localStorage.setItem("userInfo", JSON.stringify(userInfo));
     }

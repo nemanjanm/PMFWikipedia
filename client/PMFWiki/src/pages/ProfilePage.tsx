@@ -10,8 +10,13 @@ import { FileUpload, FileUploadHandlerEvent } from 'primereact/fileupload';
 import { Toast } from "primereact/toast";
 import { userService } from "./UserService";
 import { Image } from 'primereact/image';
+import { socketService } from "../services/SocketService";
 function ProfilePage(){
 
+    useEffect(() => {
+        socketService.reconnect();
+    }, []);
+    
     const navigate = useNavigate();
     const [id, setId] = useState<number>();
     const [user, setUser] = useState<LoginInfo | null>();

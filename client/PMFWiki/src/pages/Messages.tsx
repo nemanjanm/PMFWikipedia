@@ -12,11 +12,17 @@ import { LoginInfo } from "../models/LoginInfo";
 import { enviorment } from "../enviorment";
 import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
+import { socketService } from "../services/SocketService";
+import { useConnection } from "../services/ConnectionProvider";
 
 function Messages(){
 
     const location = useLocation();
     const user = location.state || {};
+
+    useEffect(() => {
+        socketService.reconnect();
+    }, []);
 
     const [selectedCity, setSelectedCity] = useState(null);
     const cities = [
@@ -29,6 +35,11 @@ function Messages(){
 
     const [loader, setLoader] = useState<boolean>(false);
     const [selectedUser, setSelectedUser] = useState<string>("");
+
+    const sendMessage = async () => {
+        //HARDCODOVANA PORUKA I CONNID USERA KOME SE SALJE PORUKA
+        socketService.sendMessage("ZDRAVO PRIJATELJU", "PNGv545ppkL3pe0cS8FPCw");
+    };
 
     return<>
         <div className="celina" style={{display: "flex", flexDirection: "column", height: "100vh", boxSizing: "border-box"}}>
@@ -43,7 +54,7 @@ function Messages(){
             </div>
             <div style={{marginTop: "auto", display: "flex", justifyContent: "flex-end", borderRadius: "0", width:"100%"}}>
                 <InputText style={{width:"10vw", flex: 1, border: "0.2rem solid #424b57", borderRight: "0", borderRadius: "0", color:"#ffffffde"}} type="text" className="p-inputtext-lg" placeholder="Unesi poruku"  />
-                <Button style={{border: "0.2rem solid #424b57", borderRadius: "0", color:"#ffffffde"}}>Pošalji</Button>
+                <Button onClick={sendMessage} style={{border: "0.2rem solid #424b57", borderRadius: "0", color:"#ffffffde"}}>Pošalji</Button>
             </div>
             </div>
             {loader && <div style={{marginTop: "50px"}}><ClipLoader color="#374151" loading={loader} size={150}></ClipLoader></div>}

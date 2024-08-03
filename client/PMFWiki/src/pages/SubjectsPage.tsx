@@ -18,8 +18,13 @@ import "./SubjectPage.css"
 import { SubjectInfo } from "../models/SubjectInfo";
 import { subjectService } from "../services/SubjectService";
 import { useNavigate } from "react-router-dom";
+import { socketService } from "../services/SocketService";
 function SubjectsPage(){
 
+    useEffect(() => {
+        socketService.reconnect();
+    }, []);
+    
     const programNumber = storageService.getUserInfo()?.program;
     const program = getName(programNumber);
     const [users, setUsers] = useState<Array<LoginInfo>>();
