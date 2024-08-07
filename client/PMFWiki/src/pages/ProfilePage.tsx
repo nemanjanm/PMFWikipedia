@@ -17,6 +17,18 @@ function ProfilePage(){
         socketService.reconnect();
     }, []);
     
+    useEffect(() => {
+        const handleUnload = () => {
+          socketService.deleteConnection(storageService.getUserInfo()?.id);
+        };
+    
+        window.addEventListener('unload', handleUnload);
+    
+        return () => {
+          window.removeEventListener('unload', handleUnload);
+        };
+    }, []);
+    
     const navigate = useNavigate();
     const [id, setId] = useState<number>();
     const [user, setUser] = useState<LoginInfo | null>();

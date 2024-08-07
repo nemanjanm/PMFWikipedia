@@ -19,10 +19,24 @@ function Messages(){
 
     const location = useLocation();
     const user = location.state || {};
+    const [message, setMessage] = useState<string>();
 
     useEffect(() => {
         socketService.reconnect();
     }, []);
+
+    useEffect(() => {
+        const handleUnload = () => {
+          socketService.deleteConnection(storageService.getUserInfo()?.id);
+        };
+    
+        window.addEventListener('unload', handleUnload);
+    
+        return () => {
+          window.removeEventListener('unload', handleUnload);
+        };
+    }, []);
+
 
     const [selectedCity, setSelectedCity] = useState(null);
     const cities = [
@@ -36,9 +50,13 @@ function Messages(){
     const [loader, setLoader] = useState<boolean>(false);
     const [selectedUser, setSelectedUser] = useState<string>("");
 
+    function handleMessage(message: string){
+        setMessage(message);
+    }
+
     const sendMessage = async () => {
-        //HARDCODOVANA PORUKA I CONNID USERA KOME SE SALJE PORUKA
-        socketService.sendMessage("ZDRAVO PRIJATELJU", "PNGv545ppkL3pe0cS8FPCw");
+        socketService.sendMessage(message, user.id, storageService.getUserInfo()?.id);
+        setMessage("");
     };
 
     return<>
@@ -53,7 +71,7 @@ function Messages(){
                 <p style={{textAlign: "center", marginBottom: "0rem"}}>{user?.fullName}</p>
             </div>
             <div style={{marginTop: "auto", display: "flex", justifyContent: "flex-end", borderRadius: "0", width:"100%"}}>
-                <InputText style={{width:"10vw", flex: 1, border: "0.2rem solid #424b57", borderRight: "0", borderRadius: "0", color:"#ffffffde"}} type="text" className="p-inputtext-lg" placeholder="Unesi poruku"  />
+                <InputText value={message} onChange={(e) => handleMessage(e.target.value)} style={{width:"10vw", flex: 1, border: "0.2rem solid #424b57", borderRight: "0", borderRadius: "0", color:"#ffffffde"}} type="text" className="p-inputtext-lg" placeholder="Unesi poruku"  />
                 <Button onClick={sendMessage} style={{border: "0.2rem solid #424b57", borderRadius: "0", color:"#ffffffde"}}>Pošalji</Button>
             </div>
             </div>

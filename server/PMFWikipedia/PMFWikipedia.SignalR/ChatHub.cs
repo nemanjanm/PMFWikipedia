@@ -1,13 +1,16 @@
 ﻿using Microsoft.AspNetCore.SignalR;
+using PMFWikipedia.InterfacesBL;
 using PMFWikipedia.Models;
 namespace PMFWikipedia.SignalR
 {
     public class ChatHub : Hub
     {
         private readonly SharedDb _shared;
+        private readonly IUserBL _userBL;
 
-        public ChatHub(SharedDb shared)
+        public ChatHub(SharedDb shared, IUserBL userBL)
         {
+            _userBL = userBL;
             _shared = shared;
         }
 
@@ -22,7 +25,9 @@ namespace PMFWikipedia.SignalR
             if(string.IsNullOrEmpty(conn.ChatRoom) || string.IsNullOrEmpty(conn.Username))
                 throw new ArgumentException("Room name cannot be null or empty", nameof(conn.ChatRoom));
 
-            
+
+            await _userBL.ChangeConnectionId(conn.MyId, Context.ConnectionId);
+
             await Groups.AddToGroupAsync(Context.ConnectionId, conn.ChatRoom);
 
             _shared.connections[Context.ConnectionId] = conn;
@@ -32,8 +37,14 @@ namespace PMFWikipedia.SignalR
 
         public async Task SendMessage(UserConnection conn)
         {
-            //DOBRO SE SALJE PORUKA, CONSOLE LOGUJEM JE, POTREBNO JE SACUVATI JE U BAZI I VIDETI KAKO DALJE
-            await Clients.Client(conn.SecondId).SendAsync("ReceiveSpecificMessage", conn.SecondId, conn.Message);
+            ActionResultResponse<string> response = await _userBL.GetConnectionId(conn.SecondId); //treba seccond id da bude long
+            if(response.Data != null) 
+                await Clients.Client(response.Data).SendAsync("ReceiveSpecificMessage", conn.SecondId, conn.Message);
+        }
+
+        public async Task DeleteConnId(UserConnection conn)
+        {
+            await _userBL.ChangeConnectionId(conn.MyId, "");
         }
     }
 }

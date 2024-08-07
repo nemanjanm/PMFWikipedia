@@ -25,6 +25,17 @@ function SubjectsPage(){
         socketService.reconnect();
     }, []);
     
+    useEffect(() => {
+        const handleUnload = () => {
+          socketService.deleteConnection(storageService.getUserInfo()?.id);
+        };
+    
+        window.addEventListener('unload', handleUnload);
+    
+        return () => {
+          window.removeEventListener('unload', handleUnload);
+        };
+    }, []);
     const programNumber = storageService.getUserInfo()?.program;
     const program = getName(programNumber);
     const [users, setUsers] = useState<Array<LoginInfo>>();

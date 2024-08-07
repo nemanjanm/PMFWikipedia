@@ -33,9 +33,15 @@ class StorageService{
     setUserInfo(userInfo: LoginInfo): void {
         localStorage.setItem("userInfo", JSON.stringify(userInfo));
     }
+
+    deleteConnectionId(){
+        localStorage.removeItem("connectionId");
+    }
+
     deleteCredentials(): void {
         localStorage.removeItem("token");
         localStorage.removeItem("userInfo");
+        localStorage.removeItem("connectionId");
     }
 }
 

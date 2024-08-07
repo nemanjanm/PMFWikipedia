@@ -51,7 +51,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/poruke-1",
-    element: <Messages/>
+    element: isAuthenticated() ? <Messages/> : <Navigate to="/Prijava"/>,
   },
   {
     path: "/poruke",

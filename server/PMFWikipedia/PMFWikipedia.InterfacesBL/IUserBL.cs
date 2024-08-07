@@ -15,5 +15,7 @@ namespace PMFWikipedia.InterfacesBL
         public Task<ActionResultResponse<string>> ChangePhoto(IFormFile photo);
         public Task<ActionResultResponse<List<UserViewModel>>> GetUsers();
         public Task<ActionResultResponse<UserViewModel>> GetUser(long id);
+        public Task<ActionResultResponse<User>> ChangeConnectionId(long id, string connId);
+        public Task<ActionResultResponse<string>> GetConnectionId(long id);
     }
 }

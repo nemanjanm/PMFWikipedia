@@ -20,6 +20,7 @@ namespace PMFWikipedia.ImplementationsDAL
         }
 
         public virtual DbSet<FavoriteSubject> FavoriteSubjects { get; set; } = null!;
+        public virtual DbSet<Message> Messages { get; set; } = null!;
         public virtual DbSet<Subject> Subjects { get; set; } = null!;
         public virtual DbSet<User> Users { get; set; } = null!;
 
@@ -40,6 +41,29 @@ namespace PMFWikipedia.ImplementationsDAL
                     .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_FavoriteSubject_UserId");
+            });
+
+            modelBuilder.Entity<Message>(entity =>
+            {
+                entity.ToTable("Message");
+
+                entity.Property(e => e.Content).IsUnicode(false);
+
+                entity.Property(e => e.IsRead).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.TimeStamp)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
+
+                entity.HasOne(d => d.Receiver)
+                    .WithMany(p => p.MessageReceivers)
+                    .HasForeignKey(d => d.ReceiverId)
+                    .HasConstraintName("FK__Message__Receive__71D1E811");
+
+                entity.HasOne(d => d.Sender)
+                    .WithMany(p => p.MessageSenders)
+                    .HasForeignKey(d => d.SenderId)
+                    .HasConstraintName("FK__Message__SenderI__70DDC3D8");
             });
 
             modelBuilder.Entity<Subject>(entity =>

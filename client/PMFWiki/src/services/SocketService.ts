@@ -10,7 +10,6 @@ class SocketService{
     }
     async ConnectToHub(){
         
-        //da proverim ako je moj id, onda se samo setuje connId
         this.conn.on("JoinSPecificChatRoom", (connId, myId) => {
             console.log(connId + myId);
             if(myId == storageService.getUserInfo()?.id)
@@ -23,13 +22,17 @@ class SocketService{
         });
 
         await this.conn.start();
-        await this.conn.invoke("JoinSPecificChatRoom", {username: storageService.getUserInfo()?.fullName, chatroom: "aaa", myid: storageService.getUserInfo()?.id, secondid: "aaa", message: "IDE GAS"});
+        await this.conn.invoke("JoinSPecificChatRoom", {username: storageService.getUserInfo()?.fullName, chatroom: "aaa", myid: storageService.getUserInfo()?.id, secondid: 1, message: "IDE GAS"});
     }                                                        
 
-    async sendMessage(message : any, secondid: any){
-        await this.conn.invoke("SendMessage",  {message, secondid});
+    async sendMessage(message : any, secondid: any, myid: any){
+        await this.conn.invoke("SendMessage",  {message, secondid, myid});
     }
 
+    async deleteConnection(myid: any){
+        await this.conn.invoke("DeleteConnId", {myid});
+        storageService.deleteConnectionId();
+    }
     async reconnect() {
         if (this.conn.state !== "Connected") {
             await this.ConnectToHub();

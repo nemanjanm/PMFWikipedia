@@ -19,6 +19,18 @@ function StartPage(){
         socketService.reconnect();
     }, []);
     
+    useEffect(() => {
+        const handleUnload = () => {
+          socketService.deleteConnection(storageService.getUserInfo()?.id);
+        };
+    
+        window.addEventListener('unload', handleUnload);
+    
+        return () => {
+          window.removeEventListener('unload', handleUnload);
+        };
+    }, []);
+    
     useEffect(() => {  
         async function getFavoriteSubjects(){
             setLoader(true);

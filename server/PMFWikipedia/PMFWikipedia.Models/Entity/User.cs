@@ -10,6 +10,8 @@ namespace PMFWikipedia.Models.Entity
         public User()
         {
             FavoriteSubjects = new HashSet<FavoriteSubject>();
+            MessageReceivers = new HashSet<Message>();
+            MessageSenders = new HashSet<Message>();
         }
 
         public long Id { get; set; }
@@ -31,5 +33,7 @@ namespace PMFWikipedia.Models.Entity
         public string? ConnectionId { get; set; }
 
         public virtual ICollection<FavoriteSubject> FavoriteSubjects { get; set; }
+        public virtual ICollection<Message> MessageReceivers { get; set; }
+        public virtual ICollection<Message> MessageSenders { get; set; }
     }
 }

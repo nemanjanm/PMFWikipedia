@@ -154,6 +154,37 @@ namespace PMFWikipedia.ImplementationsBL
             return new ActionResultResponse<User>(user, true, "Successfullt changed password");
         }
 
+        public async Task<ActionResultResponse<User>> ChangeConnectionId(long id, string connId)
+        {
+            var user = await _userDAL.GetById(id);
+            if (user == null)
+            {
+                return new ActionResultResponse<User>(null, false, "Token Expired");
+            }
+
+            user.ConnectionId = connId;
+            await _userDAL.Update(user);
+            await _userDAL.SaveChangesAsync();
+
+            return new ActionResultResponse<User>(user, true, "Successfullt changed password");
+        }
+
+        public async Task<ActionResultResponse<string>> GetConnectionId(long id)
+        {
+            var user = await _userDAL.GetById(id);
+            if (user == null)
+            {
+                return new ActionResultResponse<string>(null, false, "Token expired");
+            }
+            
+            if(user.ConnectionId == null || user.ConnectionId == "")
+            {
+                return new ActionResultResponse<string>(null, false, "User is not connected");
+            }
+
+            return new ActionResultResponse<string>(user.ConnectionId, true, "Successfully");
+        }
+
         public async Task<ActionResultResponse<string>> ChangePhoto(IFormFile photo)
         {
             var id = long.Parse(_jwtService.GetUserId());
@@ -185,6 +216,8 @@ namespace PMFWikipedia.ImplementationsBL
             return new ActionResultResponse<string>("Success", true, "Successfully changed photo");
 
         }
+
+        
 
         public async Task<ActionResultResponse<List<UserViewModel>>> GetUsers()
         {

@@ -5,6 +5,7 @@ import './SideBar.css'
 import { storageService } from '../../services/StorageService';
 import { getName, programmes } from '../../models/Programme';
 import { PanelHelper } from '../PanelHelper';
+import { Badge } from 'primereact/badge';
 
 function SideBar(){
     const navigate = useNavigate();
@@ -21,16 +22,15 @@ function SideBar(){
             },
         },
         {
-            label: 'Obaveštenja',
+            label: <>{'Obaveštenja'} <Badge severity="danger" value={null} /></>,
             icon: 'pi pi-bell',
             command: () => {
                 navigate("/")
             }
         },
         {
-            label: 'Poruke',
+            label: <>{'Poruke'} <Badge severity="danger" value={null} /></>,
             icon: 'pi pi-inbox',
-            badge: 3,
             command: () => {
                 navigate("/poruke-1")
             }
