@@ -9,9 +9,9 @@ namespace PMFWikipedia.Models.Entity
     {
         public User()
         {
+            ChatUser1Navigations = new HashSet<Chat>();
+            ChatUser2Navigations = new HashSet<Chat>();
             FavoriteSubjects = new HashSet<FavoriteSubject>();
-            MessageReceivers = new HashSet<Message>();
-            MessageSenders = new HashSet<Message>();
         }
 
         public long Id { get; set; }
@@ -32,8 +32,8 @@ namespace PMFWikipedia.Models.Entity
         public string? PhotoPath { get; set; }
         public string? ConnectionId { get; set; }
 
+        public virtual ICollection<Chat> ChatUser1Navigations { get; set; }
+        public virtual ICollection<Chat> ChatUser2Navigations { get; set; }
         public virtual ICollection<FavoriteSubject> FavoriteSubjects { get; set; }
-        public virtual ICollection<Message> MessageReceivers { get; set; }
-        public virtual ICollection<Message> MessageSenders { get; set; }
     }
 }

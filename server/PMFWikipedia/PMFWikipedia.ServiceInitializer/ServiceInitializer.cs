@@ -26,15 +26,19 @@ namespace PMFWikipedia.ServiceInitializer
             services.AddScoped<IUserDAL, UserDAL>();
             services.AddScoped<ISubjectDAL, SubjectDAL>();  
             services.AddScoped<IFavoriteSubjectDAL, FavoriteSubjectDAL>();
+            services.AddScoped<IMessageDAL, MessageDAL>();
+            services.AddScoped<IChatDAL, ChatDAL>();
             return services;
         }
 
         private static IServiceCollection initializeBL(this IServiceCollection services)
         {
             services.AddScoped<IUserBL, UserBL>();
+            services.AddScoped<IChatBL, ChatBL>();
             services.AddScoped<ISubjectBL, SubjectBL>();
             services.AddScoped<IFavoriteSubjectBL, FavoriteSubjectBL>();
             services.AddScoped<IJWTService, JWTService>();
+            services.AddScoped<IMessageBL, MessageBL>();
             return services;
         }
 

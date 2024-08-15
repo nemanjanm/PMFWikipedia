@@ -1,17 +1,21 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 using PMFWikipedia.InterfacesBL;
 using PMFWikipedia.Models;
+using PMFWikipedia.Models.Entity;
 namespace PMFWikipedia.SignalR
 {
     public class ChatHub : Hub
     {
         private readonly SharedDb _shared;
         private readonly IUserBL _userBL;
-
-        public ChatHub(SharedDb shared, IUserBL userBL)
+        private readonly IMessageBL _messageBL;
+        private readonly IChatBL _chatBL;
+        public ChatHub(SharedDb shared, IUserBL userBL, IMessageBL messageBL, IChatBL chatBL)
         {
             _userBL = userBL;
             _shared = shared;
+            _messageBL = messageBL;
+            _chatBL = chatBL;
         }
 
         public async Task JoinChat(UserConnection conn)
@@ -37,9 +41,13 @@ namespace PMFWikipedia.SignalR
 
         public async Task SendMessage(UserConnection conn)
         {
-            ActionResultResponse<string> response = await _userBL.GetConnectionId(conn.SecondId); //treba seccond id da bude long
-            if(response.Data != null) 
+            ActionResultResponse<string> response = await _userBL.GetConnectionId(conn.SecondId);
+
+            if (response.Data != null)
+            {
+                await _chatBL.InsertMessage(conn.MyId, conn.SecondId, conn.Message);
                 await Clients.Client(response.Data).SendAsync("ReceiveSpecificMessage", conn.SecondId, conn.Message);
+            }
         }
 
         public async Task DeleteConnId(UserConnection conn)

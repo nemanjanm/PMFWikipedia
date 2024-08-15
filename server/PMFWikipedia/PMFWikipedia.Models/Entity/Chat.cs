@@ -5,19 +5,23 @@ using System.Collections.Generic;
 
 namespace PMFWikipedia.Models.Entity
 {
-    public partial class Message
+    public partial class Chat
     {
+        public Chat()
+        {
+            Messages = new HashSet<Message>();
+        }
+
         public long Id { get; set; }
-        public string Content { get; set; } = null!;
-        public DateTime? TimeStamp { get; set; }
-        public bool? IsRead { get; set; }
+        public long? User1 { get; set; }
+        public long? User2 { get; set; }
         public bool IsDeleted { get; set; }
         public DateTime DateCreated { get; set; }
         public DateTime DateModified { get; set; }
         public long LastModifiedBy { get; set; }
-        public long? ChatId { get; set; }
-        public long SenderId { get; set; }
 
-        public virtual Chat? Chat { get; set; }
+        public virtual User? User1Navigation { get; set; }
+        public virtual User? User2Navigation { get; set; }
+        public virtual ICollection<Message> Messages { get; set; }
     }
 }

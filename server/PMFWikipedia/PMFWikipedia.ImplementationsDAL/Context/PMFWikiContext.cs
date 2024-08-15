@@ -19,6 +19,7 @@ namespace PMFWikipedia.ImplementationsDAL
         {
         }
 
+        public virtual DbSet<Chat> Chats { get; set; } = null!;
         public virtual DbSet<FavoriteSubject> FavoriteSubjects { get; set; } = null!;
         public virtual DbSet<Message> Messages { get; set; } = null!;
         public virtual DbSet<Subject> Subjects { get; set; } = null!;
@@ -26,6 +27,25 @@ namespace PMFWikipedia.ImplementationsDAL
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Chat>(entity =>
+            {
+                entity.ToTable("Chat");
+
+                entity.Property(e => e.DateCreated).HasColumnType("datetime");
+
+                entity.Property(e => e.DateModified).HasColumnType("datetime");
+
+                entity.HasOne(d => d.User1Navigation)
+                    .WithMany(p => p.ChatUser1Navigations)
+                    .HasForeignKey(d => d.User1)
+                    .HasConstraintName("FK__Chat__User1__0A9D95DB");
+
+                entity.HasOne(d => d.User2Navigation)
+                    .WithMany(p => p.ChatUser2Navigations)
+                    .HasForeignKey(d => d.User2)
+                    .HasConstraintName("FK__Chat__User2__0B91BA14");
+            });
+
             modelBuilder.Entity<FavoriteSubject>(entity =>
             {
                 entity.ToTable("FavoriteSubject");
@@ -49,21 +69,20 @@ namespace PMFWikipedia.ImplementationsDAL
 
                 entity.Property(e => e.Content).IsUnicode(false);
 
+                entity.Property(e => e.DateCreated).HasColumnType("datetime");
+
+                entity.Property(e => e.DateModified).HasColumnType("datetime");
+
                 entity.Property(e => e.IsRead).HasDefaultValueSql("((0))");
 
                 entity.Property(e => e.TimeStamp)
                     .HasColumnType("datetime")
                     .HasDefaultValueSql("(getdate())");
 
-                entity.HasOne(d => d.Receiver)
-                    .WithMany(p => p.MessageReceivers)
-                    .HasForeignKey(d => d.ReceiverId)
-                    .HasConstraintName("FK__Message__Receive__71D1E811");
-
-                entity.HasOne(d => d.Sender)
-                    .WithMany(p => p.MessageSenders)
-                    .HasForeignKey(d => d.SenderId)
-                    .HasConstraintName("FK__Message__SenderI__70DDC3D8");
+                entity.HasOne(d => d.Chat)
+                    .WithMany(p => p.Messages)
+                    .HasForeignKey(d => d.ChatId)
+                    .HasConstraintName("FK__Message__ChatId__0E6E26BF");
             });
 
             modelBuilder.Entity<Subject>(entity =>
