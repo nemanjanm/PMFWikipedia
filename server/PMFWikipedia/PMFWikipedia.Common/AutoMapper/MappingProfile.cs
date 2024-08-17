@@ -9,6 +9,7 @@ namespace PMFWikipedia.Common.AutoMapper
     {
         public MappingProfile() 
         {
+            CreateMap<Message, ChatViewModel>();
             CreateMap<RegisterInfo, User>();
             CreateMap<User, UserViewModel>()
                 .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => src.FirstName + " " + src.LastName));
