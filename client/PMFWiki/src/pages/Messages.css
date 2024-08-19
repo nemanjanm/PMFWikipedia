@@ -11,3 +11,49 @@ html, body {
     padding: 0;
     height: 100%;
 }
+
+.center {
+    padding: 1.5vw;
+    flex: 1;
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+
+    .message{
+        max-width: 80%;
+        width: fit-content;
+        display: flex;
+        gap: 1.5vw;
+
+        &.own{
+            align-self: flex-end;
+
+            .texts{
+                p{
+                    background-color: #374151;
+                    color: white;
+                    font-size: 1rem;
+                    margin-bottom: 0;
+                }
+            }
+        }
+
+        .texts{
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 0.3vw;
+            p{
+                padding: 1.5vw;
+                border-radius: 0.7vw;
+                background-color: #0d6efd;
+                color: white;
+                font-size: 1rem;
+                margin-bottom: 0;
+            }
+            span{
+                font-size: 0.6rem;
+            }
+        }
+    }
+}

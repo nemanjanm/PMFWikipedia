@@ -1,6 +1,9 @@
 import { HubConnectionBuilder, LogLevel, HubConnection } from "@microsoft/signalr";
 import { storageService } from "./StorageService";
-
+import Messages from "../pages/Messages";
+import { MessageInfo } from "../models/MessageInfo";
+import { MessagesProps } from "../pages/Messages";
+import { messageEmitter } from "./EventEmmiter";
 class SocketService{
     
     private conn: HubConnection;
@@ -16,9 +19,18 @@ class SocketService{
                 storageService.setConnId(connId);
         });
 
-        this.conn.on("ReceiveSpecificMessage", (username, msg) => {
-            console.log(username);
+        this.conn.on("ReceiveSpecificMessage", (senderId, msg) => {
+            console.log(senderId);
             console.log(msg);
+            const newmessage : MessageInfo = {
+                content: msg,
+                senderId: 1,
+                timeStamp: new Date(),
+                chatId: -1,
+                id: -1,
+                isRead: false
+            }
+            messageEmitter.emit('newMessage', newmessage);
         });
 
         await this.conn.start();

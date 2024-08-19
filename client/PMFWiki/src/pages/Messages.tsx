@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import NavBar from "../components/NavBar/NavBar";
 import SideBar from "../components/SideBar/SideBar";
 import "./Messages.css";
@@ -13,15 +13,53 @@ import { socketService } from "../services/SocketService";
 import { chatService } from "../services/ChatService";
 import { MessageInfo } from "../models/MessageInfo";
 import { ChatInfo } from "../models/ChatInfo";
+import { messageEmitter } from "../services/EventEmmiter";
 
-function Messages(){
+export interface MessagesProps {
+    newmessage: MessageInfo | null;
+}
+
+const Messages: React.FC<MessagesProps> = () => {
 
     const location = useLocation();
     const [user, setUser] = useState(location.state || null);
     const [message, setMessage] = useState<string>();
     const [chats, setChats] = useState<Array<ChatInfo>>();
     const [temp, setTemp] = useState(false)
-    const [messages, setMessages] = useState<Array<MessageInfo>>();
+    const [messages, setMessages] = useState<Array<any>>([]);
+    const scrollRef = useRef<any>();
+    const buttonRef = useRef<any>();
+    
+    useEffect(() => {
+        const handleNewMessage = (newMessage: MessageInfo) => {
+            setMessages(messages => [...messages, newMessage]);
+        };
+
+        messageEmitter.on('newMessage', handleNewMessage);
+
+        return () => {
+            messageEmitter.off('newMessage', handleNewMessage);
+        };
+    }, []);
+    
+    useEffect(() => {
+        if (scrollRef.current) {
+            scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+        }
+    }, [messages]);
+
+    useEffect(() => {
+        const handleKeyDown = (event : any) => {
+            if (event.key === 'Enter') {
+                console.log(message);
+                buttonRef.current.click();
+            }
+        };
+        window.addEventListener('keydown', handleKeyDown);
+        return () => {
+            window.removeEventListener('keydown', handleKeyDown);
+        };
+    }, []);
 
     useEffect(() => {
         async function getChats(){
@@ -94,6 +132,7 @@ function Messages(){
 
     const sendMessage = async () => {
         socketService.sendMessage(message, user.id, storageService.getUserInfo()?.id);
+        setMessages(messages => [...messages, {content: message, timeStamp: new Date(), senderId: storageService.getUserInfo()?.id}])
         setMessage("");
     };
 
@@ -131,17 +170,38 @@ function Messages(){
     return<>
         <div className="celina" style={{display: "flex", flexDirection: "column", height: "100vh", boxSizing: "border-box"}}>
         <NavBar></NavBar>
-        <div className="d-flex justify-content-between" style={{height: "100%"}}>
+        <div className="d-flex justify-content-between" style={{height: "100%", overflowY: "hidden"}}>
             <SideBar></SideBar>
-            {!loader && <><ListBox filter emptyFilterMessage={"Nema rezultata"} value={"ide gas"} itemTemplate={userTemplate} onChange={(e: ListBoxChangeEvent) => handleChat(e.value)} options={chats} emptyMessage={"Nema rezultata"} optionLabel="user.fullName" className="w-full md:w-14rem" style={{borderRadius: "0", width: "25vw"}} listStyle={{fontSize: "3vh"}}/>
-            <div style={{backgroundColor: "", flexGrow: 1, display: "flex", justifyContent: "flex-end", flexDirection:"column"}}>
+            {!loader && <><ListBox filter emptyFilterMessage={"Nema rezultata"} value={"ide gas"} itemTemplate={userTemplate} onChange={(e: ListBoxChangeEvent) => handleChat(e.value)} options={chats} emptyMessage={"Nema rezultata"} optionLabel="user.fullName" className="w-full md:w-14rem" style={{borderRadius: "0", width: "25vw", flexShrink: 0}} listStyle={{fontSize: "3vh"}}/>
+            <div style={{flexGrow: 1, display: "flex", justifyContent: "flex-end", flexDirection:"column"}}>
             <div className="d-flex" style={{alignItems: "center", borderBottom: "0.2rem solid #424b57"}}>
                 <img src={enviorment.port + user?.photoPath} style={{border: "0", borderRadius: "50%", height: "10vh", width: "10vh", margin: "2vh"}}></img>
                 <p style={{textAlign: "center", marginBottom: "0rem"}}>{user?.fullName}</p>
             </div>
+            <div className="center" ref={scrollRef}> 
+            {
+                messages?.map((message) => {
+                    const date = new Date(message.timeStamp);
+                    if(message.senderId === storageService.getUserInfo()?.id)
+                        return (<div className="message own">
+                                    <div className="texts">
+                                        <p>{message.content}</p>
+                                        <span>{date.toLocaleTimeString() + " " + date.toLocaleDateString()}</span>
+                                    </div>
+                                </div>)
+                    else
+                    return (<div className="message">
+                        <div className="texts">
+                            <p>{message.content}</p>
+                            <span>{date.toLocaleTimeString() + " " + date.toLocaleDateString()}</span>
+                        </div>
+                    </div>)
+                })
+            }
+            </div>
             <div style={{marginTop: "auto", display: "flex", justifyContent: "flex-end", borderRadius: "0", width:"100%"}}>
                 <InputText value={message} onChange={(e) => handleMessage(e.target.value)} style={{width:"10vw", flex: 1, border: "0.2rem solid #424b57", borderRight: "0", borderRadius: "0", color:"#ffffffde"}} type="text" className="p-inputtext-lg" placeholder="Unesi poruku"  />
-                <Button onClick={sendMessage} style={{border: "0.2rem solid #424b57", borderRadius: "0", color:"#ffffffde"}}>Pošalji</Button>
+                <Button ref={buttonRef} onClick={sendMessage} style={{border: "0.2rem solid #424b57", borderRadius: "0", color:"#ffffffde"}}>Pošalji</Button>
             </div>
             </div> </>}
             {loader && <div style={{marginTop: "50px"}}><ClipLoader color="#374151" loading={loader} size={150}></ClipLoader></div>}
