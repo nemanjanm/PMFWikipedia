@@ -8,4 +8,5 @@ export interface ChatInfo {
     program: number,
     photoPath: string,
     fullName: string
+    unread: number
 }

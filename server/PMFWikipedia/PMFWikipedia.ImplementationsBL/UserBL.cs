@@ -22,7 +22,8 @@ namespace PMFWikipedia.ImplementationsBL
         private readonly IStorageService _storageService;
         private readonly IFavoriteSubjectDAL _favoriteSubjectDAL;
         private readonly ISubjectDAL _subjectDAL;
-        public UserBL(IJWTService jwtService, ISubjectDAL subjectDAL, IFavoriteSubjectDAL favoriteSubjectDAL, IUserDAL userDAL, IMapper mapper, IEmailService emailService, IStorageService storageService)
+        private readonly IChatDAL _chatDAL;
+        public UserBL(IChatDAL chatDAL, IJWTService jwtService, ISubjectDAL subjectDAL, IFavoriteSubjectDAL favoriteSubjectDAL, IUserDAL userDAL, IMapper mapper, IEmailService emailService, IStorageService storageService)
         {
             _userDAL = userDAL;
             _mapper = mapper;
@@ -31,6 +32,7 @@ namespace PMFWikipedia.ImplementationsBL
             _favoriteSubjectDAL = favoriteSubjectDAL;
             _subjectDAL = subjectDAL;
             _jwtService = jwtService;
+            _chatDAL = chatDAL;
         }
 
         public async Task<ActionResultResponse<User>> Register(RegisterInfo registerInfo)

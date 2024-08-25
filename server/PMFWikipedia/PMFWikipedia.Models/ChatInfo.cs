@@ -7,6 +7,7 @@ namespace PMFWikipedia.Models
         public long Id { get; set; }
         public long User1Id { get; set; }
         public long User2Id { get; set; }
+        public int Unread {  get; set; }
         public UserViewModel User { get; set; }
     }
 }

@@ -2,7 +2,6 @@ import { HubConnectionBuilder, LogLevel, HubConnection } from "@microsoft/signal
 import { storageService } from "./StorageService";
 import Messages from "../pages/Messages";
 import { MessageInfo } from "../models/MessageInfo";
-import { MessagesProps } from "../pages/Messages";
 import { messageEmitter } from "./EventEmmiter";
 class SocketService{
     
@@ -14,23 +13,24 @@ class SocketService{
     async ConnectToHub(){
         
         this.conn.on("JoinSPecificChatRoom", (connId, myId) => {
-            console.log(connId + myId);
             if(myId == storageService.getUserInfo()?.id)
                 storageService.setConnId(connId);
         });
 
-        this.conn.on("ReceiveSpecificMessage", (senderId, msg) => {
-            console.log(senderId);
-            console.log(msg);
-            const newmessage : MessageInfo = {
-                content: msg,
-                senderId: 1,
-                timeStamp: new Date(),
-                chatId: -1,
-                id: -1,
-                isRead: false
+        this.conn.on("ReceiveSpecificMessage", (chatviewmodel) => {
+            if(chatviewmodel.data.chatId !== undefined)
+            {
+                const newmessage : MessageInfo = {
+                    content: chatviewmodel.data.content,
+                    senderId: chatviewmodel.data.senderId,
+                    timeStamp: chatviewmodel.data.timeStamp,
+                    chatId: chatviewmodel.data["chatId"],
+                    id: chatviewmodel.data.id,
+                    isRead: chatviewmodel.data.isRead
+                }
+                messageEmitter.emit('newMessage', newmessage);
+                messageEmitter.emit('increaseMessage', 1);
             }
-            messageEmitter.emit('newMessage', newmessage);
         });
 
         await this.conn.start();

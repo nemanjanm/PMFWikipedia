@@ -6,5 +6,6 @@ namespace PMFWikipedia.InterfacesDAL
     {
         public Task<Chat?> GetChatId(long user1Id, long user2Id);
         public Task<List<Chat>?> GetChatsById(long id);
+        public Task<List<Chat>?> GetNumberOfUnreadMessages(long id);
     }
 }

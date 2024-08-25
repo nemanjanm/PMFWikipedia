@@ -42,10 +42,10 @@ namespace PMFWikipedia.SignalR
         public async Task SendMessage(UserConnection conn)
         {
             ActionResultResponse<string> response = await _userBL.GetConnectionId(conn.SecondId);
-            await _chatBL.InsertMessage(conn.MyId, conn.SecondId, conn.Message);
+            var chatviewmodel = await _chatBL.InsertMessage(conn.MyId, conn.SecondId, conn.Message);
             if (response.Data != null)
             {
-                await Clients.Client(response.Data).SendAsync("ReceiveSpecificMessage", conn.SecondId, conn.Message);
+                await Clients.Client(response.Data).SendAsync("ReceiveSpecificMessage", chatviewmodel);
             }
         }
 

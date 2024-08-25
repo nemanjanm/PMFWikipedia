@@ -24,5 +24,10 @@ namespace PMFWikipedia.API.Controllers
         {
             return Ok(await _chatBL.GetMessages(id));
         }
+        [HttpGet("Unread-Messages")]
+        public async Task<IActionResult> GetUnreadMessages(long id)
+        {
+            return Ok(await _chatBL.GetUnreadMessages(id));
+        }
     }
 }

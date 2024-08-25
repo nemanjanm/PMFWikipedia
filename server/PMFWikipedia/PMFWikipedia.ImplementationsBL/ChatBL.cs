@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
+using PMFWikipedia.ImplementationsBL.Helpers;
 using PMFWikipedia.InterfacesBL;
 using PMFWikipedia.InterfacesDAL;
 using PMFWikipedia.Models;
 using PMFWikipedia.Models.Entity;
 using PMFWikipedia.Models.ViewModels;
+using System;
 
 namespace PMFWikipedia.ImplementationsBL
 {
@@ -12,18 +14,19 @@ namespace PMFWikipedia.ImplementationsBL
         private readonly IChatDAL _chatDAL;
         private readonly IMessageDAL _messageDAL;
         private readonly IMapper _mapper;
+        private readonly IJWTService _jwtService;
 
-        public ChatBL(IChatDAL chatDAL, IMessageDAL messageDAL, IMapper mapper) 
+        public ChatBL(IChatDAL chatDAL, IMessageDAL messageDAL, IMapper mapper, IJWTService jwtservice) 
         {
             _chatDAL = chatDAL;
             _messageDAL = messageDAL;
             _mapper = mapper;
+            _jwtService = jwtservice;
         }
 
         public async Task<ActionResultResponse<List<ChatInfo>>> GetAllChats(long id)
         {
-            List<Chat> chats = new List<Chat>();
-            chats = await _chatDAL.GetChatsById(id);
+            var chats = await _chatDAL.GetChatsById(id);
 
             List<ChatInfo> chatInfos = new List<ChatInfo>();
             foreach(var chat in chats)
@@ -41,9 +44,24 @@ namespace PMFWikipedia.ImplementationsBL
                 else
                     c.User = _mapper.Map<UserViewModel>(chat.User2Navigation);
 
+                c.Unread = chat.Messages.Count;
                 chatInfos.Add(c);
             }
             return new ActionResultResponse<List<ChatInfo>>(chatInfos, true, "");
+        }
+        public async Task<ActionResultResponse<int>> GetUnreadMessages(long id)
+        {
+            var chats = await _chatDAL.GetNumberOfUnreadMessages(id);
+            var number = 0;
+            if (chats != null && chats.Count > 0)
+            {
+                foreach (var chat in chats)
+                {
+                    number += chat.Messages.Count;
+                }
+            }
+
+            return new ActionResultResponse<int>(number, true, "");
         }
 
         public async Task<ActionResultResponse<List<ChatViewModel>>> GetMessages(long id)
@@ -67,9 +85,12 @@ namespace PMFWikipedia.ImplementationsBL
             }
             return new ActionResultResponse<List<ChatViewModel>>(chatViewModel, true, "");
         }
-        public async Task<ActionResultResponse<Chat>> InsertMessage(long user1Id, long user2Id, string message)
+        public async Task<ActionResultResponse<ChatViewModel>> InsertMessage(long user1Id, long user2Id, string message)
         {
+            ChatViewModel cvm = new ChatViewModel();
+
             Chat chat =  await _chatDAL.GetChatId(user1Id, user2Id);
+
             if (chat == null)
             {
                 Chat c = new Chat();
@@ -86,6 +107,13 @@ namespace PMFWikipedia.ImplementationsBL
                 m.SenderId = user1Id;
                 await _messageDAL.Insert(m);
                 await _messageDAL.SaveChangesAsync();
+
+                cvm.Id = m.Id;
+                cvm.SenderId = user1Id;
+                cvm.ChatId = c.Id;
+                cvm.Content = message;
+                cvm.IsRead = false;
+                cvm.TimeStamp = DateTime.Now;
             }
 
             else 
@@ -97,11 +125,19 @@ namespace PMFWikipedia.ImplementationsBL
                 m.ChatId = chat.Id;
                 m.SenderId = user1Id;
                 chat.DateModified = DateTime.Now;
+
                 await _chatDAL.SaveChangesAsync();
                 await _messageDAL.Insert(m);
                 await _messageDAL.SaveChangesAsync();
+
+                cvm.SenderId = user1Id;
+                cvm.ChatId = chat.Id;
+                cvm.Content = message;
+                cvm.IsRead = false;
+                cvm.TimeStamp = DateTime.Now;
+                cvm.Id = m.Id;
             }
-            return new ActionResultResponse<Chat>(chat, true, "");
+            return new ActionResultResponse<ChatViewModel>(cvm, true, "");
         }
     }
 }

@@ -6,10 +6,52 @@ import { storageService } from '../../services/StorageService';
 import { getName, programmes } from '../../models/Programme';
 import { PanelHelper } from '../PanelHelper';
 import { Badge } from 'primereact/badge';
+import { useEffect, useState } from 'react';
+import { messageEmitter } from '../../services/EventEmmiter';
+import { socketService } from '../../services/SocketService';
+import { chatService } from '../../services/ChatService';
 
 function SideBar(){
     const navigate = useNavigate();
     const programNumber = storageService.getUserInfo()?.program;
+    const [unread, setUnread] = useState<number>(0);
+    const [temp, setTemp] = useState();
+
+    useEffect(() => {
+        async function getChats(){
+            const response = await chatService.getUnreadMessages();
+            if(response.status){
+                setUnread(response.data);
+            }
+        }
+        getChats();
+    },[temp])
+    
+    useEffect(() => {
+        const handleNewMessage = () => {
+            setUnread( unread + 1 );
+
+        };
+
+        messageEmitter.on('increaseMessage', handleNewMessage);
+
+        return () => {
+            messageEmitter.off('increaseMessage', handleNewMessage);
+        };
+    }, [unread]);
+
+    useEffect(() => {
+        const handleNewMessage = (number: number) => {
+            console.log(number);
+            setUnread( unread - number );
+        };
+
+        messageEmitter.on('decreaseMessages', handleNewMessage);
+
+        return () => {
+            messageEmitter.off('decreaseMessages', handleNewMessage);
+        };
+    }, [unread]);
 
     const program = getName(programNumber);
 
@@ -29,7 +71,7 @@ function SideBar(){
             }
         },
         {
-            label: <>{'Poruke'} <Badge severity="danger" value={null} /></>,
+            label: <>{'Poruke'} <Badge severity="danger" value={unread} /></>,
             icon: 'pi pi-inbox',
             command: () => {
                 navigate("/poruke-1")

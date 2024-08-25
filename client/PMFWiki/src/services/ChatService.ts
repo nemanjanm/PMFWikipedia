@@ -20,6 +20,17 @@ class ChatService{
         
     }
 
+    async getUnreadMessages(){
+        const realUrl = `${getUrl}/Unread-Messages?id=${storageService.getUserInfo()?.id}`
+        const response = await fetch(realUrl, {
+            method: "GET",
+            headers: headers
+        });
+
+        const data = await response.json();
+        return(data);
+    }
+    
     async getMessages(chatId: number){
         const realUrl = `${getUrl}/Messages?id=${chatId}`
         const response = await fetch(realUrl, {

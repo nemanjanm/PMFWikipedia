@@ -17,7 +17,6 @@ import EmailForResetPassword from './components/EmailForResetPassword'
 import PasswordChange from './pages/PasswordChange'
 import ProfilePage from './pages/ProfilePage'
 import SubjectsPage from './pages/SubjectsPage'
-import Message from './pages/Message'
 import Messages from './pages/Messages'
 import React from 'react'
 import App from './App'
@@ -52,10 +51,6 @@ const router = createBrowserRouter([
   {
     path: "/poruke-1",
     element: isAuthenticated() ? <Messages/> : <Navigate to="/Prijava"/>,
-  },
-  {
-    path: "/poruke",
-    element: <Message/>
   },
   {
     path: "/email",
