@@ -15,19 +15,20 @@ namespace PMFWikipedia.ImplementationsBL
             _jwtService = jwtService;
         }
 
-        public async Task<ActionResultResponse<object>> SetMessageAsRead(long chatId)
+        public async Task<ActionResultResponse<long>> SetMessageAsRead(long chatId, long myId)
         {
-            var userId = long.Parse(_jwtService.GetUserId());
-            var messages = await _messageDAL.SetMessagesAsRead(chatId, userId);
+            var messages = await _messageDAL.SetMessagesAsRead(chatId, myId);
+
+            if (messages == null || messages.Count == 0)
+                return new ActionResultResponse<long>(0, false, "Error with messages");
+
             foreach (var message in messages)
             {
                 message.IsRead = true;
             }
             await _messageDAL.SaveChangesAsync();
-            if (messages != null)
-                return new ActionResultResponse<object>(null, true, "");
-            else
-                return new ActionResultResponse<object>(null, false, "Error with messages");
+
+            return new ActionResultResponse<long>(messages[0].SenderId, true, "");
         }
     }
 }

@@ -5,4 +5,7 @@ export interface MessageInfo{
     isRead: boolean;
     timeStamp: Date;
     senderId: number;
+    user: any;
+    user1Id: number;
+    user2Id: number;
 }

@@ -5,7 +5,6 @@ import "./TreeHelper.css"
 export function TreeHelper(props : [])
 {   
     const tree : any = [];
-    console.log(props);
     years.forEach((y: any, index: number) => {
         const children = semestars.map((s: any, index2: number) => {
             const subjects = props.filter((p: any) => 

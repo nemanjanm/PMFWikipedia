@@ -24,7 +24,7 @@ function Messages() {
     const location = useLocation();
     const [user, setUser] = useState(location.state || null);
     const [message, setMessage] = useState<string>();
-    const [chats, setChats] = useState<Array<ChatInfo>>();
+    const [chats, setChats] = useState<Array<ChatInfo>>([]);
     const [temp, setTemp] = useState(false)
     const [messages, setMessages] = useState<Array<any>>([]);
     const [currentChatId, setCurrentChatId] = useState<number>(-1);
@@ -41,8 +41,28 @@ function Messages() {
                 handleChat(chat);
             }
             else{
+                //AKO PORUKU SALJE OSOBA SA KOJOM IMAMO CET
                 const chat = chats?.find(c => c.id === newMessage.chatId)?.id
-                handleChat(chat);
+                if(chat)
+                    handleChat(chat);
+                //AKO NEMAMO CET SA OSOBOM, PRVI PUT STIZE PORUKA
+                else{
+                    const newChat : ChatInfo ={
+                        id: newMessage.chatId,
+                        timeStamp: newMessage.timeStamp,
+                        user: newMessage.user,
+                        user1Id: newMessage.user1Id,
+                        user2Id: newMessage.user2Id
+                    }
+                    setChats(chats => [...chats, newChat]);
+                    handleChat(newChat.id);
+
+                    const unreadMessage : UnreadMessage ={
+                        id : newChat.id,
+                        number: 1
+                    }
+                    setUnread(unread => [...unread, unreadMessage]);
+                }
             }
         };
 
@@ -51,8 +71,22 @@ function Messages() {
         return () => {
             messageEmitter.off('newMessage', handleNewMessage);
         };
-    }, [currentChatId]);
+    }, [currentChatId, chats]);
     
+
+    useEffect(() => {
+        const handleMessage = () => {
+            setMessages(messages => messages.map(m=> ({...m, isRead: true})) )
+            console.log(messages);
+        }
+
+        messageEmitter.on('markAsRead', handleMessage);
+
+        return () => {
+            messageEmitter.off('markAsRead', handleMessage);
+        };
+    }, [messages])
+
     useEffect(() => {
         if (scrollRef.current) {
             scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
@@ -80,42 +114,49 @@ function Messages() {
                 setChats(response.data);
                 if(user === null)
                 {
-                    setUser(response.data[0].user);
-                    setCurrentChatId(response.data[0].id);
-                    const response2 = await chatService.getMessages(response.data[0].id);
-                    
-                    if(response2.status)
+                    if(response.data.length > 0)
                     {
-                        setMessages(response2.data);
-                    }
-
-                    response.data.forEach((chat : any) => {
-                        const unreadMessage : UnreadMessage ={
-                            id : chat.id,
-                            number: chat.unread
+                        setUser(response.data[0].user);
+                        setCurrentChatId(response.data[0].id);
+                        const response2 = await chatService.getMessages(response.data[0].id);
+                        
+                        if(response2.status)
+                        {
+                            setMessages(response2.data);
                         }
-                        setUnread(unread => [...unread, unreadMessage]);
-                    })
+
+                        response.data.forEach((chat : any) => {
+                            const unreadMessage : UnreadMessage ={
+                                id : chat.id,
+                                number: chat.unread
+                            }
+                            setUnread(unread => [...unread, unreadMessage]);
+                        })
+                    }
                 }
                 else
                 {
                     let temp = -1;
-                    response.data.forEach((chat : any) => {
-                        if( temp === -1 && ((chat.user1Id == user.id && chat.user2Id == storageService.getUserInfo()?.id) || (chat.user2Id == user.id && chat.user1Id == storageService.getUserInfo()?.id)))
-                        {
-                            temp = chat.id;
-                        }
-                        const unreadMessage : UnreadMessage ={
-                            id : chat.id,
-                            number: chat.unread
-                        }
-                        setUnread(unread => [...unread, unreadMessage]);
-                    })
-                    setCurrentChatId(temp);
-                    const response2 = await chatService.getMessages(temp);
-                    if(response2.status)
+                    if(response.data.length > 0)
                     {
-                        setMessages(response2.data);
+                        response.data.forEach((chat : any) => {
+                            if( temp === -1 && ((chat.user1Id == user.id && chat.user2Id == storageService.getUserInfo()?.id) || (chat.user2Id == user.id && chat.user1Id == storageService.getUserInfo()?.id)))
+                            {
+                                temp = chat.id;
+                            }
+                            const unreadMessage : UnreadMessage ={
+                                id : chat.id,
+                                number: chat.unread
+                            }
+                            setUnread(unread => [...unread, unreadMessage]);
+                        })
+                    
+                        setCurrentChatId(temp);
+                        const response2 = await chatService.getMessages(temp);
+                        if(response2.status)
+                        {
+                            setMessages(response2.data);
+                        }
                     }
                 }
             }
@@ -151,13 +192,23 @@ function Messages() {
         if(message!== "" && message!==null && message!== undefined)
         {
             socketService.sendMessage(message, user.id, storageService.getUserInfo()?.id);
-            setMessages(messages => [...messages, {content: message, timeStamp: new Date(), senderId: storageService.getUserInfo()?.id}])
+            setMessages(messages => [...messages, {isRead: false, content: message, timeStamp: new Date(), senderId: storageService.getUserInfo()?.id}])
             setMessage("");
+            
+
+            const sortChat = chats?.find(c => c.id === currentChatId)?.id;
+            setChats(chats => chats?.map(c => c.id === sortChat ? { ...c, timeStamp: new Date()} : c))
+            
+            setChats(chats => {
+                chats?.sort((a, b) => {
+                  return new Date(b.timeStamp).getTime() - new Date(a.timeStamp).getTime();
+                });
+                return chats;
+            });
         }
     };
 
     const userTemplate = (option: any) => {
-        
         const unreadMessagesNumber = unread.find(m=>m.id === option.id)?.number;
         return (
             <div className="d-flex align-items-center">
@@ -170,19 +221,30 @@ function Messages() {
 
     async function setIsRead()
     {
-        setUnread(unread => unread.map(u => u.id === currentChatId ? { ...u, number: 0} : u))
-        console.log(unread);
-        messageEmitter.emit("decreaseMessages", unread.find(u => u.id === currentChatId)?.number)
-        const info : ChatIdModel = {
-            id: currentChatId
+        if(currentChatId > -1)
+        {
+            setUnread(unread => unread.map(u => u.id === currentChatId ? { ...u, number: 0} : u))
+            messageEmitter.emit("decreaseMessages", unread.find(u => u.id === currentChatId)?.number)
+            const info : ChatIdModel = {
+                id: currentChatId
+            }
+            socketService.markAsRead(info.id, storageService.getUserInfo()?.id);
         }
-        const response = messageService.markAsRead(info);
-    
     }
     async function handleChat(e: any)
     {
         if(e.user === undefined)
         {
+            const sortChat = chats?.find(c => c.id === e)?.id;
+            setChats(chats => chats?.map(c => c.id === sortChat ? { ...c, timeStamp: new Date()} : c))
+            
+            setChats(chats => {
+                chats?.sort((a, b) => {
+                  return new Date(b.timeStamp).getTime() - new Date(a.timeStamp).getTime();
+                });
+                return chats;
+            });
+              
             const chat = chats?.find(c => c.id === e)?.id;            
             setUnread(unread => unread.map(u => u.id === chat ? { ...u, number: u.number + 1} : u))
         }
@@ -214,25 +276,46 @@ function Messages() {
             {!loader && <><ListBox filter emptyFilterMessage={"Nema rezultata"} value={"ide gas"} itemTemplate={userTemplate} onChange={(e: ListBoxChangeEvent) => handleChat(e.value)} options={chats} emptyMessage={"Nema rezultata"} optionLabel="user.fullName" className="w-full md:w-14rem" style={{borderRadius: "0", width: "25vw", flexShrink: 0}} listStyle={{fontSize: "3vh"}}/>
             <div style={{flexGrow: 1, display: "flex", justifyContent: "flex-end", flexDirection:"column"}}>
             <div className="d-flex" style={{alignItems: "center", borderBottom: "0.2rem solid #424b57"}}>
-                <img src={enviorment.port + user?.photoPath} style={{border: "0", borderRadius: "50%", height: "10vh", width: "10vh", margin: "2vh"}}></img>
+                {user && <img src={enviorment.port + user?.photoPath} style={{border: "0", borderRadius: "50%", height: "10vh", width: "10vh", margin: "2vh"}}></img>}
                 <p style={{textAlign: "center", marginBottom: "0rem"}}>{user?.fullName}</p>
             </div>
             <div onClick={setIsRead} className="center" ref={scrollRef}> 
             {
                 messages?.map((message) => {
-                    const date = new Date(message.timeStamp);
+                    const messageDate = new Date(message.timeStamp);
+                    const thisDate = new Date();
+                    let result : string;
+                    const diffInMilliseconds: number = thisDate.getTime() - messageDate.getTime();
+                    const diffInMinutes: number = Math.floor(diffInMilliseconds / 1000 / 60);
+                    const diffInHours: number = Math.floor(diffInMilliseconds / 1000 / 60 / 60);
+                    const diffInDays: number = Math.floor(diffInMilliseconds / 1000 / 60 / 60 / 24);
+                    console.log(messageDate.getDate());
+                    if(diffInMinutes < 1)
+                        result = "sada";
+                    else if(diffInMinutes < 60)
+                        result = "pre " + diffInMinutes.toString() + " minuta";
+                    else if(diffInHours < 24 && diffInHours >= 1)
+                        result = "pre " + diffInHours.toString() + " sati";
+                    else if(diffInDays >=1 && diffInDays <= 5)
+                        result = "pre " + diffInDays.toString() + " dana";
+                    else
+                        result = messageDate.toLocaleDateString();
                     if(message.senderId === storageService.getUserInfo()?.id)
                         return (<div className="message own">
                                     <div className="texts">
-                                        <p>{message.content}</p>
-                                        <span>{date.toLocaleTimeString() + " " + date.toLocaleDateString()}</span>
+                                        <p style={{width: "fit-content"}}>{message.content}</p>
+                                        <span style={{alignSelf: "flex-end", display: "inline-flex"}}>
+                                        <span>{message.isRead ? <i className="pi pi-eye" style={{fontSize: "0.8rem"}}></i> : <i className="pi pi-eye-slash" style={{fontSize: "0.8rem"}}></i>}</span>
+                                        &nbsp;
+                                        <span>{result}</span>
+                                        </span>
                                     </div>
                                 </div>)
                     else
                     return (<div className="message">
                         <div className="texts">
-                            <p>{message.content}</p>
-                            <span>{date.toLocaleTimeString() + " " + date.toLocaleDateString()}</span>
+                            <p style={{width: "fit-content"}}>{message.content}</p>
+                            <span>{result}</span>
                         </div>
                     </div>)
                 })

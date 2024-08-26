@@ -13,11 +13,5 @@ namespace PMFWikipedia.API.Controllers
         {
             _messageBL = messageBL;
         }
-
-        [HttpPost("Read")]
-        public async Task<IActionResult> SetMessageAsRead(ChatIdModel chatId)
-        {
-            return Ok(await _messageBL.SetMessageAsRead(chatId.Id));
-        }
     }
 }

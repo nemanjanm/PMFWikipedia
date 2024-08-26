@@ -15,13 +15,14 @@ namespace PMFWikipedia.ImplementationsBL
         private readonly IMessageDAL _messageDAL;
         private readonly IMapper _mapper;
         private readonly IJWTService _jwtService;
-
-        public ChatBL(IChatDAL chatDAL, IMessageDAL messageDAL, IMapper mapper, IJWTService jwtservice) 
+        private readonly IUserDAL _userDAL;
+        public ChatBL(IChatDAL chatDAL, IMessageDAL messageDAL, IMapper mapper, IJWTService jwtservice, IUserDAL userDAL)
         {
             _chatDAL = chatDAL;
             _messageDAL = messageDAL;
             _mapper = mapper;
             _jwtService = jwtservice;
+            _userDAL = userDAL;
         }
 
         public async Task<ActionResultResponse<List<ChatInfo>>> GetAllChats(long id)
@@ -33,6 +34,7 @@ namespace PMFWikipedia.ImplementationsBL
             {
                 var c = new ChatInfo();
                 c.Id = chat.Id;
+                c.TimeStamp = chat.DateModified;
                 if (chat.User1 != null && chat.User2 != null)
                 {
                     c.User1Id = (long)chat.User1;
@@ -91,6 +93,8 @@ namespace PMFWikipedia.ImplementationsBL
 
             Chat chat =  await _chatDAL.GetChatId(user1Id, user2Id);
 
+
+            //MAPIRAJ OVO
             if (chat == null)
             {
                 Chat c = new Chat();
@@ -108,6 +112,12 @@ namespace PMFWikipedia.ImplementationsBL
                 await _messageDAL.Insert(m);
                 await _messageDAL.SaveChangesAsync();
 
+                User u = await _userDAL.GetById(user1Id);
+                var userReturn = _mapper.Map<UserViewModel>(u);
+
+                cvm.User1Id = user1Id;
+                cvm.User2Id = user2Id;
+                cvm.User = userReturn;
                 cvm.Id = m.Id;
                 cvm.SenderId = user1Id;
                 cvm.ChatId = c.Id;
@@ -130,6 +140,12 @@ namespace PMFWikipedia.ImplementationsBL
                 await _messageDAL.Insert(m);
                 await _messageDAL.SaveChangesAsync();
 
+                User u = await _userDAL.GetById(user1Id);
+                var userReturn = _mapper.Map<UserViewModel>(u);
+
+                cvm.User1Id = user1Id;
+                cvm.User2Id = user2Id;
+                cvm.User = userReturn;
                 cvm.SenderId = user1Id;
                 cvm.ChatId = chat.Id;
                 cvm.Content = message;

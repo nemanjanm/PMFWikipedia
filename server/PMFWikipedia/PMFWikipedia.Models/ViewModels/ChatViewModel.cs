@@ -8,5 +8,8 @@
         public bool IsRead { get; set; }
         public DateTime TimeStamp { get; set; }
         public long SenderId { get; set; }
+        public long User1Id { get; set; }
+        public long User2Id { get; set; }
+        public UserViewModel? User { get; set; }
     }
 }

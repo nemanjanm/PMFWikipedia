@@ -49,6 +49,16 @@ namespace PMFWikipedia.SignalR
             }
         }
 
+        public async Task MarkAsRead(MarkAsReadInfo info)
+        {
+            ActionResultResponse<long> response = await _messageBL.SetMessageAsRead(info.Id, info.MyId);
+            ActionResultResponse<string> response2 = await _userBL.GetConnectionId(response.Data);
+            if (response.Data != null)
+            {
+                await Clients.Client(response2.Data).SendAsync("MarkMessagesAsRead", response.Data);
+            }
+        }
+
         public async Task DeleteConnId(UserConnection conn)
         {
             await _userBL.ChangeConnectionId(conn.MyId, "");
