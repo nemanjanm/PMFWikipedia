@@ -16,10 +16,10 @@ namespace PMFWikipedia.ImplementationsBL
             _subjectDAL = subjectBL;
             _mapper = mapper;
         }
-        public async Task<ActionResultResponse<List<SubjectViewModel>>> GetAllSubjects()
+        public async Task<ActionResultResponse<List<SubjectViewModel>>> GetAllSubjects(long programId)
         {
             List<Subject> subjects = new List<Subject>();
-            subjects = await _subjectDAL.GetAll();
+            subjects = await _subjectDAL.GetByProgramId(programId);
             List<SubjectViewModel> viewModel = new List<SubjectViewModel>();
 
             foreach (Subject subject in subjects)

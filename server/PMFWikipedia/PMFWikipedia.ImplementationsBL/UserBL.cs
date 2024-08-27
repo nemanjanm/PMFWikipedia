@@ -218,16 +218,12 @@ namespace PMFWikipedia.ImplementationsBL
             return new ActionResultResponse<string>("Success", true, "Successfully changed photo");
 
         }
-
-        
-
-        public async Task<ActionResultResponse<List<UserViewModel>>> GetUsers()
+        public async Task<ActionResultResponse<List<UserViewModel>>> GetUsers(long programId)
         {
             var id = long.Parse(_jwtService.GetUserId());
-            var program = int.Parse(_jwtService.GetUserProgram());
 
             List<UserViewModel> users = new List<UserViewModel>();
-            var realUsers = await _userDAL.GetAllByFilter(x => x.Program == program && x.Id != id && x.Verified);
+            var realUsers = await _userDAL.GetAllByFilter(x => x.Program == programId && x.Id != id && x.Verified);
             if(realUsers == null)
                 return new ActionResultResponse<List<UserViewModel>>(null, false, "There aro no useres yet");
 

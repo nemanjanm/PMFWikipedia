@@ -10,8 +10,8 @@ const headers2 = {
     "Authorization" : "Bearer "+ storageService.getToken()
 };
 class UserService{
-    async getAllUsers(){
-        const realUrl = `${getUrl}User/GetAllUsers`
+    async getAllUsers(programId: number){
+        const realUrl = `${getUrl}User/GetAllUsers?programId=${programId}`
         const response = await fetch(realUrl, {
             method: "GET",
             headers: headers

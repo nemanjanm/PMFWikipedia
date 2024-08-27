@@ -9,7 +9,7 @@ export function PanelHelper()
     const items : any = [];
     programmes.forEach((p: any, index: number) => {
         const item = {label: p.name, id: p.id, icon: "pi pi-book", command: () => {
-            navigate("/profilna-strana")
+            navigate(`/predmeti/${p.id}`);
         }}
         if(p.id !== storageService.getUserInfo()?.program)
             items.push(item);

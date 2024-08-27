@@ -17,7 +17,7 @@ import { TreeHelper } from "../components/TreeHelper/TreeHelper";
 import "./SubjectPage.css"
 import { SubjectInfo } from "../models/SubjectInfo";
 import { subjectService } from "../services/SubjectService";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { socketService } from "../services/SocketService";
 function SubjectsPage(){
 
@@ -36,6 +36,8 @@ function SubjectsPage(){
           window.removeEventListener('unload', handleUnload);
         };
     }, []);
+    const params = useParams();
+    
     const programNumber = storageService.getUserInfo()?.program;
     const program = getName(programNumber);
     const [users, setUsers] = useState<Array<LoginInfo>>();
@@ -48,16 +50,19 @@ function SubjectsPage(){
     const [subjects, setSubjects] = useState<Array<SubjectInfo>>();
     const [tree, setTree] = useState<Array<any>>();
     const navigate = useNavigate();
-    useEffect(() => {  
+    
+
+
+    useEffect(() => { 
         async function getUsers(){
             setLoader(true);
-            const response = await userService.getAllUsers();
+            const response = await userService.getAllUsers(Number(params.id));
             if(response.status)
             {
                 setUsers(response.data);
             }
 
-            const response2 = await subjectService.getSubjects();
+            const response2 = await subjectService.getSubjects(Number(params.id));
             if(response.status){
                 setSubjects(response2.data);
                 setTree(TreeHelper(response2.data));
@@ -66,12 +71,8 @@ function SubjectsPage(){
             setLoader(false);
         }
         getUsers()
-    }, [temp])
-
-    function handleYear(e: any){
-
-    }
-
+    }, [params]);
+    
     function handleUser(e: any){
         setPreviewUser(e);
         setVisible(true);

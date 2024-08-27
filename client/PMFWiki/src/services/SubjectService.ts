@@ -8,8 +8,8 @@ const headers = {
 };
 
 class SubjectService{
-    async getSubjects(){
-        const realUrl = `${getUrl}`
+    async getSubjects(programId: number){
+        const realUrl = `${getUrl}?programId=${programId}`
         const response = await fetch(realUrl, {
             method: "GET",
             headers: headers

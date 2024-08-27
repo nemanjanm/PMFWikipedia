@@ -17,9 +17,9 @@ namespace PMFWikipedia.API.Controllers
             _subjectBL = subjectBL;
         }
         [HttpGet]
-        public async Task<IActionResult> GetAllSubjects()
+        public async Task<IActionResult> GetAllSubjects(long programId)
         {
-            return Ok(await _subjectBL.GetAllSubjects());
+            return Ok(await _subjectBL.GetAllSubjects(programId));
         }
 
     }

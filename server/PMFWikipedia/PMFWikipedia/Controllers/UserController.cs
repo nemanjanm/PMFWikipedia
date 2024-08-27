@@ -24,9 +24,9 @@ namespace PMFWikipedia.API.Controllers
         }
 
         [HttpGet("GetAllUsers")]
-        public async Task<IActionResult> GetUsers()
+        public async Task<IActionResult> GetUsers(long programId)
         {
-            return Ok(await _userBL.GetUsers());
+            return Ok(await _userBL.GetUsers(programId));
         }
         [HttpGet("GetUser")]
         public async Task<IActionResult> GetUser(long id)

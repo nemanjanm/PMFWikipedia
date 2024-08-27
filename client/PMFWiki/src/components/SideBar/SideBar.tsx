@@ -60,7 +60,7 @@ function SideBar(){
             label: program,
             icon: 'pi pi-book',
             command: () => {
-                navigate("/predmeti")
+                navigate(`/predmeti/${storageService.getUserInfo()?.program}`);
             },
         },
         {

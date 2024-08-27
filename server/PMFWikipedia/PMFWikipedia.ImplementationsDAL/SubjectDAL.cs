@@ -1,4 +1,5 @@
-﻿using PMFWikipedia.InterfacesDAL;
+﻿using Microsoft.EntityFrameworkCore;
+using PMFWikipedia.InterfacesDAL;
 using PMFWikipedia.Models.Entity;
 
 namespace PMFWikipedia.ImplementationsDAL
@@ -7,6 +8,11 @@ namespace PMFWikipedia.ImplementationsDAL
     {
         public SubjectDAL(PMFWikiContext context) : base(context)
         {
+        }
+
+        public async Task<List<Subject>?> GetByProgramId(long id)
+        {
+            return await table.Where(x=> x.ProgramId == id).ToListAsync();
         }
     }
 }
