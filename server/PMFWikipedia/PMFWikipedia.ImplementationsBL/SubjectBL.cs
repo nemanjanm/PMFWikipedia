@@ -31,5 +31,13 @@ namespace PMFWikipedia.ImplementationsBL
 
             return new ActionResultResponse<List<SubjectViewModel>>(viewModel, true, "");
         }
+
+        public async Task<ActionResultResponse<SubjectViewModel>> GetSubject(long Id)
+        {
+            var subject = await _subjectDAL.GetById(Id);
+            SubjectViewModel svm = _mapper.Map<SubjectViewModel>(subject);
+
+            return new ActionResultResponse<SubjectViewModel>(svm, true, "");
+        }
     }
 }

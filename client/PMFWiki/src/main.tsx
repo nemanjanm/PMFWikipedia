@@ -20,6 +20,7 @@ import SubjectsPage from './pages/SubjectsPage'
 import Messages from './pages/Messages'
 import React from 'react'
 import App from './App'
+import SubjectPage from './pages/SubjectPage'
 
 const isAuthenticated = () => {
   return storageService.getToken();
@@ -69,8 +70,12 @@ const router = createBrowserRouter([
     element: isAuthenticated() ? <StartPage/> : <Navigate to="/Prijava"/>,
   },
   {
-    path: "/predmeti",
+    path: "/predmeti/:id?",
     element: isAuthenticated() ? <SubjectsPage/> : <Navigate to="/Prijava"/>,
+  },
+  {
+    path: "/predmet/:id?",
+    element: isAuthenticated() ? <SubjectPage/> : <Navigate to="/Prijava"/>,
   },
   {
     path: "/profilna-strana/:id?",

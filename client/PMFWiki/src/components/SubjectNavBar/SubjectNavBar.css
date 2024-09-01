@@ -1,0 +1,10 @@
+.border{
+    border-radius: 2cap;
+}
+.border .p-menubar {
+    border-radius: inherit;
+}
+
+.border ul.p-menubar-root-list{
+    margin-bottom: 0cap;
+}

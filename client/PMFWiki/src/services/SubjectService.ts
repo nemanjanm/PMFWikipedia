@@ -19,6 +19,17 @@ class SubjectService{
         return(data);
         
     }
+
+    async getSubject(Id: number){
+        const realUrl = `${getUrl}/subject?Id=${Id}`
+        const response = await fetch(realUrl, {
+            method: "GET",
+            headers: headers
+        });
+
+        const data = await response.json();
+        return(data);
+    }
 }
 
 export const subjectService = new SubjectService();
