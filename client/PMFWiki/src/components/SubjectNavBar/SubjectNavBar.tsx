@@ -31,30 +31,30 @@ function NavBar(){
 
     const items : MenuItem[]= [
         {
-            label: "Kolokvijumi",
-            icon: 'pi pi-user',
+            label: "Wikipedia",
             visible: visible,
             template: itemRenderer,
             command: () => {
-                navigate("/profilna-strana")
+                if(location.pathname.includes("kolokvijum") || location.pathname.includes("ispit"))
+                    navigate(String(location.pathname).split('/').slice(0, -1).join('/') + "/wiki")  
+            }
+        },
+        {
+            label: "Kolokvijumi",
+            visible: visible,
+            template: itemRenderer,
+            command: () => {
+                if(location.pathname.includes("wiki") || location.pathname.includes("ispit"))
+                    navigate(String(location.pathname).split('/').slice(0, -1).join('/') + "/kolokvijum")  
             }
         },
         {
             label: "Ispiti",
-            icon: 'pi pi-user',
             visible: visible,
             template: itemRenderer,
             command: () => {
-                navigate("/profilna-strana")
-            }
-        },
-        {
-            label: "Wikipedia",
-            icon: 'pi pi-user',
-            visible: visible,
-            template: itemRenderer,
-            command: () => {
-                navigate("/profilna-strana")
+                if(location.pathname.includes("wiki") || location.pathname.includes("kolokvijum"))
+                    navigate(String(location.pathname).split('/').slice(0, -1).join('/') + "/ispit")  
             }
         }
     ];
@@ -63,7 +63,6 @@ function NavBar(){
         <div className="border" style={{width: "100%"}}>
             <Menubar className="d-flex justify-content-center" model={items}/>    
         </div> 
-        <Outlet></Outlet>
         </>
 }
 

@@ -62,7 +62,6 @@ function NavBar(){
         <div style={{width: "100%"}}>
             <Menubar className="d-flex justify-content-between" model={items} start={start}/>    
         </div> 
-        <Outlet></Outlet>
         </>
 }
 

@@ -10,12 +10,14 @@ namespace PMFWikipedia.SignalR
         private readonly IUserBL _userBL;
         private readonly IMessageBL _messageBL;
         private readonly IChatBL _chatBL;
-        public ChatHub(SharedDb shared, IUserBL userBL, IMessageBL messageBL, IChatBL chatBL)
+        private readonly IPostBL _postBL;
+        public ChatHub(SharedDb shared, IUserBL userBL, IMessageBL messageBL, IChatBL chatBL, IPostBL postBL)
         {
             _userBL = userBL;
             _shared = shared;
             _messageBL = messageBL;
             _chatBL = chatBL;
+            _postBL = postBL;
         }
 
         public async Task JoinChat(UserConnection conn)
@@ -57,6 +59,17 @@ namespace PMFWikipedia.SignalR
             {
                 await Clients.Client(response2.Data).SendAsync("MarkMessagesAsRead", response.Data);
             }
+        }
+
+        public async Task SendNotfication(PostModel post)
+        {
+            ActionResultResponse<PostModel> response = await _postBL.AddPost(post);
+            //TABELA NOTIFIKACIJE DA SE INSERTUJE
+            /*ActionResultResponse<string> response2 = await _userBL.GetConnectionId(response.Data);
+            if (response.Data != null)
+            {
+                await Clients.Client(response2.Data).SendAsync("MarkMessagesAsRead", response.Data);
+            }*/
         }
 
         public async Task DeleteConnId(UserConnection conn)

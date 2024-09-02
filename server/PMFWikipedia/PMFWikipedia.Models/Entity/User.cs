@@ -12,6 +12,8 @@ namespace PMFWikipedia.Models.Entity
             ChatUser1Navigations = new HashSet<Chat>();
             ChatUser2Navigations = new HashSet<Chat>();
             FavoriteSubjects = new HashSet<FavoriteSubject>();
+            PostAuthorNavigations = new HashSet<Post>();
+            PostLastEditedByNavigations = new HashSet<Post>();
         }
 
         public long Id { get; set; }
@@ -35,5 +37,7 @@ namespace PMFWikipedia.Models.Entity
         public virtual ICollection<Chat> ChatUser1Navigations { get; set; }
         public virtual ICollection<Chat> ChatUser2Navigations { get; set; }
         public virtual ICollection<FavoriteSubject> FavoriteSubjects { get; set; }
+        public virtual ICollection<Post> PostAuthorNavigations { get; set; }
+        public virtual ICollection<Post> PostLastEditedByNavigations { get; set; }
     }
 }

@@ -22,6 +22,7 @@ namespace PMFWikipedia.ImplementationsDAL
         public virtual DbSet<Chat> Chats { get; set; } = null!;
         public virtual DbSet<FavoriteSubject> FavoriteSubjects { get; set; } = null!;
         public virtual DbSet<Message> Messages { get; set; } = null!;
+        public virtual DbSet<Post> Posts { get; set; } = null!;
         public virtual DbSet<Subject> Subjects { get; set; } = null!;
         public virtual DbSet<User> Users { get; set; } = null!;
 
@@ -83,6 +84,36 @@ namespace PMFWikipedia.ImplementationsDAL
                     .WithMany(p => p.Messages)
                     .HasForeignKey(d => d.ChatId)
                     .HasConstraintName("FK__Message__ChatId__0E6E26BF");
+            });
+
+            modelBuilder.Entity<Post>(entity =>
+            {
+                entity.ToTable("Post");
+
+                entity.Property(e => e.Content).IsUnicode(false);
+
+                entity.Property(e => e.DateCreated).HasColumnType("datetime");
+
+                entity.Property(e => e.DateModified).HasColumnType("datetime");
+
+                entity.Property(e => e.Title)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.AuthorNavigation)
+                    .WithMany(p => p.PostAuthorNavigations)
+                    .HasForeignKey(d => d.Author)
+                    .HasConstraintName("FK__Post__Author__160F4887");
+
+                entity.HasOne(d => d.LastEditedByNavigation)
+                    .WithMany(p => p.PostLastEditedByNavigations)
+                    .HasForeignKey(d => d.LastEditedBy)
+                    .HasConstraintName("FK__Post__LastEdited__17036CC0");
+
+                entity.HasOne(d => d.SubjectNavigation)
+                    .WithMany(p => p.Posts)
+                    .HasForeignKey(d => d.Subject)
+                    .HasConstraintName("FK__Post__Subject__17F790F9");
             });
 
             modelBuilder.Entity<Subject>(entity =>

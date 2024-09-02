@@ -1,0 +1,14 @@
+#config_menu{
+    height: auto;
+}
+button{
+    border: 0;
+    margin: 0.1rem;
+}
+
+button:hover{
+    background-color: #60a5fa !important;
+}
+.p-panel-content{
+    border-radius: 0;
+}

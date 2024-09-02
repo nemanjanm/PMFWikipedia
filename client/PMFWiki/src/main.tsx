@@ -21,6 +21,9 @@ import Messages from './pages/Messages'
 import React from 'react'
 import App from './App'
 import SubjectPage from './pages/SubjectPage'
+import Wikipedia from './components/Wikipedia/Wikipedia'
+import Kolokvijum from './components/Kolokvijum/Kolokvijum'
+import Ispit from './components/Ispit/Ispit'
 
 const isAuthenticated = () => {
   return storageService.getToken();
@@ -76,6 +79,20 @@ const router = createBrowserRouter([
   {
     path: "/predmet/:id?",
     element: isAuthenticated() ? <SubjectPage/> : <Navigate to="/Prijava"/>,
+    children: [
+      {
+        path: "wiki",
+        element: <Wikipedia/>
+      },
+      {
+        path: "kolokvijum",
+        element: <Kolokvijum/>
+      },
+      {
+        path: "ispit",
+        element: <Ispit/>
+      }
+    ]
   },
   {
     path: "/profilna-strana/:id?",

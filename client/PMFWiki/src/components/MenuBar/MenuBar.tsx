@@ -36,7 +36,6 @@ export default function MenuBar() {
     ];
     
     const start = <div className=""><p style={{fontSize: "40px", float:"left", textAlign:"center", fontFamily: "sans-serif", color:"rgb(255, 255, 255, 0.87)"}} className="d-flex justify-content-center"><Link to="/">PMFWiki</Link></p></div>
-    //<img src="../src/assets/logo4.png" height="76" style={{margin: "10px"}}></img>
     return (
         <>
             <div>

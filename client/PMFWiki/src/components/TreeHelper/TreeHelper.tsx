@@ -12,7 +12,7 @@ export function TreeHelper(props : [])
             ).map((p: any, index3: number) => {
                 return {
                     key: index +"-"+ index2 +"-"+ index3,
-                    label: <a href={`/predmet/${p.id}`} className="" style={{padding: "20px"}}>{p.name}</a>,
+                    label: <a href={`/predmet/${p.id}/wiki`} className="" style={{padding: "20px"}}>{p.name}</a>,
                     id: p.id,
                     url: "/profilna-strana"
                 }

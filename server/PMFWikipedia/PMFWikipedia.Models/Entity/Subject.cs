@@ -10,6 +10,7 @@ namespace PMFWikipedia.Models.Entity
         public Subject()
         {
             FavoriteSubjects = new HashSet<FavoriteSubject>();
+            Posts = new HashSet<Post>();
         }
 
         public long Id { get; set; }
@@ -19,5 +20,6 @@ namespace PMFWikipedia.Models.Entity
         public int Semester { get; set; }
 
         public virtual ICollection<FavoriteSubject> FavoriteSubjects { get; set; }
+        public virtual ICollection<Post> Posts { get; set; }
     }
 }
