@@ -11,7 +11,7 @@ namespace PMFWikipedia.Common.AutoMapper
         {
             CreateMap<Message, ChatViewModel>();
             CreateMap<RegisterInfo, User>();
-            CreateMap<Post, PostModel>();
+            CreateMap<PostModel, Post>();
             CreateMap<User, UserViewModel>()
                 .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => src.FirstName + " " + src.LastName));
             CreateMap<FavoriteSubject, FavoriteSubjectViewModel>()

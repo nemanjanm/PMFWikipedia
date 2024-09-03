@@ -289,7 +289,6 @@ function Messages() {
                     const diffInMinutes: number = Math.floor(diffInMilliseconds / 1000 / 60);
                     const diffInHours: number = Math.floor(diffInMilliseconds / 1000 / 60 / 60);
                     const diffInDays: number = Math.floor(diffInMilliseconds / 1000 / 60 / 60 / 24);
-                    console.log(messageDate.getDate());
                     if(diffInMinutes < 1)
                         result = "sada";
                     else if(diffInMinutes < 60)

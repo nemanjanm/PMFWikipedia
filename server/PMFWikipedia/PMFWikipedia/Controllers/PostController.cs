@@ -22,5 +22,15 @@ namespace PMFWikipedia.API.Controllers
         {
             return Ok(await _postBl.AddPost(post));
         }
+        [HttpGet]
+        public async Task<IActionResult> GetAllPosts(long subjectId)
+        {
+            return Ok(await _postBl.GetAllPosts(subjectId));
+        }
+        [HttpGet("single")]
+        public async Task<IActionResult> GetPost(long postId)
+        {
+            return Ok(await _postBl.GetPost(postId));
+        }
     }
 }

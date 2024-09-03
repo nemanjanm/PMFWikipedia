@@ -28,6 +28,8 @@ namespace PMFWikipedia.ServiceInitializer
             services.AddScoped<IFavoriteSubjectDAL, FavoriteSubjectDAL>();
             services.AddScoped<IMessageDAL, MessageDAL>();
             services.AddScoped<IChatDAL, ChatDAL>();
+            services.AddScoped<IPostDAL, PostDAL>();
+            services.AddScoped<INotificationDAL, NotificationDAL>();
             return services;
         }
 
@@ -39,6 +41,8 @@ namespace PMFWikipedia.ServiceInitializer
             services.AddScoped<IFavoriteSubjectBL, FavoriteSubjectBL>();
             services.AddScoped<IJWTService, JWTService>();
             services.AddScoped<IMessageBL, MessageBL>();
+            services.AddScoped<IPostBL, PostBL>();
+            services.AddScoped<INotificationBL, NotificationBL>();
             return services;
         }
 

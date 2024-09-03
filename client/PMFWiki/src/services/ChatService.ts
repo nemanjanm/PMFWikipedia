@@ -17,7 +17,6 @@ class ChatService{
 
         const data = await response.json();
         return(data);
-        
     }
 
     async getUnreadMessages(){

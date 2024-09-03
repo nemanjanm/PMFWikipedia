@@ -22,6 +22,9 @@ class SocketService{
             messageEmitter.emit('markAsRead', id);
         })
 
+        this.conn.on("ReceiveNotification", (authorName, subjectName, postId) => {
+            messageEmitter.emit("increaseNotification", 1);
+        })
         this.conn.on("ReceiveSpecificMessage", (chatviewmodel) => {
             if(chatviewmodel.data.chatId !== undefined)
             {
@@ -77,6 +80,9 @@ class SocketService{
         await this.conn.invoke("SendMessage",  {message, secondid, myid});
     }
 
+    async sendNotification(title : any, content : any, author : any, subject : any){
+        await this.conn.invoke("SendNotfication", {title, content, author, subject});
+    }
     async markAsRead(id : any, myId: any){
         await this.conn.invoke("MarkAsRead",  {id, myId});
     }

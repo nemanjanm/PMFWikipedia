@@ -12,6 +12,7 @@ import { Avatar } from 'primereact/avatar';
 import { MenuItem } from "primereact/menuitem";
 import { enviorment } from "../../enviorment";
 import { useEffect, useState } from "react";
+import { socketService } from "../../services/SocketService";
 
 function NavBar(){
 
@@ -43,13 +44,20 @@ function NavBar(){
             visible: visible,
             template: itemRenderer,
             command: () => {
-                navigate("/profilna-strana")
+                if(location.pathname.includes("profilna-strana"))
+                {
+                    navigate("/profilna-strana")
+                    window.location.reload();
+                }
+                else
+                    navigate("/profilna-strana")
             }
         },
         {
             label: "odjava",
             icon: 'pi pi-sign-out',
             command: () => {
+                socketService.deleteConnection(storageService.getUserInfo()?.id);
                 storageService.deleteCredentials();
                 navigate(0);
             }

@@ -2,6 +2,7 @@
 using PMFWikipedia.InterfacesBL;
 using PMFWikipedia.Models;
 using PMFWikipedia.Models.Entity;
+using PMFWikipedia.Models.ViewModels;
 namespace PMFWikipedia.SignalR
 {
     public class ChatHub : Hub
@@ -11,13 +12,15 @@ namespace PMFWikipedia.SignalR
         private readonly IMessageBL _messageBL;
         private readonly IChatBL _chatBL;
         private readonly IPostBL _postBL;
-        public ChatHub(SharedDb shared, IUserBL userBL, IMessageBL messageBL, IChatBL chatBL, IPostBL postBL)
+        private readonly IFavoriteSubjectBL _favoriteSubjectBL;
+        public ChatHub(SharedDb shared, IUserBL userBL, IMessageBL messageBL, IChatBL chatBL, IPostBL postBL, IFavoriteSubjectBL favoriteSubjectBL)
         {
             _userBL = userBL;
             _shared = shared;
             _messageBL = messageBL;
             _chatBL = chatBL;
             _postBL = postBL;
+            _favoriteSubjectBL = favoriteSubjectBL; 
         }
 
         public async Task JoinChat(UserConnection conn)
@@ -63,13 +66,13 @@ namespace PMFWikipedia.SignalR
 
         public async Task SendNotfication(PostModel post)
         {
-            ActionResultResponse<PostModel> response = await _postBL.AddPost(post);
-            //TABELA NOTIFIKACIJE DA SE INSERTUJE
-            /*ActionResultResponse<string> response2 = await _userBL.GetConnectionId(response.Data);
-            if (response.Data != null)
+            ActionResultResponse<PostViewModel> response = await _postBL.AddPost(post);
+            ActionResultResponse<List<FavoriteSubject>> favoriteSubjects = await _favoriteSubjectBL.GetOnlineUsers(post.Subject);
+            foreach (var item in favoriteSubjects.Data)
             {
-                await Clients.Client(response2.Data).SendAsync("MarkMessagesAsRead", response.Data);
-            }*/
+                if (item.UserId != post.Author)
+                    await Clients.Client(item.User.ConnectionId).SendAsync("ReceiveNotification", response.Data);
+            }
         }
 
         public async Task DeleteConnId(UserConnection conn)

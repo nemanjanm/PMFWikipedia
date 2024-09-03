@@ -10,26 +10,42 @@ import { useEffect, useState } from 'react';
 import { messageEmitter } from '../../services/EventEmmiter';
 import { socketService } from '../../services/SocketService';
 import { chatService } from '../../services/ChatService';
+import { notificationService } from '../../services/NotificationService';
 
 function SideBar(){
     const navigate = useNavigate();
     const programNumber = storageService.getUserInfo()?.program;
-    const [unread, setUnread] = useState<number>(0);
+    const [unreadMessages, setUnreadMessages] = useState<number>(0);
+    const [unreadNotifications, setUnreadNotifications] = useState<number>(0);
     const [temp, setTemp] = useState();
 
     useEffect(() => {
         async function getChats(){
             const response = await chatService.getUnreadMessages();
             if(response.status){
-                setUnread(response.data);
+                setUnreadMessages(response.data);
+                const response2 = await notificationService.getNotifications();
+                if(response2.status){
+                    setUnreadNotifications(response2.data);
+                }
             }
         }
         getChats();
     },[temp])
     
     useEffect(() => {
+        async function getNotification(){
+            const response = await chatService.getUnreadMessages();
+            if(response.status){
+                setUnreadMessages(response.data);
+            }
+        }
+        getNotification();
+    },[temp])
+
+    useEffect(() => {
         const handleNewMessage = () => {
-            setUnread( unread + 1 );
+            setUnreadMessages( unreadMessages + 1 );
 
         };
 
@@ -38,12 +54,12 @@ function SideBar(){
         return () => {
             messageEmitter.off('increaseMessage', handleNewMessage);
         };
-    }, [unread]);
+    }, [unreadMessages]);
 
     useEffect(() => {
         const handleNewMessage = (number: number) => {
             console.log(number);
-            setUnread( unread - number );
+            setUnreadMessages( unreadMessages - number );
         };
 
         messageEmitter.on('decreaseMessages', handleNewMessage);
@@ -51,7 +67,19 @@ function SideBar(){
         return () => {
             messageEmitter.off('decreaseMessages', handleNewMessage);
         };
-    }, [unread]);
+    }, [unreadMessages]);
+
+    useEffect(() => {
+        const handleNotification = () => {
+            setUnreadNotifications( unreadNotifications + 1);
+        };
+
+        messageEmitter.on('increaseNotification', handleNotification);
+
+        return () => {
+            messageEmitter.off('increaseNotification', handleNotification);
+        };
+    }, [unreadNotifications]);
 
     const program = getName(programNumber);
 
@@ -64,14 +92,15 @@ function SideBar(){
             },
         },
         {
-            label: <>{'Obaveštenja'} <Badge severity="danger" value={null} /></>,
+            label: <>{'Obaveštenja'} <Badge severity="danger" value={unreadNotifications} /></>,
             icon: 'pi pi-bell',
             command: () => {
+                //ovo da se odkomentarise setUnreadNotifications(0);
                 navigate("/")
             }
         },
         {
-            label: <>{'Poruke'} <Badge severity="danger" value={unread} /></>,
+            label: <>{'Poruke'} <Badge severity="danger" value={unreadMessages} /></>,
             icon: 'pi pi-inbox',
             command: () => {
                 navigate("/poruke-1")

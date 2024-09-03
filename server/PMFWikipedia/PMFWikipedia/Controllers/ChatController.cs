@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using PMFWikipedia.ImplementationsBL;
 using PMFWikipedia.InterfacesBL;
 
 namespace PMFWikipedia.API.Controllers

@@ -7,6 +7,11 @@ namespace PMFWikipedia.Models.Entity
 {
     public partial class Post
     {
+        public Post()
+        {
+            Notifications = new HashSet<Notification>();
+        }
+
         public long Id { get; set; }
         public string Title { get; set; } = null!;
         public string Content { get; set; } = null!;
@@ -21,5 +26,6 @@ namespace PMFWikipedia.Models.Entity
         public virtual User? AuthorNavigation { get; set; }
         public virtual User? LastEditedByNavigation { get; set; }
         public virtual Subject? SubjectNavigation { get; set; }
+        public virtual ICollection<Notification> Notifications { get; set; }
     }
 }

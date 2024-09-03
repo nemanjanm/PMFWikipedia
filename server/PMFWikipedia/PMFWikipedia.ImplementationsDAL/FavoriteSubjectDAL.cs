@@ -14,5 +14,16 @@ namespace PMFWikipedia.ImplementationsDAL
         {
             return await table.Where(x => x.UserId == id).Include(x => x.Subject).ToListAsync();
         }
+        public async Task<List<FavoriteSubject>> GetOnlineUsers(long id)
+        {
+            return await table.Include(c =>  c.User).
+                Where(x=> x.SubjectId == id && x.User.ConnectionId != "").
+                Select(c => new FavoriteSubject
+                {
+                    Id = c.Id,
+                    User = c.User
+                })
+                .ToListAsync();
+        }
     }
 }

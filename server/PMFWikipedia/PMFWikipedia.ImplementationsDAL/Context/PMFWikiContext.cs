@@ -22,6 +22,7 @@ namespace PMFWikipedia.ImplementationsDAL
         public virtual DbSet<Chat> Chats { get; set; } = null!;
         public virtual DbSet<FavoriteSubject> FavoriteSubjects { get; set; } = null!;
         public virtual DbSet<Message> Messages { get; set; } = null!;
+        public virtual DbSet<Notification> Notifications { get; set; } = null!;
         public virtual DbSet<Post> Posts { get; set; } = null!;
         public virtual DbSet<Subject> Subjects { get; set; } = null!;
         public virtual DbSet<User> Users { get; set; } = null!;
@@ -84,6 +85,39 @@ namespace PMFWikipedia.ImplementationsDAL
                     .WithMany(p => p.Messages)
                     .HasForeignKey(d => d.ChatId)
                     .HasConstraintName("FK__Message__ChatId__0E6E26BF");
+            });
+
+            modelBuilder.Entity<Notification>(entity =>
+            {
+                entity.ToTable("Notification");
+
+                entity.Property(e => e.DateCreated).HasColumnType("datetime");
+
+                entity.Property(e => e.DateModified).HasColumnType("datetime");
+
+                entity.HasOne(d => d.AuthorNavigation)
+                    .WithMany(p => p.NotificationAuthorNavigations)
+                    .HasForeignKey(d => d.Author)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__Notificat__Autho__42E1EEFE");
+
+                entity.HasOne(d => d.PostNavigation)
+                    .WithMany(p => p.Notifications)
+                    .HasForeignKey(d => d.Post)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__Notificati__Post__44CA3770");
+
+                entity.HasOne(d => d.ReceiverNavigation)
+                    .WithMany(p => p.NotificationReceiverNavigations)
+                    .HasForeignKey(d => d.Receiver)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__Notificat__Recei__45BE5BA9");
+
+                entity.HasOne(d => d.SubjectNavigation)
+                    .WithMany(p => p.Notifications)
+                    .HasForeignKey(d => d.Subject)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__Notificat__Subje__43D61337");
             });
 
             modelBuilder.Entity<Post>(entity =>

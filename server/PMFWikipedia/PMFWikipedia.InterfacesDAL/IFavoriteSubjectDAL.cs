@@ -5,5 +5,6 @@ namespace PMFWikipedia.InterfacesDAL
     public interface IFavoriteSubjectDAL : IBaseDAL<FavoriteSubject>
     {
         public Task<List<FavoriteSubject>> GetSubjectsByUser(long id);
+        public Task<List<FavoriteSubject>> GetOnlineUsers(long id);
     }
 }

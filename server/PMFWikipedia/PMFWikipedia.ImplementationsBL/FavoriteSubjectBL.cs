@@ -37,5 +37,12 @@ namespace PMFWikipedia.ImplementationsBL
 
             return new ActionResultResponse<List<FavoriteSubjectViewModel>>(favoriteSubjects, true, "");
         }
+
+        public async Task<ActionResultResponse<List<FavoriteSubject>>> GetOnlineUsers(long Id)
+        {
+            List<FavoriteSubject> favoriteSubjects = await _favoriteSubjectDAL.GetOnlineUsers(Id);
+            return new ActionResultResponse<List<FavoriteSubject>>(favoriteSubjects, true, "");
+
+        }
     }
 }
