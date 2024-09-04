@@ -17,6 +17,17 @@ class NotificationService{
         const data = await response.json();
         return(data);
     }
+
+    async getAllNotifications(){
+        const realUrl = `${getUrl}/all-notification?id=${storageService.getUserInfo()?.id}`
+        const response = await fetch(realUrl, {
+            method: "GET",
+            headers: headers
+        });
+
+        const data = await response.json();
+        return(data);
+    }
 }
 
 export const notificationService = new NotificationService()

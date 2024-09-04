@@ -39,3 +39,9 @@ div.p-menuitem-content:hover.p-menuitem-link {
 .p-menuitem-content:hover .p-menuitem-link .p-menuitem-icon {
        color: #60a5fa !important;
 }
+
+.sideBar .p-listbox-item{
+    border: solid 0.1rem  #60a5fa ;
+    margin-bottom: 0.2rem;
+    width: 100%;
+}

@@ -52,8 +52,8 @@ function PostPanel(info : any) {
                 </div>
                 </a>
                 <div>
-                    <Button icon="pi pi-pencil" rounded severity="danger" aria-label="Izmeni" />
-                    {!del && <Button icon="pi pi-trash" rounded severity="danger" aria-label="Obriši" />}
+                    <Button className="izmeni" icon="pi pi-pencil" rounded severity="danger" aria-label="Izmeni" />
+                    {!del && <Button className="izmeni" icon="pi pi-trash" rounded severity="danger" aria-label="Obriši" />}
                 </div>
             </div>
         );

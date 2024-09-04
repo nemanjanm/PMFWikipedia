@@ -8,15 +8,19 @@ import { PanelHelper } from '../PanelHelper';
 import { Badge } from 'primereact/badge';
 import { useEffect, useState } from 'react';
 import { messageEmitter } from '../../services/EventEmmiter';
-import { socketService } from '../../services/SocketService';
+import { Sidebar } from 'primereact/sidebar';
 import { chatService } from '../../services/ChatService';
 import { notificationService } from '../../services/NotificationService';
+import { ListBox } from 'primereact/listbox';
+import { NotificationModel } from '../../models/NotificationModel';
 
 function SideBar(){
     const navigate = useNavigate();
     const programNumber = storageService.getUserInfo()?.program;
+    const [visible, setVisible] = useState(false);
     const [unreadMessages, setUnreadMessages] = useState<number>(0);
     const [unreadNotifications, setUnreadNotifications] = useState<number>(0);
+    const [notifications, setNotifications] = useState<Array<NotificationModel>>([]);
     const [temp, setTemp] = useState();
 
     useEffect(() => {
@@ -58,7 +62,6 @@ function SideBar(){
 
     useEffect(() => {
         const handleNewMessage = (number: number) => {
-            console.log(number);
             setUnreadMessages( unreadMessages - number );
         };
 
@@ -94,9 +97,14 @@ function SideBar(){
         {
             label: <>{'Obaveštenja'} <Badge severity="danger" value={unreadNotifications} /></>,
             icon: 'pi pi-bell',
-            command: () => {
+            command: async () => {
+                console.log("KRECE");
+                const response = await notificationService.getAllNotifications();
+                if(response.status)
+                    setNotifications(response.data);
+                setVisible(true);
                 //ovo da se odkomentarise setUnreadNotifications(0);
-                navigate("/")
+                //navigate("/")
             }
         },
         {
@@ -111,8 +119,19 @@ function SideBar(){
             items: PanelHelper(),
         }
     ];
+
+    function showPost(e: any){
+        console.log(e);
+        //e.postId vodi na stranu posta
+    }
+
     return (
         <>
+            {visible && 
+                <Sidebar className='sideBar' visible={visible} onHide={() => setVisible(false)}>
+                    <h2 style={{color: 'white'}}>Obaveštenja</h2>
+                    <ListBox style={{border: 0}} onChange={(e : any) => showPost(e.value)} options={notifications} itemTemplate={(option: any) => `${option.authorName} je dodao nešto u ${option.subjectName}`} className="w-full md:w-14rem" />
+                </Sidebar>}
             <div className='d-flex justify-content-centar' style={{flexShrink: 0,  position: "relative", overflow: 'auto', top: 0, bottom: 0, height: "auto", backgroundColor: "#374151"}}>
                 <PanelMenu style={{height:"100%", width:"100%", border: 0, borderRadius: "0", padding: "0", fontSize: "1vw"}} model={items}/>    
             </div>
