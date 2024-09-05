@@ -52,6 +52,10 @@ namespace PMFWikipedia.ImplementationsDAL
             {
                 entity.ToTable("FavoriteSubject");
 
+                entity.Property(e => e.DateCreated).HasColumnType("datetime");
+
+                entity.Property(e => e.DateModified).HasColumnType("datetime");
+
                 entity.HasOne(d => d.Subject)
                     .WithMany(p => p.FavoriteSubjects)
                     .HasForeignKey(d => d.SubjectId)

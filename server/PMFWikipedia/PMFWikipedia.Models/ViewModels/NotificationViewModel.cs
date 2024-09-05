@@ -2,6 +2,7 @@
 {
     public class NotificationViewModel
     {
+        public long Id { get; set; }
         public string AuthorName { get; set; }
         public long PostId { get; set; }
         public string SubjectName { get; set; }

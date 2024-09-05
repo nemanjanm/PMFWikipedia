@@ -9,6 +9,9 @@ import { FavoriteSubject } from "../models/FavoriteSubject";
 import { ClipLoader } from "react-spinners";
 import { socketService } from "../services/SocketService";
 import { Button } from "primereact/button";
+import { confirmDialog, ConfirmDialog } from 'primereact/confirmdialog';
+import { FavoriteSubjectInfo } from "../models/FavoriteSubjectInfo";
+import "./StartPage.css"
 
 function StartPage(){
 
@@ -44,23 +47,46 @@ function StartPage(){
         getFavoriteSubjects()
     }, [temp])
 
+    const accept = async (e: any) =>{
+        const subject: FavoriteSubjectInfo = {
+            subjectId: e.subjectId,
+            userId: Number(storageService.getUserInfo()?.id)
+        }
+
+        setLoader(true)
+        const response = await favoriteSubjectService.removeFavoriteSubject(subject);
+        if(response.status){
+            navigate(0); 
+        }
+        else{
+            //napisi nesto za gresku
+        }
+    }
+    const confirm = (e : any) => {
+        confirmDialog({
+            message: 'Da li ste sigurni da želite da uklonite predmet iz omiljenih predmeta?',
+            header: 'Ukloni predmet',
+            icon: 'pi pi-info-circle',
+            acceptClassName: 'p-button-danger',
+            rejectLabel: "Odustani",
+            acceptLabel: "Potvrdi",
+            accept: () => accept(e)
+        });
+    };
+
     const [selectedSubject, setSelectedSubject] = useState<FavoriteSubject | null>(null);
     function handleSubject(e: any){
         navigate("/predmet/"+e.value.subjectId+"/wiki");
-    }
-
-    function deletSubject(e: any){
-        console.log(e.subjectId);        
-        //da se prikaze dialog da li sam siguran da zelim da obrisem! pa onda zovem za uklanjanje iz omiljenih i saljem subjectId i userId
     }
     return <>
     <div className="celina" style={{ display: "flex", flexDirection: "column", height: "100vh" }}>
         <NavBar></NavBar>
         <div className="d-flex justify-content-between" style={{flex: 1}}>
             <SideBar></SideBar>
+            <ConfirmDialog />
             {!loader && <div style={{width: "100vh"}}>
                 <h1 style={{textAlign: "center", fontWeight: "bold", marginTop: "10px"}}>Moji predmeti</h1>
-                {favoriteSubjects && <ListBox value={selectedSubject} onChange={(e: ListBoxChangeEvent) => handleSubject(e)} options={favoriteSubjects} itemTemplate={(option: any) => (<div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}> <span>{option.name}</span> <Button style={{border: 0, fontSize: "1rem"}} label="Ukloni" onClick={(e) => {e.stopPropagation(); deletSubject(option);}} /></div>)} className="w-full md:w-14rem" listStyle={{maxHeight: "70vh", fontSize: "1.5rem"}}/>}
+                {favoriteSubjects && <ListBox value={selectedSubject} onChange={(e: ListBoxChangeEvent) => handleSubject(e)} options={favoriteSubjects} itemTemplate={(option: any) => (<div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}> <span>{option.name}</span> <Button style={{border: 0, fontSize: "1rem"}} label="Ukloni" onClick={(e) => {e.stopPropagation(); confirm(option);}} /></div>)} className="w-full md:w-14rem" listStyle={{maxHeight: "70vh", fontSize: "1.5rem"}}/>}
                 {!favoriteSubjects && <p style={{fontSize: "3vw", color: "#374151", textAlign: "center"}}>Trenutno nemate omiljene predmete</p>}
             </div>}
             {loader && <div style={{marginTop: "50px"}}><ClipLoader color="#374151" loading={loader} size={150}></ClipLoader></div>}

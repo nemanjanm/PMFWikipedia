@@ -45,3 +45,12 @@ div.p-menuitem-content:hover.p-menuitem-link {
     margin-bottom: 0.2rem;
     width: 100%;
 }
+
+.unread-notification{
+    font-weight: bold;
+    font-style: italic;
+    color: wheat
+}
+.read-notification{
+    color: white;
+}

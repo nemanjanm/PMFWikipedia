@@ -23,7 +23,7 @@ namespace PMFWikipedia.API.Controllers
         }
 
         [HttpGet("subject")]
-        public async Task<IActionResult> GetAllSubject(long Id)
+        public async Task<IActionResult> GetSubject(long Id)
         {
             return Ok(await _subjectBL.GetSubject(Id));
         }

@@ -1,5 +1,6 @@
 export interface SubjectInfo{
-    subjectId: number;
+    id: number;
     programId: number,
-    name: string
+    name: string,
+    allowed: boolean
 }

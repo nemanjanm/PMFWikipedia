@@ -6,6 +6,7 @@ import { storageService } from "./StorageService";
 const url = `${enviorment.serverUrl}Post`
 const headers = {
 	"Content-Type": "application/json",
+    "Authorization" : "Bearer "+ storageService.getToken()
 };
 
 class PostService{
@@ -20,6 +21,17 @@ class PostService{
         return(data);
 	}
 
+    async deletePost(postId: number){
+        const realUrl = `${url}/Delete?postId=${postId}`
+		const response = await fetch(realUrl ,{
+            method: "POST",
+            headers: headers
+        });
+
+        const data = await response.json();
+        return(data);
+	}
+
 	async getPosts(subjectId: number){
 		const realUrl = `${url}?subjectId=${subjectId}`
 		const response = await fetch(realUrl, {
@@ -27,6 +39,16 @@ class PostService{
             headers: headers
         });
 
+		const data = await response.json();
+        return(data);
+	}
+
+    async getPost(postId: number){
+		const realUrl = `${url}/single?postId=${postId}`
+		const response = await fetch(realUrl, {
+            method: "GET",
+            headers: headers
+        });
 		const data = await response.json();
         return(data);
 	}

@@ -24,6 +24,7 @@ import SubjectPage from './pages/SubjectPage'
 import Wikipedia from './components/Wikipedia/Wikipedia'
 import Kolokvijum from './components/Kolokvijum/Kolokvijum'
 import Ispit from './components/Ispit/Ispit'
+import SinglePostPage from './pages/SinglePostPage'
 
 const isAuthenticated = () => {
   return storageService.getToken();
@@ -93,6 +94,10 @@ const router = createBrowserRouter([
         element: <Ispit/>
       }
     ]
+  },
+  {
+    path: "/post/:id",
+    element: isAuthenticated() ? <SinglePostPage/> : <Navigate to="/Prijava"/>
   },
   {
     path: "/profilna-strana/:id?",

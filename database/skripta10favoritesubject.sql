@@ -3,7 +3,11 @@ BEGIN
 	CREATE TABLE [dbo].[FavoriteSubject](
 		[Id] [bigint] IDENTITY(1,1) NOT NULL,
 		[UserId] [bigint] NOT NULL,
-		[SubjectId] [bigint] NOT NULL
+		[SubjectId] [bigint] NOT NULL,
+		[IsDeleted] [bit] NOT NULL DEFAULT 0,
+		[DateCreated] [datetime] NOT NULL,
+		[DateModified] [datetime] NOT NULL,
+		[LastModifiedBy] [bigint] NOT NULL,
 		CONSTRAINT [PK_FavoriteSubject] PRIMARY KEY CLUSTERED 
 		(
 			   [Id] ASC

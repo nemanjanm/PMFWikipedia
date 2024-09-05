@@ -18,6 +18,24 @@ namespace PMFWikipedia.ImplementationsBL
             _mapper = mapper;
         }
 
+        public async Task<ActionResultResponse<FavoriteSubject>> AddFavoriteSubject(RemoveFavoriteSubject fs)
+        {
+            var checkFs = await _favoriteSubjectDAL.GetByFilter(fs);
+            if (checkFs == null) 
+            {
+                FavoriteSubject f = new FavoriteSubject();
+                f.SubjectId = fs.SubjectId;
+                f.UserId = fs.UserId;
+                await _favoriteSubjectDAL.Insert(f);
+                await _favoriteSubjectDAL.SaveChangesAsync();
+
+                return new ActionResultResponse<FavoriteSubject>(f, true, "Successfully added favorite subject");
+            }
+            else
+                return new ActionResultResponse<FavoriteSubject>(null, false, "Favorite subject already exists");
+
+        }
+
         public async Task<ActionResultResponse<List<FavoriteSubjectViewModel>>> GetFavoriteSubjects(long Id)
         {
             List<FavoriteSubject> favorites = new List<FavoriteSubject>();
@@ -43,6 +61,12 @@ namespace PMFWikipedia.ImplementationsBL
             List<FavoriteSubject> favoriteSubjects = await _favoriteSubjectDAL.GetOnlineUsers(Id);
             return new ActionResultResponse<List<FavoriteSubject>>(favoriteSubjects, true, "");
 
+        }
+
+        public async Task<ActionResultResponse<bool>> RemoveFavoriteSubject(RemoveFavoriteSubject fs)
+        {
+            var response = await _favoriteSubjectDAL.RemoveFavoriteSubject(fs);
+            return new ActionResultResponse<bool>(response, true, "");
         }
     }
 }

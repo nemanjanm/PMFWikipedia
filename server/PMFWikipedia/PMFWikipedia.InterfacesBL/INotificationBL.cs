@@ -7,5 +7,6 @@ namespace PMFWikipedia.InterfacesBL
     {
         public Task<ActionResultResponse<int>> GetUnreadNotification(long id);
         public Task<ActionResultResponse<List<NotificationViewModel>>> GetAllNotification(long id);
+        public Task<ActionResultResponse<bool>> SetIsRead(long nottId);
     }
 }

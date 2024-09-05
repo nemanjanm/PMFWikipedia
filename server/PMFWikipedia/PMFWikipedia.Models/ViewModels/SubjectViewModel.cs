@@ -2,10 +2,11 @@
 {
     public class SubjectViewModel
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
         public int ProgramId { get; set; }
         public string Name { get; set; }
         public int Year { get; set; }
         public int Semester {  get; set; }
+        public bool Allowed { get; set; }
     }
 }

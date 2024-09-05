@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using PMFWikipedia.ImplementationsBL.Helpers;
 using PMFWikipedia.InterfacesBL;
 using PMFWikipedia.InterfacesDAL;
 using PMFWikipedia.Models;
@@ -15,7 +16,8 @@ namespace PMFWikipedia.ImplementationsBL
         private IUserDAL _userDAL;
         private ISubjectDAL _subjectDAL;
         private IFavoriteSubjectDAL _favoriteSubjectDAL;
-        public PostBL(IPostDAL postDAL, IMapper mapper, INotificationDAL notificationDAL, IUserDAL userDAL, ISubjectDAL subjectDAL, IFavoriteSubjectDAL favoriteSubjectDAL)
+        private readonly IJWTService _jwtService;
+        public PostBL(IPostDAL postDAL, IMapper mapper, INotificationDAL notificationDAL, IUserDAL userDAL, ISubjectDAL subjectDAL, IFavoriteSubjectDAL favoriteSubjectDAL, IJWTService jWTService)
         {
             _postDAL = postDAL;
             _mapper = mapper;
@@ -23,6 +25,7 @@ namespace PMFWikipedia.ImplementationsBL
             _userDAL = userDAL;
             _subjectDAL = subjectDAL; 
             _favoriteSubjectDAL = favoriteSubjectDAL;
+            _jwtService = jWTService;
         }
 
         public async Task<ActionResultResponse<PostViewModel>> AddPost(PostModel post)
@@ -57,30 +60,53 @@ namespace PMFWikipedia.ImplementationsBL
 
         public async Task<ActionResultResponse<List<PostViewModel>>> GetAllPosts(long subjectId)
         {
+            bool allowed = true;
+            var id = long.Parse(_jwtService.GetUserId());
+            var favoriteSubject = await _favoriteSubjectDAL.GetByUser(id, subjectId);
+            if (favoriteSubject == null) 
+                allowed = false;
+
             List<Post> posts = await _postDAL.GetAllPostsBySubject(subjectId);
             List<PostViewModel> list = new List<PostViewModel>();
 
-            foreach (Post post in posts) 
+            if (posts.Count == 0)
             {
                 PostViewModel pvm = new PostViewModel();
-                pvm.Title = post.Title;
-                pvm.Content = post.Content;
-                pvm.AuthorName = post.AuthorNavigation.FirstName + " " + post.AuthorNavigation.LastName;
-                pvm.PhotoPath = post.AuthorNavigation.PhotoPath;
-                pvm.PostId = post.Id;
-                pvm.TimeStamp = post.DateCreated;
-                pvm.SubjectName = post.SubjectNavigation.Name;
-                pvm.AuthorId = (long)post.Author;
-
+                pvm.Allowed = allowed;
                 list.Add(pvm);
             }
-
+            else
+            {
+                foreach (Post post in posts)
+                {
+                    PostViewModel pvm = new PostViewModel();
+                    pvm.Title = post.Title;
+                    pvm.Content = post.Content;
+                    pvm.AuthorName = post.AuthorNavigation.FirstName + " " + post.AuthorNavigation.LastName;
+                    pvm.PhotoPath = post.AuthorNavigation.PhotoPath;
+                    pvm.PostId = post.Id;
+                    pvm.TimeStamp = post.DateCreated;
+                    pvm.SubjectName = post.SubjectNavigation.Name;
+                    pvm.AuthorId = (long)post.Author;
+                    pvm.Allowed = allowed;
+                    list.Add(pvm);
+                }
+            }
             return new ActionResultResponse<List<PostViewModel>>(list, true, "");
         }
 
         public async Task<ActionResultResponse<PostViewModel>> GetPost(long postId)
         {
+            bool allowed = true;
+            var id = long.Parse(_jwtService.GetUserId());
+            
+
             Post post = await _postDAL.GetPostById(postId);
+            var favoriteSubject = await _favoriteSubjectDAL.GetByUser(id, (long)post.Subject);
+            if (favoriteSubject == null)
+                allowed = false;
+
+
             PostViewModel pvm = new PostViewModel();
             pvm.Title = post.Title;
             pvm.Content = post.Content;
@@ -90,8 +116,20 @@ namespace PMFWikipedia.ImplementationsBL
             pvm.TimeStamp = post.DateCreated;
             pvm.SubjectName = post.SubjectNavigation.Name;
             pvm.AuthorId = (long)post.Author;
+            pvm.Allowed = allowed;
 
             return new ActionResultResponse<PostViewModel>(pvm, true, "");
+        }
+
+        public async Task<ActionResultResponse<bool>> DeletePost(long postId)
+        {
+            await _postDAL.Delete(postId);
+            await _postDAL.SaveChangesAsync();
+
+            var fs = await _postDAL.GetById(postId);
+            if (fs != null && fs.IsDeleted == true)
+                return new ActionResultResponse<bool>(true, true, "Successfully deleted");
+            return new ActionResultResponse<bool>(false, false, "Something went wrong");
         }
     }
 }

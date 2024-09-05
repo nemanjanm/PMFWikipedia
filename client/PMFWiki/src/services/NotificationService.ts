@@ -28,6 +28,17 @@ class NotificationService{
         const data = await response.json();
         return(data);
     }
+
+    async setIsRead(nottId: number){
+        const realUrl = `${getUrl}/read?nottId=${nottId}`
+        const response = await fetch(realUrl ,{
+            method: "POST",
+            headers: headers
+        });
+
+        const data = await response.json();
+        return(data);
+    }
 }
 
 export const notificationService = new NotificationService()

@@ -7,4 +7,5 @@ export interface PostViewModel{
     postId: number;
     photoPath: string;
     timeStamp: Date;
+    allowed: boolean;
 }

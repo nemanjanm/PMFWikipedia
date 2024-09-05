@@ -1,5 +1,6 @@
 import { storageService } from "./StorageService";
 import { enviorment } from "../enviorment";
+import { FavoriteSubjectInfo } from "../models/FavoriteSubjectInfo";
 
 const getUrl = `${enviorment.serverUrl}FavoriteSubject/GetFavoriteSubjects`
 const headers = {
@@ -16,7 +17,30 @@ class FavoriteSubjectService{
 
         const data = await response.json();
         return(data);
-        
+    }
+
+    async removeFavoriteSubject(favoriteSubject: FavoriteSubjectInfo){
+        const realUrl = `${enviorment.serverUrl}FavoriteSubject`
+        const response = await fetch(realUrl, {
+            method: "POST",
+            headers: headers,
+            body: JSON.stringify(favoriteSubject)
+        });
+
+        const data = await response.json();
+        return(data);
+    }
+
+    async addToFavorites(favoriteSubject: FavoriteSubjectInfo){
+        const realUrl = `${enviorment.serverUrl}FavoriteSubject/Add`
+        const response = await fetch(realUrl, {
+            method: "POST",
+            headers: headers,
+            body: JSON.stringify(favoriteSubject)
+        });
+
+        const data = await response.json();
+        return(data);
     }
 }
 

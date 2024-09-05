@@ -31,7 +31,7 @@ function NavBar(){
     })
     const itemRenderer = (item : any) => (
         <span className="flex align-items-center p-menuitem-link">
-            <Avatar image={avatar} shape="circle" />
+            <img alt={avatar} src={avatar} style={{ width: '7vh', height: "7vh", borderRadius: "50%"}}/>
             <span className="mx-2">{item.label}</span>
         </span>
     );

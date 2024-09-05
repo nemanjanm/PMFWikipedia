@@ -12,11 +12,13 @@ import { PostInfo } from "../../models/PostInfo";
 import { storageService } from "../../services/StorageService";
 import { PostViewModel } from "../../models/PostViewModel";
 import { socketService } from "../../services/SocketService";
+import ClipLoader from "react-spinners/ClipLoader";
 
 function Wikipedia(){
-    const [posts, setPosts] = useState<Array<PostViewModel>>();
+    const [posts, setPosts] = useState<Array<PostViewModel>>([]);
     const [loader, setLoader] = useState<boolean>(false);
     const [pom, setPom] = useState();
+    const [allowed, setAllowed] = useState<boolean>(false);
     const [visible, setVisible] = useState<boolean>(false)
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('')
@@ -44,7 +46,10 @@ function Wikipedia(){
             const response = await postService.getPosts(Number((location.pathname).split('/').slice(2, -1).join('/')));
             if(response.status)
             {
-                setPosts(response.data)
+                if(response.data[0].authorId !== 0)
+                    setPosts(response.data)
+                if(response.data[0].allowed && response.data[0].allowed === true)
+                    setAllowed(true);
             }
             setLoader(false);
         }
@@ -56,26 +61,15 @@ function Wikipedia(){
     }
 
     async function addPost(){
-        // const post: PostInfo = {
-        //     title: title,
-        //     content: content,
-        //     author: Number(storageService.getUserInfo()?.id),
-        //     subject: Number((location.pathname).split('/').slice(2, -1).join('/'))
-        // }
-        // const response : any = await postService.addPost(post);
-        // setVisible(false);
-        // if(response.status){
-        //     navigate(0);
-        // }
-
         socketService.sendNotification(title, content, Number(storageService.getUserInfo()?.id), Number((location.pathname).split('/').slice(2, -1).join('/')))
         navigate(0); //proveri bolje resenj, mozda timeout
     }
-    return <div className="d-flex align-items-center justify-content-center flex-column" style={{width: "100%"}}>
-        <Button label="Dodaj" icon="pi pi-plus" style={{width: "20vw"}} onClick={handleAdd} ></Button>
-        {posts?.map(s => (
+    return <>{!loader && <div className="d-flex align-items-center justify-content-center flex-column" style={{width: "100%"}}>
+        {allowed && <Button label="Dodaj" icon="pi pi-plus" style={{width: "20vw"}} onClick={handleAdd} ></Button>}
+        {posts?.length > 0 && posts?.map(s => (
             <div style={{width: "80%", marginBottom: "1vh"}}><PostPanel info={s}></PostPanel></div>
         ))}
+        {posts?.length === 0 && <p style={{fontSize: "3vw", color: "#374151", textAlign: "center"}}>Trenutno nema postova na ovom predmetu</p>}
         {visible && <Dialog visible={visible} header={"Dodaj novi post"} onHide={() => {if (!visible) return; setVisible(false); }}
             style={{ width: '70vw', textAlign: "center", height: "90vh"}}>
                 <div className="d-flex align-items-center flex-column">
@@ -89,7 +83,9 @@ function Wikipedia(){
                 </div>
         </Dialog>}
         <Outlet></Outlet>
-    </div>
+    </div>}
+    {loader && <div className="d-flex justify-content-center" style={{marginTop: "50px"}}><ClipLoader color="#374151" loading={loader} size={150}></ClipLoader></div>}
+    </>
 }
 
 export default Wikipedia;

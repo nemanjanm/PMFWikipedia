@@ -1,6 +1,7 @@
 ﻿using PMFWikipedia.InterfacesBL;
 using PMFWikipedia.InterfacesDAL;
 using PMFWikipedia.Models;
+using PMFWikipedia.Models.Entity;
 using PMFWikipedia.Models.ViewModels;
 
 namespace PMFWikipedia.ImplementationsBL
@@ -21,6 +22,7 @@ namespace PMFWikipedia.ImplementationsBL
             foreach (var notification in notts) 
             {
                 NotificationViewModel n = new NotificationViewModel();
+                n.Id = notification.Id;
                 n.PostId = notification.Post;
                 n.AuthorName = notification.AuthorNavigation.FirstName + " " + notification.AuthorNavigation.LastName;
                 n.SubjectName = notification.SubjectNavigation.Name;
@@ -35,6 +37,16 @@ namespace PMFWikipedia.ImplementationsBL
         {
             var notts = await _notificationDAL.GetAllByFilter(x=>x.Receiver == id && x.IsRead == false);
             return new ActionResultResponse<int>(notts.Count, true, "");
+        }
+
+        public async Task<ActionResultResponse<bool>> SetIsRead(long nottId)
+        {
+            var nott = await _notificationDAL.GetById(nottId);
+            if (nott == null)
+                return new ActionResultResponse<bool>(false, false, "Nottification doesnt exists");
+            nott.IsRead = true;
+            await _notificationDAL.SaveChangesAsync();
+            return new ActionResultResponse<bool>(true, true, "Nottification set isRead");
         }
     }
 }

@@ -10,6 +10,10 @@ namespace PMFWikipedia.Models.Entity
         public long Id { get; set; }
         public long UserId { get; set; }
         public long SubjectId { get; set; }
+        public bool IsDeleted { get; set; }
+        public DateTime DateCreated { get; set; }
+        public DateTime DateModified { get; set; }
+        public long LastModifiedBy { get; set; }
 
         public virtual Subject Subject { get; set; } = null!;
         public virtual User User { get; set; } = null!;

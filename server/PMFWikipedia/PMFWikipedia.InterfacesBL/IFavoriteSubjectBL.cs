@@ -8,5 +8,7 @@ namespace PMFWikipedia.InterfacesBL
     {
         public Task<ActionResultResponse<List<FavoriteSubjectViewModel>>> GetFavoriteSubjects(long Id);
         public Task<ActionResultResponse<List<FavoriteSubject>>> GetOnlineUsers(long Id);
+        public Task<ActionResultResponse<bool>> RemoveFavoriteSubject(RemoveFavoriteSubject fs);
+        public Task<ActionResultResponse<FavoriteSubject>> AddFavoriteSubject(RemoveFavoriteSubject fs);
     }
 }
