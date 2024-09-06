@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 using PMFWikipedia.InterfacesBL;
+using PMFWikipedia.InterfacesDAL;
 using PMFWikipedia.Models;
 using PMFWikipedia.Models.Entity;
 using PMFWikipedia.Models.ViewModels;
@@ -13,14 +14,24 @@ namespace PMFWikipedia.SignalR
         private readonly IChatBL _chatBL;
         private readonly IPostBL _postBL;
         private readonly IFavoriteSubjectBL _favoriteSubjectBL;
-        public ChatHub(SharedDb shared, IUserBL userBL, IMessageBL messageBL, IChatBL chatBL, IPostBL postBL, IFavoriteSubjectBL favoriteSubjectBL)
+        private readonly ICommentBL _commentBL;
+        private readonly ICommentDAL _commentDAL;
+        private readonly IUserDAL _userDAL;
+        private readonly IPostDAL _postDAL;
+        private readonly INotificationDAL _notificationDAL;
+        public ChatHub(SharedDb shared, IUserBL userBL, IMessageBL messageBL, IChatBL chatBL, IPostBL postBL, IFavoriteSubjectBL favoriteSubjectBL, ICommentBL commentBL, ICommentDAL commentDAL, IUserDAL userDAL, IPostDAL postDAL, INotificationDAL notificationDAL)
         {
             _userBL = userBL;
             _shared = shared;
             _messageBL = messageBL;
             _chatBL = chatBL;
             _postBL = postBL;
-            _favoriteSubjectBL = favoriteSubjectBL; 
+            _favoriteSubjectBL = favoriteSubjectBL;
+            _commentBL = commentBL;
+            _commentDAL = commentDAL;
+            _userDAL = userDAL;
+            _postDAL = postDAL;
+            _notificationDAL = notificationDAL;
         }
 
         public async Task JoinChat(UserConnection conn)
@@ -75,6 +86,44 @@ namespace PMFWikipedia.SignalR
             }
         }
 
+        public async Task SendNotificationForComment(AddCommentInfo info)
+        {
+            ActionResultResponse<CommentViewModel> response = await _commentBL.AddComment(info);
+            var me = await _userDAL.GetById(info.UserId);
+            await Clients.Client(me.ConnectionId).SendAsync("ReceiveData", response.Data); //saljem sebi
+
+            var post = await _postDAL.GetPostById(info.PostId);
+            Notification n1 = new Notification();
+            n1.Author = (long)info.UserId;
+            n1.Post = post.Id;
+            n1.Subject = (long)post.Subject;
+            n1.Receiver = (long)post.Author;
+            n1.NotificationId = 4;
+            await _notificationDAL.Insert(n1);
+            await _notificationDAL.SaveChangesAsync();
+
+            await Clients.Client(post.AuthorNavigation.ConnectionId).SendAsync("ReceiveCommentNotification"); //poslato owneru
+
+            var users = await _commentDAL.GetAllUsers(info.PostId);
+
+            foreach(var user in users)
+            {
+                if(user.Id != info.UserId)
+                {
+                    Notification n = new Notification();
+                    n.Author = info.UserId;
+                    n.Post = post.Id;
+                    n.Subject = (long)post.Subject;
+                    n.Receiver = user.Id;
+                    n.NotificationId = 5;
+                    await _notificationDAL.Insert(n);
+                    await _notificationDAL.SaveChangesAsync();
+
+                    if (user.ConnectionId != "" && user.ConnectionId != post.AuthorNavigation.ConnectionId)
+                        await Clients.Client(user.ConnectionId).SendAsync("ReceiveCommentNotification");
+                }
+            }
+        }
         public async Task DeleteConnId(UserConnection conn)
         {
             await _userBL.ChangeConnectionId(conn.MyId, "");
