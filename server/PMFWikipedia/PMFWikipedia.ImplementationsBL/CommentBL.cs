@@ -12,12 +12,14 @@ namespace PMFWikipedia.ImplementationsBL
         private readonly IJWTService _jWTService;
         private readonly ICommentDAL _commentDAL;
         private readonly IUserDAL _userDAL;
+        private readonly IPostDAL _postDAL;
 
-        public CommentBL(IJWTService jWTService, ICommentDAL commentDAL, IUserDAL userDAL)
+        public CommentBL(IJWTService jWTService, ICommentDAL commentDAL, IUserDAL userDAL, IPostDAL postDAL)
         {
             _jWTService = jWTService;
             _commentDAL = commentDAL;
             _userDAL = userDAL;
+            _postDAL = postDAL; 
         }
 
         public async Task<ActionResultResponse<CommentViewModel>> AddComment(AddCommentInfo info)
@@ -27,6 +29,12 @@ namespace PMFWikipedia.ImplementationsBL
             {
                 return new ActionResultResponse<CommentViewModel>(null, false, "Something went wrong");
             }
+            var post = await _postDAL.GetById(info.PostId);
+            if (post == null)
+            {
+                return new ActionResultResponse<CommentViewModel>(null, false, "Something went wrong");
+            }
+
             Comment c = new Comment();
             c.UserId = user.Id;
             c.PostId = info.PostId;

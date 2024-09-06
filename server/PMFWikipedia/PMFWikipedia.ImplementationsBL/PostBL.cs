@@ -16,8 +16,9 @@ namespace PMFWikipedia.ImplementationsBL
         private IUserDAL _userDAL;
         private ISubjectDAL _subjectDAL;
         private IFavoriteSubjectDAL _favoriteSubjectDAL;
+        private readonly ICommentDAL _commentDAL;
         private readonly IJWTService _jwtService;
-        public PostBL(IPostDAL postDAL, IMapper mapper, INotificationDAL notificationDAL, IUserDAL userDAL, ISubjectDAL subjectDAL, IFavoriteSubjectDAL favoriteSubjectDAL, IJWTService jWTService)
+        public PostBL(IPostDAL postDAL, IMapper mapper, INotificationDAL notificationDAL, IUserDAL userDAL, ISubjectDAL subjectDAL, IFavoriteSubjectDAL favoriteSubjectDAL, IJWTService jWTService, ICommentDAL commentDAL)
         {
             _postDAL = postDAL;
             _mapper = mapper;
@@ -26,6 +27,7 @@ namespace PMFWikipedia.ImplementationsBL
             _subjectDAL = subjectDAL; 
             _favoriteSubjectDAL = favoriteSubjectDAL;
             _jwtService = jWTService;
+            _commentDAL = commentDAL;
         }
 
         public async Task<ActionResultResponse<PostViewModel>> AddPost(PostModel post)
@@ -108,6 +110,10 @@ namespace PMFWikipedia.ImplementationsBL
             
 
             Post post = await _postDAL.GetPostById(postId);
+            if(post == null)
+            {
+                return new ActionResultResponse<PostViewModel>(null, false, "Something went wrong");
+            }
             var favoriteSubject = await _favoriteSubjectDAL.GetByUser(id, (long)post.Subject);
             if (favoriteSubject == null)
                 allowed = false;
@@ -136,17 +142,31 @@ namespace PMFWikipedia.ImplementationsBL
             await _postDAL.Delete(postId);
             await _postDAL.SaveChangesAsync();
 
+            var notifications = await _notificationDAL.GetAllByFilter(x => x.Post == postId);
+            foreach (var notification in notifications)
+            {
+                await _notificationDAL.Delete(notification.Id);
+                await _notificationDAL.SaveChangesAsync();
+            }
+
+            var comments = await _commentDAL.GetAllByFilter(x => x.PostId == postId);
+            foreach (var comment in comments)
+            {
+                await _commentDAL.Delete(comment.Id);
+                await _commentDAL.SaveChangesAsync();
+            }
+
             var fs = await _postDAL.GetById(postId);
             if (fs != null && fs.IsDeleted == true)
                 return new ActionResultResponse<bool>(true, true, "Successfully deleted");
             return new ActionResultResponse<bool>(false, false, "Something went wrong");
         }
 
-        public async Task<ActionResultResponse<PostModel>> EditPost(PostModel post)
+        public async Task<ActionResultResponse<Post>> EditPost(PostModel post)
         {
             var p = await _postDAL.GetById((long)post.Id);
             if (p == null)
-                return new ActionResultResponse<PostModel>(null, false, "Something went wrong");
+                return new ActionResultResponse<Post>(null, false, "Something went wrong");
 
             p.Title = post.Title;
             p.Content = post.Content;
@@ -155,7 +175,7 @@ namespace PMFWikipedia.ImplementationsBL
             await _postDAL.Update(p);
             await _postDAL.SaveChangesAsync();
 
-            return new ActionResultResponse<PostModel>(post, true, "Something went wrong");
+            return new ActionResultResponse<Post>(p, true, "Succesfully edited post");
         }
     }
 }

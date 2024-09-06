@@ -98,18 +98,8 @@ function PostPanel(props : any) {
     };
 
     async function sendToEdit(){
-        const postInfo : PostInfo = {
-            Id: info.postId,
-            author: Number(storageService.getUserInfo()?.id),
-            subject: info.subjectId,
-            content: content,
-            title: title
-        }
-        console.log(title);
-        const response = await postService.editPost(postInfo);
-        if(response.status){
-            navigate(0)
-        }
+        socketService.editPostNotification(info.postId, title, content, Number(storageService.getUserInfo()?.id), info.subjectId);
+        navigate(0);
     }
     const confirmDelete = () => {
         setDialogVisible(true);

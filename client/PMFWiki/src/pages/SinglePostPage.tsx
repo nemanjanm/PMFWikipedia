@@ -4,7 +4,7 @@ import SideBar from "../components/SideBar/SideBar";
 import { useEffect, useState } from "react";
 import { PostViewModel } from "../models/PostViewModel";
 import { postService } from "../services/PostService";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import PostPanel from "../components/PostPanel/PostPanel";
 import { socketService } from "../services/SocketService";
 import { storageService } from "../services/StorageService";
@@ -13,6 +13,8 @@ function SinglePostPage(){
     const [loader, setLoader] = useState<boolean>(false);
     const [post, setPost] = useState<PostViewModel>();
     const [temp, setTemp] = useState(false)
+    const [obrisan, setObrisan] = useState(false);
+    const navigate = useNavigate();
     const params = useParams();
 
     useEffect(() => {
@@ -37,6 +39,12 @@ function SinglePostPage(){
             const response = await postService.getPost(Number(params.id));
             if(response.status)
                 setPost(response.data);
+            else{
+                setObrisan(true);
+                setTimeout( () => {
+                    navigate("/pocetna")} , 2000
+                );
+            }
             setLoader(false);
         }
         getPost()
@@ -47,8 +55,11 @@ function SinglePostPage(){
         <NavBar></NavBar>
         <div className="d-flex justify-content-between" style={{flex: 1}}>
             <SideBar></SideBar>
-            {post &&
+            {post!==undefined &&
                 <div style={{width: "80%", margin: "1vh"}}><PostPanel info={post}></PostPanel></div>
+            }
+            {obrisan &&
+                <p className="d-flex justify-content-center">Došlo je do greške</p>
             }
             <div></div>
         </div>

@@ -86,6 +86,26 @@ namespace PMFWikipedia.SignalR
             }
         }
 
+        public async Task SendNotficationForEditPost(PostModel post)
+        {
+            ActionResultResponse<Post> response = await _postBL.EditPost(post);
+            if (response.Data != null && response.Data.Author != post.Author)
+            {
+                var user = await _postDAL.GetPostById((long)post.Id);
+
+                Notification n1 = new Notification();
+                n1.Author = (long)post.Author;
+                n1.Post = (long)post.Id;
+                n1.Subject = (long)post.Subject;
+                n1.Receiver = (long)response.Data.Author;
+                n1.NotificationId = 6;
+                await _notificationDAL.Insert(n1);
+                await _notificationDAL.SaveChangesAsync();
+
+                if (user != null) 
+                    await Clients.Client(user.AuthorNavigation.ConnectionId).SendAsync("ReceiveCommentNotification");
+            }
+        }
         public async Task SendNotificationForComment(AddCommentInfo info)
         {
             ActionResultResponse<CommentViewModel> response = await _commentBL.AddComment(info);

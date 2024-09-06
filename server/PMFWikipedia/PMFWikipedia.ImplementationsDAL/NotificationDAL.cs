@@ -12,7 +12,7 @@ namespace PMFWikipedia.ImplementationsDAL
 
         public async Task<List<Notification>> GetAllNotification(long id)
         {
-            return await table.Include(c=> c.AuthorNavigation).Include(c=>c.SubjectNavigation).Where(x=>x.Receiver == id).OrderByDescending(x=>x.DateCreated).ToListAsync();
+            return await table.Include(c=> c.AuthorNavigation).Include(c=>c.SubjectNavigation).Where(x=>x.Receiver == id && x.IsDeleted == false).OrderByDescending(x=>x.DateCreated).ToListAsync();
         }
     }
 }

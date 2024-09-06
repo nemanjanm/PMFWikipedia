@@ -46,7 +46,8 @@ namespace PMFWikipedia.ImplementationsBL
                 allowed = false;
 
             var subject = await _subjectDAL.GetById(Id);
-            SubjectViewModel svm = _mapper.Map<SubjectViewModel>(subject);
+            SubjectViewModel svm = new SubjectViewModel();
+            svm = _mapper.Map<SubjectViewModel>(subject);
             svm.Allowed = allowed;
 
             return new ActionResultResponse<SubjectViewModel>(svm, true, "");

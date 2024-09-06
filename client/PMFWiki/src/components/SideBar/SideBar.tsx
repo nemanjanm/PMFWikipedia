@@ -3,7 +3,8 @@ import { Outlet } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
 import './SideBar.css'
 import { storageService } from '../../services/StorageService';
-import { getName, programmes } from '../../models/Programme';
+import { getName } from '../../models/Programme';
+import { getNotName } from '../../models/Notification';
 import { PanelHelper } from '../PanelHelper';
 import { Badge } from 'primereact/badge';
 import { useEffect, useState } from 'react';
@@ -87,6 +88,27 @@ function SideBar(){
 
     const program = getName(programNumber);
 
+    function returnDate(timeStamp: Date){
+        const messageDate = new Date(timeStamp);
+        const thisDate = new Date();
+        let result : string;
+        const diffInMilliseconds: number = thisDate.getTime() - messageDate.getTime();
+        const diffInMinutes: number = Math.floor(diffInMilliseconds / 1000 / 60);
+        const diffInHours: number = Math.floor(diffInMilliseconds / 1000 / 60 / 60);
+        const diffInDays: number = Math.floor(diffInMilliseconds / 1000 / 60 / 60 / 24);
+        if(diffInMinutes < 1)
+            result = "sada";
+        else if(diffInMinutes < 60)
+            result = "pre " + diffInMinutes.toString() + " minuta";
+        else if(diffInHours < 24 && diffInHours >= 1)
+            result = "pre " + diffInHours.toString() + " sati";
+        else if(diffInDays >=1 && diffInDays <= 5)
+            result = "pre " + diffInDays.toString() + " dana";
+        else
+            result = messageDate.toLocaleDateString();
+
+        return result;
+    }
     const items  = [
         {
             label: program,
@@ -121,19 +143,29 @@ function SideBar(){
     async function showPost(e: any){
         const response = await notificationService.setIsRead(e.id);
         if(response.status){
-            navigate("/post/"+e.postId);
-            window.location.reload();
+            if(e.notificationId === 1){
+                navigate("/predmet/"+e.subjectId+"/kolokvijum");
+                window.location.reload();
+            }
+            else if(e.notificationId === 2){
+                navigate("/predmet/"+e.subjectId+"/ispit");
+                window.location.reload();
+            }
+            else{
+                navigate("/post/"+e.postId);
+                window.location.reload();
+            }
+            
         }
         else
             console.log("Greska neka") //IZMENI MOZDA!
     }
-
     return (
         <>
             {visible && 
                 <Sidebar className='sideBar' visible={visible} onHide={() => setVisible(false)}>
                     <h2 style={{color: 'white'}}>Obaveštenja</h2>
-                    <ListBox emptyMessage={"Nema obaveštenja"} style={{border: 0}} onChange={(e : any) => showPost(e.value)} options={notifications} itemTemplate={(option: any) => ( <div className={option.isRead ? 'read-notification' : 'unread-notification'}>{option.authorName} je dodao nešto u {option.subjectName}</div>)} className="w-full md:w-14rem" />
+                    <ListBox emptyMessage={"Nema obaveštenja"} style={{border: 0}} onChange={(e : any) => showPost(e.value)} options={notifications} itemTemplate={(option: any) => ( <><div className={option.isRead ? 'read-notification' : 'unread-notification'}>{option.authorName} je dodao {getNotName(option.notificationId)} u {option.subjectName}</div><span style={{fontSize: "2vh"}}>{returnDate(option.timeStamp)}</span></>)} className="w-full md:w-14rem" />
                 </Sidebar>}
             <div className='d-flex justify-content-centar' style={{flexShrink: 0,  position: "relative", overflow: 'auto', top: 0, bottom: 0, height: "auto", backgroundColor: "#374151"}}>
                 <PanelMenu style={{height:"100%", width:"100%", border: 0, borderRadius: "0", padding: "0", fontSize: "1vw"}} model={items}/>    

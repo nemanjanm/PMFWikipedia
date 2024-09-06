@@ -92,10 +92,13 @@ class SocketService{
     async sendNotification(title : any, content : any, author : any, subject : any){
         await this.conn.invoke("SendNotfication", {title, content, author, subject});
     }
+
+    async editPostNotification(id : any, title : any, content : any, author : any, subject: any){
+        console.log('saljem');
+        await this.conn.invoke("SendNotficationForEditPost", {id, title, content, author, subject});
+    }
+
     async sendNotificationForComment(postId : any, userId : any, content : any){
-        console.log(postId);
-        console.log(userId);
-        console.log(content);
         await this.conn.invoke("SendNotificationForComment", {postId, userId, content});
     }
     async markAsRead(id : any, myId: any){

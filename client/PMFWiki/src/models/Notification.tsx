@@ -8,7 +8,7 @@ export const notifications= [
     {name: "Psigologija", id: 7},
 ];
 
-export function getName(id : any) : any{
+export function getNotName(id : any) : any{
     switch(id) {
         case 1:
             return "Kolkovijum";

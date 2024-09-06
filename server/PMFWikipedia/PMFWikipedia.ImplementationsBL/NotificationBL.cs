@@ -26,7 +26,10 @@ namespace PMFWikipedia.ImplementationsBL
                 n.PostId = notification.Post;
                 n.AuthorName = notification.AuthorNavigation.FirstName + " " + notification.AuthorNavigation.LastName;
                 n.SubjectName = notification.SubjectNavigation.Name;
+                n.SubjectId = notification.SubjectNavigation.Id;
                 n.IsRead = notification.IsRead;
+                n.NotificationId = notification.NotificationId;
+                n.TimeStamp = notification.DateCreated;
                 list.Add(n);
             }
 
@@ -35,7 +38,7 @@ namespace PMFWikipedia.ImplementationsBL
 
         public async Task<ActionResultResponse<int>> GetUnreadNotification(long id)
         {
-            var notts = await _notificationDAL.GetAllByFilter(x=>x.Receiver == id && x.IsRead == false);
+            var notts = await _notificationDAL.GetAllByFilter(x=>x.Receiver == id && x.IsRead == false && x.IsDeleted == false);
             return new ActionResultResponse<int>(notts.Count, true, "");
         }
 
