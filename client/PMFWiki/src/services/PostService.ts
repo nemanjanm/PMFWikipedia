@@ -21,6 +21,18 @@ class PostService{
         return(data);
 	}
 
+    async editPost(post: PostInfo){
+        const realUrl = `${url}/Edit`
+		const response = await fetch(realUrl ,{
+            method: "POST",
+            headers: headers,
+            body: JSON.stringify(post)
+        });
+
+        const data = await response.json();
+        return(data);
+	}
+
     async deletePost(postId: number){
         const realUrl = `${url}/Delete?postId=${postId}`
 		const response = await fetch(realUrl ,{

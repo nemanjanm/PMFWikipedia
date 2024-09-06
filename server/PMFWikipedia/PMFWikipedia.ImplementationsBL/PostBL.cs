@@ -32,6 +32,7 @@ namespace PMFWikipedia.ImplementationsBL
         {
             Post p = _mapper.Map<Post>(post);
             p.LastEditedBy = post.Author;
+            p.DateModified = DateTime.Now;
             await _postDAL.Insert(p);
             await _postDAL.SaveChangesAsync();
 
@@ -52,6 +53,7 @@ namespace PMFWikipedia.ImplementationsBL
                 n.Post = p.Id;
                 n.Subject = post.Subject;
                 n.Receiver = s.UserId;
+                n.NotificationId = 3;
                 await _notificationDAL.Insert(n);
             }
             await _notificationDAL.SaveChangesAsync();
@@ -87,8 +89,12 @@ namespace PMFWikipedia.ImplementationsBL
                     pvm.PostId = post.Id;
                     pvm.TimeStamp = post.DateCreated;
                     pvm.SubjectName = post.SubjectNavigation.Name;
+                    pvm.SubjectId = (long)post.Subject;
                     pvm.AuthorId = (long)post.Author;
                     pvm.Allowed = allowed;
+                    pvm.TimeEdited = post.DateModified;
+                    pvm.EditorName = post.LastEditedByNavigation.FirstName + " " + post.LastEditedByNavigation.LastName;
+                    pvm.EditorId = post.LastEditedByNavigation.Id;
                     list.Add(pvm);
                 }
             }
@@ -115,8 +121,12 @@ namespace PMFWikipedia.ImplementationsBL
             pvm.PostId = postId;
             pvm.TimeStamp = post.DateCreated;
             pvm.SubjectName = post.SubjectNavigation.Name;
+            pvm.SubjectId = (long)post.Subject;
             pvm.AuthorId = (long)post.Author;
             pvm.Allowed = allowed;
+            pvm.TimeEdited = post.DateModified;
+            pvm.EditorName = post.LastEditedByNavigation.FirstName + " " + post.LastEditedByNavigation.LastName;
+            pvm.EditorId = post.LastEditedByNavigation.Id;
 
             return new ActionResultResponse<PostViewModel>(pvm, true, "");
         }
@@ -130,6 +140,22 @@ namespace PMFWikipedia.ImplementationsBL
             if (fs != null && fs.IsDeleted == true)
                 return new ActionResultResponse<bool>(true, true, "Successfully deleted");
             return new ActionResultResponse<bool>(false, false, "Something went wrong");
+        }
+
+        public async Task<ActionResultResponse<PostModel>> EditPost(PostModel post)
+        {
+            var p = await _postDAL.GetById((long)post.Id);
+            if (p == null)
+                return new ActionResultResponse<PostModel>(null, false, "Something went wrong");
+
+            p.Title = post.Title;
+            p.Content = post.Content;
+            p.LastEditedBy = post.Author;
+            p.DateModified = DateTime.Now;
+            await _postDAL.Update(p);
+            await _postDAL.SaveChangesAsync();
+
+            return new ActionResultResponse<PostModel>(post, true, "Something went wrong");
         }
     }
 }

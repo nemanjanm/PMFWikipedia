@@ -7,7 +7,7 @@ namespace PMFWikipedia.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize]
+    [Authorize]
     public class FavoriteSubject : ControllerBase
     {
         private readonly IFavoriteSubjectBL _favoriteSubjectBL;

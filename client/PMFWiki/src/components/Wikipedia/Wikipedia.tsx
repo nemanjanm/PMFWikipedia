@@ -13,6 +13,7 @@ import { storageService } from "../../services/StorageService";
 import { PostViewModel } from "../../models/PostViewModel";
 import { socketService } from "../../services/SocketService";
 import ClipLoader from "react-spinners/ClipLoader";
+import { getName, notifications } from "../../models/Notification";
 
 function Wikipedia(){
     const [posts, setPosts] = useState<Array<PostViewModel>>([]);
@@ -67,7 +68,7 @@ function Wikipedia(){
     return <>{!loader && <div className="d-flex align-items-center justify-content-center flex-column" style={{width: "100%"}}>
         {allowed && <Button label="Dodaj" icon="pi pi-plus" style={{width: "20vw"}} onClick={handleAdd} ></Button>}
         {posts?.length > 0 && posts?.map(s => (
-            <div style={{width: "80%", marginBottom: "1vh"}}><PostPanel info={s}></PostPanel></div>
+            <div style={{width: "80%", marginBottom: "1vh"}}><PostPanel info={s} subjectId={Number((location.pathname).split('/').slice(2, -1).join('/'))}></PostPanel></div>
         ))}
         {posts?.length === 0 && <p style={{fontSize: "3vw", color: "#374151", textAlign: "center"}}>Trenutno nema postova na ovom predmetu</p>}
         {visible && <Dialog visible={visible} header={"Dodaj novi post"} onHide={() => {if (!visible) return; setVisible(false); }}

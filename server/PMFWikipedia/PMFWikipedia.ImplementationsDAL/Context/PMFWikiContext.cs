@@ -20,6 +20,7 @@ namespace PMFWikipedia.ImplementationsDAL
         }
 
         public virtual DbSet<Chat> Chats { get; set; } = null!;
+        public virtual DbSet<Comment> Comments { get; set; } = null!;
         public virtual DbSet<FavoriteSubject> FavoriteSubjects { get; set; } = null!;
         public virtual DbSet<Message> Messages { get; set; } = null!;
         public virtual DbSet<Notification> Notifications { get; set; } = null!;
@@ -46,6 +47,29 @@ namespace PMFWikipedia.ImplementationsDAL
                     .WithMany(p => p.ChatUser2Navigations)
                     .HasForeignKey(d => d.User2)
                     .HasConstraintName("FK__Chat__User2__0B91BA14");
+            });
+
+            modelBuilder.Entity<Comment>(entity =>
+            {
+                entity.ToTable("Comment");
+
+                entity.Property(e => e.Content).IsUnicode(false);
+
+                entity.Property(e => e.DateCreated).HasColumnType("datetime");
+
+                entity.Property(e => e.DateModified).HasColumnType("datetime");
+
+                entity.HasOne(d => d.Post)
+                    .WithMany(p => p.Comments)
+                    .HasForeignKey(d => d.PostId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Comment_PostId");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.Comments)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Comment_UserId");
             });
 
             modelBuilder.Entity<FavoriteSubject>(entity =>
@@ -103,25 +127,25 @@ namespace PMFWikipedia.ImplementationsDAL
                     .WithMany(p => p.NotificationAuthorNavigations)
                     .HasForeignKey(d => d.Author)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Notificat__Autho__42E1EEFE");
+                    .HasConstraintName("FK__Notificat__Autho__671F4F74");
 
                 entity.HasOne(d => d.PostNavigation)
                     .WithMany(p => p.Notifications)
                     .HasForeignKey(d => d.Post)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Notificati__Post__44CA3770");
+                    .HasConstraintName("FK__Notificati__Post__690797E6");
 
                 entity.HasOne(d => d.ReceiverNavigation)
                     .WithMany(p => p.NotificationReceiverNavigations)
                     .HasForeignKey(d => d.Receiver)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Notificat__Recei__45BE5BA9");
+                    .HasConstraintName("FK__Notificat__Recei__69FBBC1F");
 
                 entity.HasOne(d => d.SubjectNavigation)
                     .WithMany(p => p.Notifications)
                     .HasForeignKey(d => d.Subject)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Notificat__Subje__43D61337");
+                    .HasConstraintName("FK__Notificat__Subje__681373AD");
             });
 
             modelBuilder.Entity<Post>(entity =>

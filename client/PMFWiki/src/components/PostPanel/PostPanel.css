@@ -10,3 +10,17 @@ button:hover{
 .p-panel-content{
     border-radius: 0;
 }
+p.comments{
+    color: white;
+}
+p.comments:hover{
+    color: #60a5fa;
+    cursor: pointer;
+}
+
+.post:hover{
+    cursor: pointer;
+}
+.p-panel-title{
+    width: 100vw;
+}

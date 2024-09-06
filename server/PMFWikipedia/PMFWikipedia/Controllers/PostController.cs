@@ -24,6 +24,11 @@ namespace PMFWikipedia.API.Controllers
         {
             return Ok(await _postBl.AddPost(post));
         }
+        [HttpPost("Edit")]
+        public async Task<IActionResult> EditPost(PostModel post)
+        {
+            return Ok(await _postBl.EditPost(post));
+        }
         [HttpPost("Delete")]
         public async Task<IActionResult> DeletePost(long postId)
         {

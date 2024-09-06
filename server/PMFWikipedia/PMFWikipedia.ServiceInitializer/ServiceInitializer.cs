@@ -30,6 +30,7 @@ namespace PMFWikipedia.ServiceInitializer
             services.AddScoped<IChatDAL, ChatDAL>();
             services.AddScoped<IPostDAL, PostDAL>();
             services.AddScoped<INotificationDAL, NotificationDAL>();
+            services.AddScoped<ICommentDAL, CommentDAL>();
             return services;
         }
 
@@ -43,6 +44,7 @@ namespace PMFWikipedia.ServiceInitializer
             services.AddScoped<IMessageBL, MessageBL>();
             services.AddScoped<IPostBL, PostBL>();
             services.AddScoped<INotificationBL, NotificationBL>();
+            services.AddScoped<ICommentBL, CommentBL>();
             return services;
         }
 

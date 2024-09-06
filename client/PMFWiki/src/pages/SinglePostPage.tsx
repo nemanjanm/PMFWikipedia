@@ -6,6 +6,8 @@ import { PostViewModel } from "../models/PostViewModel";
 import { postService } from "../services/PostService";
 import { useParams } from "react-router-dom";
 import PostPanel from "../components/PostPanel/PostPanel";
+import { socketService } from "../services/SocketService";
+import { storageService } from "../services/StorageService";
 
 function SinglePostPage(){
     const [loader, setLoader] = useState<boolean>(false);
@@ -13,6 +15,22 @@ function SinglePostPage(){
     const [temp, setTemp] = useState(false)
     const params = useParams();
 
+    useEffect(() => {
+        socketService.reconnect();
+    }, []);
+
+    useEffect(() => {
+        const handleUnload = () => {
+          socketService.deleteConnection(storageService.getUserInfo()?.id);
+        };
+    
+        window.addEventListener('unload', handleUnload);
+    
+        return () => {
+          window.removeEventListener('unload', handleUnload);
+        };
+    }, []);
+    
     useEffect(() => {  
         async function getPost(){
             setLoader(true);

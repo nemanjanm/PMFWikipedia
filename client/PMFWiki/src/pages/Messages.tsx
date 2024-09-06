@@ -77,7 +77,6 @@ function Messages() {
     useEffect(() => {
         const handleMessage = () => {
             setMessages(messages => messages.map(m=> ({...m, isRead: true})) )
-            console.log(messages);
         }
 
         messageEmitter.on('markAsRead', handleMessage);

@@ -6,6 +6,7 @@ BEGIN
 		[Subject] [bigint] FOREIGN KEY REFERENCES [dbo].[Subject](Id) NOT NULL,
 		[Post] [bigint] FOREIGN KEY REFERENCES [dbo].[Post](Id) NOT NULL,
 		[Receiver][bigint] FOREIGN KEY REFERENCES [dbo].[User](Id) NOT NULL,
+		[NotificationId][int] NOT NULL DEFAULT 0,
 		[IsRead] [bit] NOT NULL DEFAULT 0,
 		[IsDeleted] [bit] NOT NULL DEFAULT 0,
 		[DateCreated] [datetime] NOT NULL,

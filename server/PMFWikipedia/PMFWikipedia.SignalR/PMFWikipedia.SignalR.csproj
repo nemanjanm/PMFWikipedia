@@ -14,6 +14,7 @@
   <ItemGroup>
     <ProjectReference Include="..\PMFWikipedia.Common\PMFWikipedia.Common.csproj" />
     <ProjectReference Include="..\PMFWikipedia.InterfacesBL\PMFWikipedia.InterfacesBL.csproj" />
+    <ProjectReference Include="..\PMFWikipedia.InterfacesDAL\PMFWikipedia.InterfacesDAL.csproj" />
     <ProjectReference Include="..\PMFWikipedia.Models\PMFWikipedia.Models.csproj" />
   </ItemGroup>
 
