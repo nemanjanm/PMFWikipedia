@@ -25,6 +25,16 @@ namespace PMFWikipedia.API.Controllers
         {
             return Ok(await _ispitBL.AddIspit(ispit));
         }
+        [HttpPost("delete")]
+        public async Task<IActionResult> DeleteKolokvijum(long id)
+        {
+            return Ok(await _ispitBL.DeleteIspit(id));
+        }
+        [HttpPost("delete/resenje")]
+        public async Task<IActionResult> DeleteResenje(long id)
+        {
+            return Ok(await _ispitResenjeBL.DeleteResenje(id));
+        }
         [HttpPost("resenje")]
         public async Task<IActionResult> AddResenje([FromForm] KolokvijumResenjeModel resenje)
         {

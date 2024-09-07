@@ -115,14 +115,14 @@ function Messages() {
                 {
                     if(response.data.length > 0)
                     {
-                        setUser(response.data[0].user);
-                        setCurrentChatId(response.data[0].id);
-                        const response2 = await chatService.getMessages(response.data[0].id);
+                        // setUser(response.data[0].user);
+                        // setCurrentChatId(response.data[0].id);
+                        // const response2 = await chatService.getMessages(response.data[0].id);
                         
-                        if(response2.status)
-                        {
-                            setMessages(response2.data);
-                        }
+                        // if(response2.status)
+                        // {
+                        //     setMessages(response2.data);
+                        // }
 
                         response.data.forEach((chat : any) => {
                             const unreadMessage : UnreadMessage ={

@@ -13,7 +13,6 @@ import { storageService } from "../../services/StorageService";
 import { PostViewModel } from "../../models/PostViewModel";
 import { socketService } from "../../services/SocketService";
 import ClipLoader from "react-spinners/ClipLoader";
-import { getName, notifications } from "../../models/Notification";
 
 function Wikipedia(){
     const [posts, setPosts] = useState<Array<PostViewModel>>([]);

@@ -57,7 +57,7 @@ function ProfilePage(){
             const response = await userService.changePhoto(e.files[0]);
             if(response.status)
             {
-                navigate(0)
+                //navigate(0)
             }
 
     };

@@ -19,7 +19,8 @@ namespace PMFWikipedia.SignalR
         private readonly IUserDAL _userDAL;
         private readonly IPostDAL _postDAL;
         private readonly INotificationDAL _notificationDAL;
-        public ChatHub(SharedDb shared, IUserBL userBL, IMessageBL messageBL, IChatBL chatBL, IPostBL postBL, IFavoriteSubjectBL favoriteSubjectBL, ICommentBL commentBL, ICommentDAL commentDAL, IUserDAL userDAL, IPostDAL postDAL, INotificationDAL notificationDAL)
+        private readonly IKolokvijumBL _kolokvijumBL;
+        public ChatHub(SharedDb shared, IUserBL userBL, IMessageBL messageBL, IChatBL chatBL, IPostBL postBL, IFavoriteSubjectBL favoriteSubjectBL, ICommentBL commentBL, ICommentDAL commentDAL, IUserDAL userDAL, IPostDAL postDAL, INotificationDAL notificationDAL, IKolokvijumBL kolokvijumBL)
         {
             _userBL = userBL;
             _shared = shared;
@@ -32,6 +33,7 @@ namespace PMFWikipedia.SignalR
             _userDAL = userDAL;
             _postDAL = postDAL;
             _notificationDAL = notificationDAL;
+            _kolokvijumBL = kolokvijumBL;
         }
 
         public async Task JoinChat(UserConnection conn)
@@ -74,7 +76,45 @@ namespace PMFWikipedia.SignalR
                 await Clients.Client(response2.Data).SendAsync("MarkMessagesAsRead", response.Data);
             }
         }
+        public async Task AddKolokvijum(IspitKolokvijumNotidicationModel model)
+        {
+            var notifications = await _notificationDAL.GetAllKolokvijumNotification(model.Id);
+            foreach(var notification in notifications)
+            {
+                if(notification.ReceiverNavigation.ConnectionId != "")
+                    await Clients.Client(notification.ReceiverNavigation.ConnectionId).SendAsync("ReceiveCommentNotification");
+            }
+        }
 
+        public async Task AddIspit(IspitKolokvijumNotidicationModel model)
+        {
+            var notifications = await _notificationDAL.GetAllIspitNotification(model.Id);
+            foreach (var notification in notifications)
+            {
+                if (notification.ReceiverNavigation.ConnectionId != "")
+                    await Clients.Client(notification.ReceiverNavigation.ConnectionId).SendAsync("ReceiveCommentNotification");
+            }
+        }
+
+        public async Task AddResenjeKolokvijum(IspitKolokvijumNotidicationModel model)
+        {
+            var notifications = await _notificationDAL.GetAllKolokvijumResenjeNotification(model.Id);
+            foreach (var notification in notifications)
+            {
+                if (notification.ReceiverNavigation.ConnectionId != "")
+                    await Clients.Client(notification.ReceiverNavigation.ConnectionId).SendAsync("ReceiveCommentNotification");
+            }
+        }
+
+        public async Task AddResenjeIspit(IspitKolokvijumNotidicationModel model)
+        {
+            var notifications = await _notificationDAL.GetAllIspitResenjeNotification(model.Id);
+            foreach (var notification in notifications)
+            {
+                if (notification.ReceiverNavigation.ConnectionId != "")
+                    await Clients.Client(notification.ReceiverNavigation.ConnectionId).SendAsync("ReceiveCommentNotification");
+            }
+        }
         public async Task SendNotfication(PostModel post)
         {
             ActionResultResponse<PostViewModel> response = await _postBL.AddPost(post);

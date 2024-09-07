@@ -16,7 +16,9 @@ namespace PMFWikipedia.ImplementationsBL
         private readonly IUserDAL _userDAL;
         private readonly ISubjectDAL _subjectDAL;
         private readonly IKolokvijumResenjeDAL _kolokvijumResenjeDAL;
-        public KolokvijumBL(IJWTService jWTService, IKolokvijumDAL kolokvijumDAL, IStorageService storageService, IUserDAL userDAL, ISubjectDAL subjectDAL, IKolokvijumResenjeDAL kolokvijumResenjeDAL)
+        private readonly IFavoriteSubjectDAL _favoriteSubjectDAL;
+        private readonly INotificationDAL _notificationDAL;
+        public KolokvijumBL(IJWTService jWTService, IKolokvijumDAL kolokvijumDAL, IStorageService storageService, IUserDAL userDAL, ISubjectDAL subjectDAL, IKolokvijumResenjeDAL kolokvijumResenjeDAL, IFavoriteSubjectDAL favoriteSubjectDAL, INotificationDAL notificationDAL)
         {
             _jwtService = jWTService;
             _kolokvijumDAL = kolokvijumDAL;
@@ -24,19 +26,21 @@ namespace PMFWikipedia.ImplementationsBL
             _userDAL = userDAL;
             _subjectDAL = subjectDAL;
             _kolokvijumResenjeDAL = kolokvijumResenjeDAL;
+            _favoriteSubjectDAL = favoriteSubjectDAL;
+            _notificationDAL = notificationDAL;
         }
 
-        public async Task<ActionResultResponse<bool>> AddKolokvijum(KolokvijumModel kolokvijum)
+        public async Task<ActionResultResponse<long>> AddKolokvijum(KolokvijumModel kolokvijum)
         {
             Kolokvijum k = new Kolokvijum();
 
             var author = await _userDAL.GetById(kolokvijum.AuthorId);
             if(author==null)
-                return new ActionResultResponse<bool>(false, false, "Something went wrong");
+                return new ActionResultResponse<long>(0, false, "Something went wrong");
 
             var subject = await _subjectDAL.GetById(kolokvijum.SubjectId);
             if (subject == null)
-                return new ActionResultResponse<bool>(false, false, "Something went wrong");
+                return new ActionResultResponse<long>(0, false, "Something went wrong");
 
             k.AuthorId = kolokvijum.AuthorId;
             k.SubjectId = kolokvijum.SubjectId;
@@ -66,6 +70,47 @@ namespace PMFWikipedia.ImplementationsBL
             {
                 kolokvijum.File.CopyTo(stream);
                 stream.Flush();
+            }
+
+            var favoriteSubjects = await _favoriteSubjectDAL.GetAllByFilter(x => x.SubjectId == kolokvijum.SubjectId && x.UserId != kolokvijum.AuthorId && x.IsDeleted == false);
+
+            foreach (var s in favoriteSubjects)
+            {
+                Notification n = new Notification();
+                n.Author = kolokvijum.AuthorId;
+                n.Post = k.Id;
+                n.Subject = kolokvijum.SubjectId;
+                n.Receiver = s.UserId;
+                n.NotificationId = 1;
+                await _notificationDAL.Insert(n);
+                await _notificationDAL.SaveChangesAsync();
+            }
+            return new ActionResultResponse<long>(k.Id, true, "");
+        }
+
+        public async Task<ActionResultResponse<bool>> DeleteKolokvijum(long id)
+        {
+            var klk = await _kolokvijumDAL.GetById(id);
+            if(klk == null)
+                return new ActionResultResponse<bool>(false, false, "");
+
+            await _kolokvijumDAL.Delete(id);
+            await _kolokvijumDAL.SaveChangesAsync();
+
+            var notification = await _notificationDAL.GetAllByFilter(x => x.NotificationId == 1 && x.Post == id);
+            
+            foreach(var nott in notification)
+            {
+                await _notificationDAL.Delete(nott.Id);
+                await _notificationDAL.SaveChangesAsync();
+            }
+
+            var resenja = await _kolokvijumResenjeDAL.GetAllByFilter(x => x.KolokvijumId == id);
+
+            foreach(var resenje in resenja)
+            {
+                await _kolokvijumResenjeDAL.Delete(resenje.Id);
+                await _kolokvijumResenjeDAL.SaveChangesAsync();
             }
 
             return new ActionResultResponse<bool>(true, true, "");

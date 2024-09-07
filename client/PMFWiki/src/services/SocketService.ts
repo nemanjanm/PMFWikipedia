@@ -104,6 +104,23 @@ class SocketService{
     async markAsRead(id : any, myId: any){
         await this.conn.invoke("MarkAsRead",  {id, myId});
     }
+    async addKolokvijum(authorId: any, id : any, subjectId: any){
+        await this.conn.invoke("AddKolokvijum",  {authorId, id, subjectId});
+    }
+
+    async addIspit(authorId: any, id : any, subjectId: any){
+        console.log(id);
+        await this.conn.invoke("AddIspit",  {authorId, id, subjectId});
+    }
+
+    async addResenje(authorId: any, id : any, subjectId: any){
+        await this.conn.invoke("AddResenjeKolokvijum",  {authorId, id, subjectId});
+    }
+
+    async addIspitResenje(authorId: any, id : any, subjectId: any){
+        await this.conn.invoke("AddResenjeIspit",  {authorId, id, subjectId});
+    }
+
     async deleteConnection(myid: any){
         await this.conn.invoke("DeleteConnId", {myid});
         storageService.deleteConnectionId();

@@ -120,7 +120,7 @@ function PostPanel(props : any) {
                     <span className="font-bold">{info.authorName}</span>
                 </div>
                 </a> :
-                <div className="d-flex align-items-center gap-2" onClick={() => showUser(info.authorId)}>
+                <div className="d-flex align-items-center gap-2">
                     <img alt={info.photoPath} src={enviorment.port + info.photoPath} style={{ width: '5vh', height: "5vh", borderRadius: "50%"}}/>
                     <span className="font-bold">{info.authorName}</span>
                 </div>    

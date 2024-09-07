@@ -7,4 +7,5 @@ export interface NotificationModel {
     isRead: boolean,
     notificationId: number,
     timeStamp: Date;
+    title: string;
 }

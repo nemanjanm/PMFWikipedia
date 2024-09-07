@@ -5,7 +5,8 @@ export const notifications= [
     {name: "Komentar na tvoj post", id: 4},
     {name: "Komentar gde si ti komentarisao", id: 5},
     {name: "Izmenjen je tvoj post", id: 6},
-    {name: "Psigologija", id: 7},
+    {name: "Resenje Kolokvijuma", id: 7},
+    {name: "Resenje Ispita", id: 8}
 ];
 
 export function getNotName(id : any) : any{
@@ -23,6 +24,8 @@ export function getNotName(id : any) : any{
         case 6:
             return "Izmenjen je tvoj post";
         case 7:
-            return "Psihologija";
+            return "Resenje Kolokvijuma";
+        case 8:
+            return "Resenje Ispita";
     }
 }

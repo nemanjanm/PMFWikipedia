@@ -1,7 +1,6 @@
 ﻿using PMFWikipedia.InterfacesBL;
 using PMFWikipedia.InterfacesDAL;
 using PMFWikipedia.Models;
-using PMFWikipedia.Models.Entity;
 using PMFWikipedia.Models.ViewModels;
 
 namespace PMFWikipedia.ImplementationsBL
@@ -9,10 +8,17 @@ namespace PMFWikipedia.ImplementationsBL
     public class NotificationBL : INotificationBL
     {
         private readonly INotificationDAL _notificationDAL;
-
-        public NotificationBL(INotificationDAL notificationDAL)
+        private readonly IKolokvijumDAL _kolokvijumDAL;
+        private readonly IKolokvijumResenjeDAL _kolokvijumResenjeDAL;
+        private readonly IIspitDAL _ispitDAL;
+        private readonly IIspitResenjeDAL _ispitResenjeDAL;
+        public NotificationBL(INotificationDAL notificationDAL, IKolokvijumDAL kolokvijumDAL, IKolokvijumResenjeDAL kolokvijumResenjeDAL, IIspitDAL ispitDAL, IIspitResenjeDAL ispitResenjeDAL)
         {
             _notificationDAL = notificationDAL;
+            _kolokvijumDAL = kolokvijumDAL;
+            _kolokvijumResenjeDAL = kolokvijumResenjeDAL;
+            _ispitDAL = ispitDAL;
+            _ispitResenjeDAL = ispitResenjeDAL;
         }
 
         public async Task<ActionResultResponse<List<NotificationViewModel>>> GetAllNotification(long id)
@@ -22,6 +28,27 @@ namespace PMFWikipedia.ImplementationsBL
             foreach (var notification in notts) 
             {
                 NotificationViewModel n = new NotificationViewModel();
+                if (notification.NotificationId == 7)
+                {
+                    var klkresenje = await _kolokvijumResenjeDAL.GetById(notification.Post);
+                    if (klkresenje != null)
+                    {
+                        var klk = await _kolokvijumDAL.GetById(klkresenje.KolokvijumId);
+                        if (klk != null)
+                            n.Title = klk.Title;
+                    }
+                }
+                else if (notification.NotificationId == 8) 
+                {
+                    var ispitResenje = await _ispitResenjeDAL.GetById(notification.Post);
+                    if (ispitResenje != null)
+                    {
+                        var ispit = await _ispitDAL.GetById(ispitResenje.IspitId);
+                        if (ispit != null)
+                            n.Title = ispit.Title;
+                    }
+                }
+
                 n.Id = notification.Id;
                 n.PostId = notification.Post;
                 n.AuthorName = notification.AuthorNavigation.FirstName + " " + notification.AuthorNavigation.LastName;

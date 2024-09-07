@@ -143,11 +143,11 @@ function SideBar(){
     async function showPost(e: any){
         const response = await notificationService.setIsRead(e.id);
         if(response.status){
-            if(e.notificationId === 1){
+            if(e.notificationId === 1 || e.notificationId === 7){
                 navigate("/predmet/"+e.subjectId+"/kolokvijum");
                 window.location.reload();
             }
-            else if(e.notificationId === 2){
+            else if(e.notificationId === 2 || e.notificationId === 8){
                 navigate("/predmet/"+e.subjectId+"/ispit");
                 window.location.reload();
             }
@@ -165,7 +165,7 @@ function SideBar(){
             {visible && 
                 <Sidebar className='sideBar' visible={visible} onHide={() => setVisible(false)}>
                     <h2 style={{color: 'white'}}>Obaveštenja</h2>
-                    <ListBox emptyMessage={"Nema obaveštenja"} style={{border: 0}} onChange={(e : any) => showPost(e.value)} options={notifications} itemTemplate={(option: any) => ( <><div className={option.isRead ? 'read-notification' : 'unread-notification'}>{option.authorName} je dodao {getNotName(option.notificationId)} u {option.subjectName}</div><span style={{fontSize: "2vh"}}>{returnDate(option.timeStamp)}</span></>)} className="w-full md:w-14rem" />
+                    <ListBox emptyMessage={"Nema obaveštenja"} style={{border: 0}} onChange={(e : any) => showPost(e.value)} options={notifications} itemTemplate={(option: any) => ( <><div className={option.isRead ? 'read-notification' : 'unread-notification'}>{option.authorName} je dodao {getNotName(option.notificationId)} {option.title!==undefined ? option.title : ""} u {option.subjectName}</div><span style={{fontSize: "2vh"}}>{returnDate(option.timeStamp)}</span></>)} className="w-full md:w-14rem" />
                 </Sidebar>}
             <div className='d-flex justify-content-centar' style={{flexShrink: 0,  position: "relative", overflow: 'auto', top: 0, bottom: 0, height: "auto", backgroundColor: "#374151"}}>
                 <PanelMenu style={{height:"100%", width:"100%", border: 0, borderRadius: "0", padding: "0", fontSize: "1vw"}} model={items}/>    

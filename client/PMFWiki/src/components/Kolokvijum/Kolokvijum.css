@@ -1,0 +1,9 @@
+span.p-button.p-component.p-fileupload-choose{
+    background-color: #111827;
+    border: 0;
+    width: 100%;
+}
+
+span.p-button.p-component.p-fileupload-choose:hover{
+    background-color: #60a5fa;
+}

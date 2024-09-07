@@ -14,27 +14,31 @@ namespace PMFWikipedia.ImplementationsBL
         private readonly ISubjectDAL _subjectDAL;
         private readonly IIspitDAL _ispitDAL;
         private readonly IIspitResenjeDAL _ispitResenjeDAL;
+        private readonly IFavoriteSubjectDAL _favoriteSubjectDAL;
+        private readonly INotificationDAL _notificationDAL;
 
-        public IspitBL(IStorageService storageService, IUserDAL userDAL, ISubjectDAL subjectDAL, IIspitDAL ispitDAL, IIspitResenjeDAL ispitResenjeDAL)
+        public IspitBL(IStorageService storageService, IUserDAL userDAL, ISubjectDAL subjectDAL, IIspitDAL ispitDAL, IIspitResenjeDAL ispitResenjeDAL, IFavoriteSubjectDAL favoriteSubjectDAL, INotificationDAL notificationDAL)
         {
             _storageService = storageService;
             _userDAL = userDAL;
             _subjectDAL = subjectDAL;
             _ispitDAL = ispitDAL;
             _ispitResenjeDAL = ispitResenjeDAL;
+            _favoriteSubjectDAL = favoriteSubjectDAL;
+            _notificationDAL = notificationDAL;
         }
 
-        public async Task<ActionResultResponse<bool>> AddIspit(KolokvijumModel ispit)
+        public async Task<ActionResultResponse<long>> AddIspit(KolokvijumModel ispit)
         {
             Ispit i = new Ispit();
 
             var author = await _userDAL.GetById(ispit.AuthorId);
             if (author == null)
-                return new ActionResultResponse<bool>(false, false, "Something went wrong");
+                return new ActionResultResponse<long>(0, false, "Something went wrong");
 
             var subject = await _subjectDAL.GetById(ispit.SubjectId);
             if (subject == null)
-                return new ActionResultResponse<bool>(false, false, "Something went wrong");
+                return new ActionResultResponse<long>(0, false, "Something went wrong");
 
             i.AuthorId = ispit.AuthorId;
             i.SubjectId = ispit.SubjectId;
@@ -62,6 +66,47 @@ namespace PMFWikipedia.ImplementationsBL
             {
                 ispit.File.CopyTo(stream);
                 stream.Flush();
+            }
+
+            var favoriteSubjects = await _favoriteSubjectDAL.GetAllByFilter(x => x.SubjectId == ispit.SubjectId && x.UserId != ispit.AuthorId && x.IsDeleted == false);
+
+            foreach (var s in favoriteSubjects)
+            {
+                Notification n = new Notification();
+                n.Author = ispit.AuthorId;
+                n.Post = i.Id;
+                n.Subject = ispit.SubjectId;
+                n.Receiver = s.UserId;
+                n.NotificationId = 2;
+                await _notificationDAL.Insert(n);
+                await _notificationDAL.SaveChangesAsync();
+            }
+
+            return new ActionResultResponse<long>(i.Id, true, "");
+        }
+
+        public async Task<ActionResultResponse<bool>> DeleteIspit(long id)
+        {
+            var ispit = await _ispitDAL.GetById(id);
+            if(ispit == null)
+                return new ActionResultResponse<bool>(false, false, "");
+
+            await _ispitDAL.Delete(id);
+            await _ispitDAL.SaveChangesAsync();
+
+            var notification = await _notificationDAL.GetAllByFilter(x => x.NotificationId == 2 && x.Post == id);
+
+            foreach (var nott in notification)
+            {
+                await _notificationDAL.Delete(nott.Id);
+                await _notificationDAL.SaveChangesAsync();
+            }
+
+            var resenja = await _ispitResenjeDAL.GetAllByFilter(x => x.IspitId == id);
+            foreach (var resenje in resenja)
+            {
+                await _ispitResenjeDAL.Delete(resenje.Id);
+                await _ispitResenjeDAL.SaveChangesAsync();
             }
 
             return new ActionResultResponse<bool>(true, true, "");
