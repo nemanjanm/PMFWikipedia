@@ -10,6 +10,10 @@ namespace PMFWikipedia.Models.Entity
         public Subject()
         {
             FavoriteSubjects = new HashSet<FavoriteSubject>();
+            IspitResenjes = new HashSet<IspitResenje>();
+            Ispits = new HashSet<Ispit>();
+            KolokvijumResenjes = new HashSet<KolokvijumResenje>();
+            Kolokvijums = new HashSet<Kolokvijum>();
             Notifications = new HashSet<Notification>();
             Posts = new HashSet<Post>();
         }
@@ -21,6 +25,10 @@ namespace PMFWikipedia.Models.Entity
         public int Semester { get; set; }
 
         public virtual ICollection<FavoriteSubject> FavoriteSubjects { get; set; }
+        public virtual ICollection<IspitResenje> IspitResenjes { get; set; }
+        public virtual ICollection<Ispit> Ispits { get; set; }
+        public virtual ICollection<KolokvijumResenje> KolokvijumResenjes { get; set; }
+        public virtual ICollection<Kolokvijum> Kolokvijums { get; set; }
         public virtual ICollection<Notification> Notifications { get; set; }
         public virtual ICollection<Post> Posts { get; set; }
     }

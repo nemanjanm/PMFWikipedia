@@ -13,6 +13,10 @@ namespace PMFWikipedia.Models.Entity
             ChatUser2Navigations = new HashSet<Chat>();
             Comments = new HashSet<Comment>();
             FavoriteSubjects = new HashSet<FavoriteSubject>();
+            IspitResenjes = new HashSet<IspitResenje>();
+            Ispits = new HashSet<Ispit>();
+            KolokvijumResenjes = new HashSet<KolokvijumResenje>();
+            Kolokvijums = new HashSet<Kolokvijum>();
             NotificationAuthorNavigations = new HashSet<Notification>();
             NotificationReceiverNavigations = new HashSet<Notification>();
             PostAuthorNavigations = new HashSet<Post>();
@@ -41,6 +45,10 @@ namespace PMFWikipedia.Models.Entity
         public virtual ICollection<Chat> ChatUser2Navigations { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }
         public virtual ICollection<FavoriteSubject> FavoriteSubjects { get; set; }
+        public virtual ICollection<IspitResenje> IspitResenjes { get; set; }
+        public virtual ICollection<Ispit> Ispits { get; set; }
+        public virtual ICollection<KolokvijumResenje> KolokvijumResenjes { get; set; }
+        public virtual ICollection<Kolokvijum> Kolokvijums { get; set; }
         public virtual ICollection<Notification> NotificationAuthorNavigations { get; set; }
         public virtual ICollection<Notification> NotificationReceiverNavigations { get; set; }
         public virtual ICollection<Post> PostAuthorNavigations { get; set; }

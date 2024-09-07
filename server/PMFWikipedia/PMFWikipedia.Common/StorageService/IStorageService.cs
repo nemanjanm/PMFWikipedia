@@ -5,5 +5,6 @@
         public string CreatePhotoPath();
         public string GetDefaultPath();
         public string SetDefaultPhoto(long id);
+        public string CreateFilePath();
     }
 }

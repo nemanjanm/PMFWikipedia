@@ -22,6 +22,10 @@ namespace PMFWikipedia.ImplementationsDAL
         public virtual DbSet<Chat> Chats { get; set; } = null!;
         public virtual DbSet<Comment> Comments { get; set; } = null!;
         public virtual DbSet<FavoriteSubject> FavoriteSubjects { get; set; } = null!;
+        public virtual DbSet<Ispit> Ispits { get; set; } = null!;
+        public virtual DbSet<IspitResenje> IspitResenjes { get; set; } = null!;
+        public virtual DbSet<Kolokvijum> Kolokvijums { get; set; } = null!;
+        public virtual DbSet<KolokvijumResenje> KolokvijumResenjes { get; set; } = null!;
         public virtual DbSet<Message> Messages { get; set; } = null!;
         public virtual DbSet<Notification> Notifications { get; set; } = null!;
         public virtual DbSet<Post> Posts { get; set; } = null!;
@@ -91,6 +95,122 @@ namespace PMFWikipedia.ImplementationsDAL
                     .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_FavoriteSubject_UserId");
+            });
+
+            modelBuilder.Entity<Ispit>(entity =>
+            {
+                entity.ToTable("Ispit");
+
+                entity.Property(e => e.DateCreated).HasColumnType("datetime");
+
+                entity.Property(e => e.DateModified).HasColumnType("datetime");
+
+                entity.Property(e => e.FilePath)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Title).IsUnicode(false);
+
+                entity.HasOne(d => d.Author)
+                    .WithMany(p => p.Ispits)
+                    .HasForeignKey(d => d.AuthorId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Ispit_AuthorId");
+
+                entity.HasOne(d => d.Subject)
+                    .WithMany(p => p.Ispits)
+                    .HasForeignKey(d => d.SubjectId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Ispit_SubjectId");
+            });
+
+            modelBuilder.Entity<IspitResenje>(entity =>
+            {
+                entity.ToTable("IspitResenje");
+
+                entity.Property(e => e.DateCreated).HasColumnType("datetime");
+
+                entity.Property(e => e.DateModified).HasColumnType("datetime");
+
+                entity.Property(e => e.FilePath)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.Author)
+                    .WithMany(p => p.IspitResenjes)
+                    .HasForeignKey(d => d.AuthorId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_IspitResenje_AuthorId");
+
+                entity.HasOne(d => d.Ispit)
+                    .WithMany(p => p.IspitResenjes)
+                    .HasForeignKey(d => d.IspitId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_IspitResenje_IspitId");
+
+                entity.HasOne(d => d.Subject)
+                    .WithMany(p => p.IspitResenjes)
+                    .HasForeignKey(d => d.SubjectId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_IspitResenje_SubjectId");
+            });
+
+            modelBuilder.Entity<Kolokvijum>(entity =>
+            {
+                entity.ToTable("Kolokvijum");
+
+                entity.Property(e => e.DateCreated).HasColumnType("datetime");
+
+                entity.Property(e => e.DateModified).HasColumnType("datetime");
+
+                entity.Property(e => e.FilePath)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Title).IsUnicode(false);
+
+                entity.HasOne(d => d.Author)
+                    .WithMany(p => p.Kolokvijums)
+                    .HasForeignKey(d => d.AuthorId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Kolokvijum_AuthorId");
+
+                entity.HasOne(d => d.Subject)
+                    .WithMany(p => p.Kolokvijums)
+                    .HasForeignKey(d => d.SubjectId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Kolkovijum_SubjectId");
+            });
+
+            modelBuilder.Entity<KolokvijumResenje>(entity =>
+            {
+                entity.ToTable("KolokvijumResenje");
+
+                entity.Property(e => e.DateCreated).HasColumnType("datetime");
+
+                entity.Property(e => e.DateModified).HasColumnType("datetime");
+
+                entity.Property(e => e.FilePath)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.Author)
+                    .WithMany(p => p.KolokvijumResenjes)
+                    .HasForeignKey(d => d.AuthorId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_KolokvijumResenje_AuthorId");
+
+                entity.HasOne(d => d.Kolokvijum)
+                    .WithMany(p => p.KolokvijumResenjes)
+                    .HasForeignKey(d => d.KolokvijumId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_KolokvijumResenje_KolokvijumId");
+
+                entity.HasOne(d => d.Subject)
+                    .WithMany(p => p.KolokvijumResenjes)
+                    .HasForeignKey(d => d.SubjectId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_KolokvijumResenje_SubjectId");
             });
 
             modelBuilder.Entity<Message>(entity =>

@@ -31,6 +31,10 @@ namespace PMFWikipedia.ServiceInitializer
             services.AddScoped<IPostDAL, PostDAL>();
             services.AddScoped<INotificationDAL, NotificationDAL>();
             services.AddScoped<ICommentDAL, CommentDAL>();
+            services.AddScoped<IKolokvijumDAL, KolokvijumDAL>();
+            services.AddScoped<IKolokvijumResenjeDAL, KolokvijumResenjeDAL>();
+            services.AddScoped<IIspitDAL, IspitDAL>();
+            services.AddScoped<IIspitResenjeDAL, IspitResenjeDAL>();
             return services;
         }
 
@@ -45,6 +49,10 @@ namespace PMFWikipedia.ServiceInitializer
             services.AddScoped<IPostBL, PostBL>();
             services.AddScoped<INotificationBL, NotificationBL>();
             services.AddScoped<ICommentBL, CommentBL>();
+            services.AddScoped<IKolokvijumBL, KolokvijumBL>();
+            services.AddScoped<IKolokvijumResenjeBL, KolokvijumResenjeBL>();
+            services.AddScoped<IIspitBL, IspitBL>();
+            services.AddScoped<IIspitResenjeBL, IspitResenjeBL>();
             return services;
         }
 

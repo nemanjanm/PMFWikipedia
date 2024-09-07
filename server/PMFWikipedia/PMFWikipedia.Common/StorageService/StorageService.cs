@@ -10,6 +10,13 @@
             return imgpath;
         }
 
+        public string CreateFilePath()
+        {
+            var path = @"wwwroot";
+            var filefolder = "Files";
+            var filepath = Path.Combine(path, filefolder);
+            return filepath;
+        }
         public string GetDefaultPath()
         {
             var path = "Images";
