@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using PMFWikipedia.ImplementationsBL;
 using PMFWikipedia.InterfacesBL;
+using PMFWikipedia.Models;
 
 namespace PMFWikipedia.API.Controllers
 {
@@ -20,6 +21,17 @@ namespace PMFWikipedia.API.Controllers
         public async Task<IActionResult> GetAllSubjects(long programId)
         {
             return Ok(await _subjectBL.GetAllSubjects(programId));
+        }
+        [HttpPost]
+        public async Task<IActionResult> AddSubject(SubjectModel model)
+        {
+            return Ok(await _subjectBL.AddSubject(model));
+        }
+
+        [HttpPost("Program")]
+        public async Task<IActionResult> AddProgram(string name)
+        {
+            return Ok(await _subjectBL.AddProgram(name));
         }
 
         [HttpGet("subject")]

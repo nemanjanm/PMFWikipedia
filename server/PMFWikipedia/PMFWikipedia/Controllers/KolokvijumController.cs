@@ -7,7 +7,7 @@ namespace PMFWikipedia.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize]
+    [Authorize]
     public class KolokvijumController : ControllerBase
     {
         private readonly IKolokvijumBL _kolokvijumBL;

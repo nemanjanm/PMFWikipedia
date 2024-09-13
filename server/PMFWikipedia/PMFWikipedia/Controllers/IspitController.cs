@@ -8,7 +8,7 @@ namespace PMFWikipedia.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize]
+    [Authorize]
     public class IspitController : ControllerBase
     {
         private readonly IIspitBL _ispitBL;

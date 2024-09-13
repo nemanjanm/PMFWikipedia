@@ -5,7 +5,7 @@ export const programmes= [
     {name: "Ekologija", id: 4},
     {name: "Fizika", id: 5},
     {name: "Hemija", id: 6},
-    {name: "Psigologija", id: 7},
+    {name: "Psigologija", id: 7}
 ];
 
 export function getName(id : any) : any{

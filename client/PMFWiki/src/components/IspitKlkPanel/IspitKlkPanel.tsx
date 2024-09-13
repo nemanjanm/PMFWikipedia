@@ -135,7 +135,7 @@ function IspitKlkPanel(props: any){
                     <ConfirmDialog visible={isDialogVisible2}onHide={handleReject2}message="Da li ste sigurni da želite da obrišete rešenje?"header="Obriši post"icon="pi pi-info-circle"acceptClassName="p-button-danger"rejectLabel="Odustani"acceptLabel="Potvrdi" accept={() => accept2(r.id)}reject={handleReject2}/>
                     </div>
                 ))}
-                <Button onClick={() => setVisible(true)} style={{fontSize: "3vh", width: "10vw", marginTop: "2vh", height: "8vh"}} icon="pi pi-plus" label="Dodaj"></Button>
+                <Button onClick={() => setVisible(true)} style={{fontSize: "3vh", width: "10vw", marginTop: "2vh", height: "8vh"}} icon="pi pi-plus" label="Rešenje"></Button>
                 </div>
             </div>
         </Panel>

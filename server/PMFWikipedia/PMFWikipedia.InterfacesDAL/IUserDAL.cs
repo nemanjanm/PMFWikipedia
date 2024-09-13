@@ -9,5 +9,6 @@ namespace PMFWikipedia.InterfacesDAL
         public Task<User?> GetUserByEmail(string email);
         public Task<User?> GetUserForPhoto(string email);
         public Task <User?> GetUserByResetToken(string token);
+        public Task<User> GetUserForPage(long id);
     }
 }

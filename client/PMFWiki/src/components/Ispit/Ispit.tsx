@@ -18,6 +18,7 @@ function Ispit(){
     const [visible, setVisible] = useState<boolean>(false)
     const [title, setTitle] = useState('');
     const [file, setFile] = useState<FileUploadHandlerEvent>();
+    const [allowed, setAllowed] = useState<boolean>(false);
     const navigate = useNavigate();
     useEffect(() => {
         socketService.reconnect();
@@ -39,7 +40,12 @@ function Ispit(){
         async function getIspiti(){
             const response = await ispitService.getIspit(Number((location.pathname).split('/').slice(2, -1).join('/')));
             if(response.status)
-                setIspiti(response.data)
+            {
+                if(response.data[0].authorId !== 0)
+                    setIspiti(response.data)
+                if(response.data[0].allowed && response.data[0].allowed === true)
+                    setAllowed(true);
+            }
         }
         getIspiti();
     }, []);
@@ -62,7 +68,7 @@ function Ispit(){
     }
 
     return <>{!loader && <div className="d-flex align-items-center justify-content-center flex-column" style={{width: "100%"}}>
-        <Button label="Dodaj" icon="pi pi-plus" style={{width: "20vw"}} onClick={handleAdd} ></Button>
+        {allowed && <Button label="Dodaj" icon="pi pi-plus" style={{width: "20vw"}} onClick={handleAdd} ></Button>}
         {ispiti?.length > 0 && ispiti?.map(k => (
             <div style={{width: "80%", marginBottom: "1vh"}}><IspitKlkPanel info={k} flag={2}></IspitKlkPanel></div>
         ))}

@@ -7,6 +7,7 @@
         public long AuthorId { get; set; }
         public string AuthorName { get; set; }
         public string FilePath { get; set; }
+        public bool Allowed { get; set; }
         public List<KolokvijumResenjeViewModel> Resenja { get; set; } = new List<KolokvijumResenjeViewModel>();
     }
 }

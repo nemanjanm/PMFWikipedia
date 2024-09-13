@@ -38,13 +38,10 @@ div.d-flex.flex-column > div > div:nth-child(1) > div > div > span > svg{
 
 .slika1{
     width: 100vw;
-    background-image: url("../assets/logopmf.png");
-    background-repeat: no-repeat;
-    background-position: top;
 }
 
 .slika2{
-    background-color: rgb(81, 94, 211, 0.8);
+    
 }
 
 button.p-image-preview-indicator{

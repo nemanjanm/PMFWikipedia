@@ -23,6 +23,10 @@ namespace PMFWikipedia.Models.Entity
         public string Name { get; set; } = null!;
         public int Year { get; set; }
         public int Semester { get; set; }
+        public bool IsDeleted { get; set; }
+        public DateTime? DateCreated { get; set; }
+        public DateTime? DateModified { get; set; }
+        public long? LastModifiedBy { get; set; }
 
         public virtual ICollection<FavoriteSubject> FavoriteSubjects { get; set; }
         public virtual ICollection<IspitResenje> IspitResenjes { get; set; }

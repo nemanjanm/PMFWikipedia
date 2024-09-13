@@ -31,12 +31,12 @@ function ProfilePage(){
     
     const navigate = useNavigate();
     const [id, setId] = useState<number>();
-    const [user, setUser] = useState<LoginInfo | null>();
+    const [user, setUser] = useState<any>();
     const toast = useRef<Toast>(null);
     const params = useParams();
     useEffect(() => {
         const func = async () => {
-        if(params.id)
+            if(params.id)
             {
                 const id = Number(params.id);
                 const response = await userService.getUser(id)
@@ -47,7 +47,15 @@ function ProfilePage(){
                     console.log("dodaj toaster")
             }
             else
-                setUser(storageService.getUserInfo());
+            {
+                const id = Number(storageService.getUserInfo()?.id);
+                const response = await userService.getUser(id)
+                if(response.status){
+                    setUser(response.data);
+                }
+                else
+                    console.log("dodaj toaster")
+            }
         }
         func();
     },[id])
@@ -82,7 +90,16 @@ function ProfilePage(){
                     </div>
                     <div className="d-flex justify-content-center" style={{width: "100%", height: "auto"}}>
                         <div className="">
-                            <h2>Interesovanja</h2>
+                            <h2 style={{fontWeight: "bold", margin: 0}}>Informacije o korisniku</h2>
+                            <p style={{fontSize: "3vh", margin: 0}}><b>Email</b>: {user?.email}</p>
+                            <p style={{fontSize: "3vh", margin: 0}}><b>Broj dodatih rešenja kolokvijuma</b>: {user?.kolokvijums}</p>
+                            <p style={{fontSize: "3vh"}}><b>Broj dodatih resenja kolokvijuma</b>: {user?.ispits}</p>
+                            <h2>Omiljeni predmeti</h2>
+                            {user?.favoriteSubjects.length>0 && user?.favoriteSubjects?.map((fs: any) => (
+                                <div className="d-flex justify-content-centar">
+                                    <a style={{fontSize: "3vh", fontWeight: "bold", textDecoration: "underline"}} href={"/predmet/"+fs.subjectId+"/wiki"}>{fs.name}</a>
+                                </div>
+                            ))}
                         </div>
                     </div>
                 </div>

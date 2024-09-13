@@ -33,5 +33,10 @@ namespace PMFWikipedia.ImplementationsDAL
         {
             return await table.Where(x => x.RegisterToken==registrationToken && x.Verified == false && x.RegisterTokenExpirationTime > DateTime.Now).FirstOrDefaultAsync();
         }
+
+        public async Task<User> GetUserForPage(long id)
+        {
+            return await table.Include(x => x.IspitResenjes).Include(x => x.FavoriteSubjects.Where(c=>c.IsDeleted == false)).Include(x => x.KolokvijumResenjes).Where(x => x.Id == id && x.IsDeleted == false).FirstOrDefaultAsync();
+        }
     }
 }

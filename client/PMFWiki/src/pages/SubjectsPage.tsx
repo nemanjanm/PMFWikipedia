@@ -19,6 +19,9 @@ import { SubjectInfo } from "../models/SubjectInfo";
 import { subjectService } from "../services/SubjectService";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { socketService } from "../services/SocketService";
+import { InputText } from "primereact/inputtext";
+import { Dropdown } from "primereact/dropdown";
+import { SubjectModel } from "../models/SubjectModel";
 function SubjectsPage(){
 
     useEffect(() => {
@@ -38,20 +41,35 @@ function SubjectsPage(){
     }, []);
     const params = useParams();
     
-    const programNumber = storageService.getUserInfo()?.program;
+    const programNumber = Number(params.id);
     const program = getName(programNumber);
     const [users, setUsers] = useState<Array<LoginInfo>>();
     const [previewUser, setPreviewUser] = useState<LoginInfo>();
     const [temp, setTemp] = useState(false)
     const [visible, setVisible] = useState<boolean>(false)
+    const [visible2, setVisible2] = useState<boolean>(false)
     const [loader, setLoader] = useState<boolean>(false);
     const [selectedYear, setSelectedYear] = useState<string>("");
     const [selectedUser, setSelectedUser] = useState<string>("");
     const [subjects, setSubjects] = useState<Array<SubjectInfo>>();
     const [tree, setTree] = useState<Array<any>>();
-    const navigate = useNavigate();
-    
+    const [name, setName] = useState<any>();
+    const [year, setYear] = useState<any>();
+    const [semester, setSemester] = useState<any>();
 
+    const years = [
+        { value: 1},
+        { value: 2},
+        { value: 3},
+        { value: 4},
+        { value: 5}
+    ];
+
+    const semesters = [
+        { value: 1},
+        { value: 2}
+    ];
+    const navigate = useNavigate();
 
     useEffect(() => { 
         async function getUsers(){
@@ -86,6 +104,23 @@ function SubjectsPage(){
     {
         navigate("/poruke-1/", {state: e});
     }
+
+    async function addSubject(){
+
+        const model: SubjectModel={
+            programId: Number(params.id),
+            name: name,
+            year: year,
+            semester: semester
+        }
+        const response = await subjectService.addSubject(model)
+        if(response.status)
+            navigate(0);
+    }
+    function handleVisible(){
+        console.log(visible2);
+        setVisible2(true);
+    }
     const userTemplate = (option: LoginInfo) => {
         return (
             <div className="d-flex align-items-center">
@@ -101,10 +136,13 @@ function SubjectsPage(){
         <div className="d-flex justify-content-between" style={{height: "100vh"}}>
             <SideBar></SideBar>
                 {!loader && <div>
-                    <h1 style={{textAlign: "center", fontWeight: "bold", margin: "1vh", width: "100%", height: "auto"}}>{program}</h1>
+                    <div>
+                        <h1 style={{textAlign: "center", fontWeight: "bold", margin: "1vh", width: "100%", height: "auto"}}>{program}</h1>
+                    </div>
                     <div className="d-flex justify-content-around" style={{width: "100%", height: "auto", flexGrow: 1}}>
-                        <div style={{width: "70vh"}}>
+                        <div className="d-flex flex-column" style={{width: "70vh"}}>
                             <h2 style={{textAlign: "center", fontWeight: "bold"}}>Predmeti</h2>
+                            {storageService.getUserInfo()?.firstName === "Admin" && <Button onClick={handleVisible} label="Dodaj predmet"></Button>}
                             <Tree style={{maxHeight: "70vh", overflowY: "scroll", fontSize: "3vh"}} value={tree} filterPlaceholder="Lenient Filter" className="w-full md:w-14rem" />
                         </div>
                         <div style={{width: "30vh"}}></div>
@@ -119,6 +157,21 @@ function SubjectsPage(){
                                     <div>
                                         <Button onClick={() => sendMessage(previewUser)}  label="Pošalji poruku" icon="pi pi-send" iconPos="right" style={{marginRight: "1vh"}}/>
                                         <Button onClick={() => showProfile(previewUser)} label="Prikaži profil" icon="pi pi-user" iconPos="right" style={{marginLeft: "1vh"}}/>
+                                    </div>
+                                </div>
+                        </Dialog>}
+                        {visible2 && <Dialog headerStyle={{textAlign: "center"}} visible={visible2} header={"Dodaj predmet"} onHide={() => {if (!visible2) return; setVisible2(false); }}
+                            style={{ width: '50vw', textAlign: "center", height: "70vh"}}>
+                                <div className="d-flex align-items-center flex-column">
+                                    <div style={{width: "20vw"}} className="d-flex justify-content-center flex-column">
+                                        <InputText style={{marginBottom: "0.3rem"}} placeholder="Naziv predmeta" value={name} onChange={(e) => setName(e.target.value)} />
+                                        <span style={{textAlign: "left"}}>godina</span>
+                                        <Dropdown style={{textAlign: "left"}} value={year} onChange={(e) => setYear(e.value)} options={years} optionLabel="value" placeholder="Izaberi godinu" className="w-full md:w-14rem" />
+                                        <span style={{textAlign: "left"}}>semestar</span>
+                                        <Dropdown style={{textAlign: "left"}} value={semester} onChange={(e) => setSemester(e.value)} options={semesters} optionLabel="value" placeholder="Izaberi semestar" className="w-full md:w-14rem" />
+                                    </div>
+                                    <div>
+                                        <Button onClick={() => addSubject()}  label="Potvrdi" icon="pi pi-send" iconPos="right" style={{border: 0, borderRadius: "10%", marginTop: "5vh"}}/>
                                     </div>
                                 </div>
                         </Dialog>}

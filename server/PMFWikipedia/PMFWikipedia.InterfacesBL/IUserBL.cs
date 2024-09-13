@@ -14,7 +14,7 @@ namespace PMFWikipedia.InterfacesBL
         public Task<ActionResultResponse<User>> ResetPassword(ResetPasswordInfo info);
         public Task<ActionResultResponse<string>> ChangePhoto(IFormFile photo);
         public Task<ActionResultResponse<List<UserViewModel>>> GetUsers(long programId);
-        public Task<ActionResultResponse<UserViewModel>> GetUser(long id);
+        public Task<ActionResultResponse<UserProfileViewModel>> GetUser(long id);
         public Task<ActionResultResponse<User>> ChangeConnectionId(long id, string connId);
         public Task<ActionResultResponse<string>> GetConnectionId(long id);
     }

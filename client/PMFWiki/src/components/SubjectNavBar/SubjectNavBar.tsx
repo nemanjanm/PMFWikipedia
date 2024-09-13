@@ -33,7 +33,14 @@ function NavBar(){
         {
             label: "Wikipedia",
             visible: visible,
-            template: itemRenderer,
+            template: (item, options) => {
+                const isActive = location.pathname.includes("wiki");
+                return (
+                    <span style={{backgroundColor: isActive ? "#111827" : "inherit"}} className="flex align-items-center p-menuitem-link">
+                        <span  className="mx-2">{item.label}</span>
+                    </span>
+                );
+              },
             command: () => {
                 if(location.pathname.includes("kolokvijum") || location.pathname.includes("ispit"))
                     navigate(String(location.pathname).split('/').slice(0, -1).join('/') + "/wiki")  
@@ -42,7 +49,14 @@ function NavBar(){
         {
             label: "Kolokvijumi",
             visible: visible,
-            template: itemRenderer,
+            template: (item, options) => {
+                const isActive = location.pathname.includes("kolokvijum");
+                return (
+                    <span style={{backgroundColor: isActive ? "#111827" : "inherit"}} className="flex align-items-center p-menuitem-link">
+                        <span  className="mx-2">{item.label}</span>
+                    </span>
+                );
+              },
             command: () => {
                 if(location.pathname.includes("wiki") || location.pathname.includes("ispit"))
                     navigate(String(location.pathname).split('/').slice(0, -1).join('/') + "/kolokvijum")  
@@ -51,7 +65,14 @@ function NavBar(){
         {
             label: "Ispiti",
             visible: visible,
-            template: itemRenderer,
+            template: (item, options) => {
+                const isActive = location.pathname.includes("ispit");
+                return (
+                    <span style={{backgroundColor: isActive ? "#111827" : "inherit"}} className="flex align-items-center p-menuitem-link">
+                        <span  className="mx-2">{item.label}</span>
+                    </span>
+                );
+              },
             command: () => {
                 if(location.pathname.includes("wiki") || location.pathname.includes("kolokvijum"))
                     navigate(String(location.pathname).split('/').slice(0, -1).join('/') + "/ispit")  

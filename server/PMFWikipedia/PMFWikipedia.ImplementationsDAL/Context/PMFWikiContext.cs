@@ -29,6 +29,7 @@ namespace PMFWikipedia.ImplementationsDAL
         public virtual DbSet<Message> Messages { get; set; } = null!;
         public virtual DbSet<Notification> Notifications { get; set; } = null!;
         public virtual DbSet<Post> Posts { get; set; } = null!;
+        public virtual DbSet<Program> Programs { get; set; } = null!;
         public virtual DbSet<Subject> Subjects { get; set; } = null!;
         public virtual DbSet<User> Users { get; set; } = null!;
 
@@ -298,9 +299,24 @@ namespace PMFWikipedia.ImplementationsDAL
                     .HasConstraintName("FK__Post__Subject__17F790F9");
             });
 
+            modelBuilder.Entity<Program>(entity =>
+            {
+                entity.ToTable("Program");
+
+                entity.Property(e => e.DateCreated).HasColumnType("datetime");
+
+                entity.Property(e => e.DateModified).HasColumnType("datetime");
+
+                entity.Property(e => e.Name).IsUnicode(false);
+            });
+
             modelBuilder.Entity<Subject>(entity =>
             {
                 entity.ToTable("Subject");
+
+                entity.Property(e => e.DateCreated).HasColumnType("datetime");
+
+                entity.Property(e => e.DateModified).HasColumnType("datetime");
 
                 entity.Property(e => e.Name)
                     .HasMaxLength(100)

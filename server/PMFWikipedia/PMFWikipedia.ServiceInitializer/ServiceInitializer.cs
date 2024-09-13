@@ -35,6 +35,7 @@ namespace PMFWikipedia.ServiceInitializer
             services.AddScoped<IKolokvijumResenjeDAL, KolokvijumResenjeDAL>();
             services.AddScoped<IIspitDAL, IspitDAL>();
             services.AddScoped<IIspitResenjeDAL, IspitResenjeDAL>();
+            services.AddScoped<IProgramDAL, ProgramDAL>();
             return services;
         }
 

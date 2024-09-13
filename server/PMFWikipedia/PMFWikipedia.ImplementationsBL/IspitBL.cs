@@ -1,9 +1,11 @@
 ﻿using PMFWikipedia.Common.StorageService;
+using PMFWikipedia.ImplementationsBL.Helpers;
 using PMFWikipedia.InterfacesBL;
 using PMFWikipedia.InterfacesDAL;
 using PMFWikipedia.Models;
 using PMFWikipedia.Models.Entity;
 using PMFWikipedia.Models.ViewModels;
+using System.Collections.Generic;
 
 namespace PMFWikipedia.ImplementationsBL
 {
@@ -16,8 +18,8 @@ namespace PMFWikipedia.ImplementationsBL
         private readonly IIspitResenjeDAL _ispitResenjeDAL;
         private readonly IFavoriteSubjectDAL _favoriteSubjectDAL;
         private readonly INotificationDAL _notificationDAL;
-
-        public IspitBL(IStorageService storageService, IUserDAL userDAL, ISubjectDAL subjectDAL, IIspitDAL ispitDAL, IIspitResenjeDAL ispitResenjeDAL, IFavoriteSubjectDAL favoriteSubjectDAL, INotificationDAL notificationDAL)
+        private readonly IJWTService _jWTService;
+        public IspitBL(IStorageService storageService, IUserDAL userDAL, ISubjectDAL subjectDAL, IIspitDAL ispitDAL, IIspitResenjeDAL ispitResenjeDAL, IFavoriteSubjectDAL favoriteSubjectDAL, INotificationDAL notificationDAL, IJWTService jWTService)
         {
             _storageService = storageService;
             _userDAL = userDAL;
@@ -26,6 +28,7 @@ namespace PMFWikipedia.ImplementationsBL
             _ispitResenjeDAL = ispitResenjeDAL;
             _favoriteSubjectDAL = favoriteSubjectDAL;
             _notificationDAL = notificationDAL;
+            _jWTService = jWTService;
         }
 
         public async Task<ActionResultResponse<long>> AddIspit(KolokvijumModel ispit)
@@ -117,6 +120,18 @@ namespace PMFWikipedia.ImplementationsBL
             List<KolokvijumViewModel> lista = new List<KolokvijumViewModel>();
             var ispiti = await _ispitDAL.GetAllWithAuthor(subjectId);
 
+            bool allowed = true;
+            var id = long.Parse(_jWTService.GetUserId());
+            var favoriteSubject = await _favoriteSubjectDAL.GetByUser(id, subjectId);
+            if (favoriteSubject == null)
+                allowed = false;
+
+            if (ispiti.Count == 0)
+            {
+                KolokvijumViewModel pvm = new KolokvijumViewModel();
+                pvm.Allowed = allowed;
+                lista.Add(pvm);
+            }
             foreach (var ispit in ispiti)
             {
                 KolokvijumViewModel k = new KolokvijumViewModel();
@@ -125,7 +140,7 @@ namespace PMFWikipedia.ImplementationsBL
                 k.FilePath = ispit.FilePath;
                 k.Id = ispit.Id;
                 k.AuthorName = ispit.Author.FirstName + " " + ispit.Author.LastName;
-
+                k.Allowed = allowed;
                 var resenja = await _ispitResenjeDAL.GetAllWithAuthor(ispit.Id);
                 foreach (var resenje in resenja)
                 {
@@ -135,7 +150,6 @@ namespace PMFWikipedia.ImplementationsBL
                     krvm.AuthorName = resenje.Author.FirstName + " " + resenje.Author.LastName;
                     krvm.FilePath = resenje.FilePath;
                     krvm.KolokvijumId = resenje.IspitId;
-
                     k.Resenja.Add(krvm);
                 }
 

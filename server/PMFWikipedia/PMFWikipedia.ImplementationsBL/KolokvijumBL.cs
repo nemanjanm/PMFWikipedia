@@ -5,6 +5,7 @@ using PMFWikipedia.InterfacesDAL;
 using PMFWikipedia.Models;
 using PMFWikipedia.Models.Entity;
 using PMFWikipedia.Models.ViewModels;
+using System.Collections.Generic;
 
 namespace PMFWikipedia.ImplementationsBL
 {
@@ -119,32 +120,46 @@ namespace PMFWikipedia.ImplementationsBL
         public async Task<ActionResultResponse<List<KolokvijumViewModel>>> GetAllKolokvijum(long subjectId)
         {
             List<KolokvijumViewModel> lista = new List<KolokvijumViewModel>();
-
             var kolokvijumi = await _kolokvijumDAL.GetAllWithAuthor(subjectId);
 
-            foreach (var kolokvijum in kolokvijumi) 
+            bool allowed = true;
+            var id = long.Parse(_jwtService.GetUserId());
+            var favoriteSubject = await _favoriteSubjectDAL.GetByUser(id, subjectId);
+            if (favoriteSubject == null)
+                allowed = false;
+
+            if (kolokvijumi.Count == 0)
             {
-                KolokvijumViewModel k = new KolokvijumViewModel();
-                k.Title = kolokvijum.Title;
-                k.AuthorId = kolokvijum.AuthorId;
-                k.FilePath = kolokvijum.FilePath;
-                k.Id = kolokvijum.Id;
-                k.AuthorName = kolokvijum.Author.FirstName + " " + kolokvijum.Author.LastName;
-
-                var resenja = await _kolokvijumResenjeDAL.GetAllWithAuthor(kolokvijum.Id);
-                foreach(var resenje in resenja)
+                KolokvijumViewModel pvm = new KolokvijumViewModel();
+                pvm.Allowed = allowed;
+                lista.Add(pvm);
+            }
+            else
+            {
+                foreach (var kolokvijum in kolokvijumi)
                 {
-                    KolokvijumResenjeViewModel krvm = new KolokvijumResenjeViewModel();
-                    krvm.AuthorId = resenje.AuthorId;
-                    krvm.Id = resenje.Id;
-                    krvm.AuthorName = resenje.Author.FirstName + " " + resenje.Author.LastName;
-                    krvm.FilePath = resenje.FilePath;
-                    krvm.KolokvijumId = resenje.KolokvijumId;
+                    KolokvijumViewModel k = new KolokvijumViewModel();
+                    k.Title = kolokvijum.Title;
+                    k.AuthorId = kolokvijum.AuthorId;
+                    k.FilePath = kolokvijum.FilePath;
+                    k.Id = kolokvijum.Id;
+                    k.Allowed = allowed;
+                    k.AuthorName = kolokvijum.Author.FirstName + " " + kolokvijum.Author.LastName;
 
-                    k.Resenja.Add(krvm);
+                    var resenja = await _kolokvijumResenjeDAL.GetAllWithAuthor(kolokvijum.Id);
+                    foreach (var resenje in resenja)
+                    {
+                        KolokvijumResenjeViewModel krvm = new KolokvijumResenjeViewModel();
+                        krvm.AuthorId = resenje.AuthorId;
+                        krvm.Id = resenje.Id;
+                        krvm.AuthorName = resenje.Author.FirstName + " " + resenje.Author.LastName;
+                        krvm.FilePath = resenje.FilePath;
+                        krvm.KolokvijumId = resenje.KolokvijumId;
+                        k.Resenja.Add(krvm);
+                    }
+
+                    lista.Add(k);
                 }
-
-                lista.Add(k);
             }
 
             return new ActionResultResponse<List<KolokvijumViewModel>>(lista, true, "");

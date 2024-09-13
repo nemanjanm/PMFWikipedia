@@ -23,7 +23,9 @@ namespace PMFWikipedia.ImplementationsBL
         private readonly IFavoriteSubjectDAL _favoriteSubjectDAL;
         private readonly ISubjectDAL _subjectDAL;
         private readonly IChatDAL _chatDAL;
-        public UserBL(IChatDAL chatDAL, IJWTService jwtService, ISubjectDAL subjectDAL, IFavoriteSubjectDAL favoriteSubjectDAL, IUserDAL userDAL, IMapper mapper, IEmailService emailService, IStorageService storageService)
+        private readonly IKolokvijumResenjeDAL _kolokvijumResenjeDAL;
+        private readonly IIspitResenjeDAL _ispitResenjeDAL;
+        public UserBL(IChatDAL chatDAL, IJWTService jwtService, ISubjectDAL subjectDAL, IFavoriteSubjectDAL favoriteSubjectDAL, IUserDAL userDAL, IMapper mapper, IEmailService emailService, IStorageService storageService, IIspitResenjeDAL ispitResenjeDAL, IKolokvijumResenjeDAL kolokvijumResenjeDAL)
         {
             _userDAL = userDAL;
             _mapper = mapper;
@@ -33,6 +35,8 @@ namespace PMFWikipedia.ImplementationsBL
             _subjectDAL = subjectDAL;
             _jwtService = jwtService;
             _chatDAL = chatDAL;
+            _kolokvijumResenjeDAL = kolokvijumResenjeDAL;
+            _ispitResenjeDAL = ispitResenjeDAL;
         }
 
         public async Task<ActionResultResponse<User>> Register(RegisterInfo registerInfo)
@@ -234,18 +238,36 @@ namespace PMFWikipedia.ImplementationsBL
                 uvm.FullName = user.FirstName + " " + user.LastName;
                 users.Add(uvm);
             }
-
+            
             return new ActionResultResponse<List<UserViewModel>> (users, true, "All users");
         }
 
-        public async Task<ActionResultResponse<UserViewModel>> GetUser(long id)
+        public async Task<ActionResultResponse<UserProfileViewModel>> GetUser(long id)
         {
-            var user = await _userDAL.GetById(id);
+            var user = await _userDAL.GetUserForPage(id);
             if(user == null)
-                return new ActionResultResponse<UserViewModel>(null, false, "User doesnt exists");
+                return new ActionResultResponse<UserProfileViewModel>(null, false, "User doesnt exists");
 
-            var uvm = _mapper.Map<UserViewModel>(user);
-            return new ActionResultResponse<UserViewModel>(uvm, true, "Success");
+            UserProfileViewModel upvm = new UserProfileViewModel();
+            upvm.FullName = user.FirstName + " " + user.LastName;
+            upvm.Id = user.Id;
+            upvm.Email = user.Email;
+            upvm.PhotoPath = user.PhotoPath;
+            upvm.ConnectionId = user.ConnectionId;
+            upvm.Ispits = user.IspitResenjes.Count();
+            upvm.Kolokvijums = user.KolokvijumResenjes.Count();
+            List<FavoriteSubjectViewModel> lista = new List<FavoriteSubjectViewModel>();
+            foreach(var s in user.FavoriteSubjects)
+            {
+                var name = await _subjectDAL.GetById(s.SubjectId);
+                FavoriteSubjectViewModel fs = new FavoriteSubjectViewModel();
+                fs.subjectId = s.SubjectId;
+                fs.name = name.Name;
+
+                lista.Add(fs);
+            }
+            upvm.FavoriteSubjects = lista;
+            return new ActionResultResponse<UserProfileViewModel>(upvm, true, "Success");
         }
     }
 }

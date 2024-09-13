@@ -18,6 +18,8 @@ function Kolokvijum(){
     const [visible, setVisible] = useState<boolean>(false)
     const [title, setTitle] = useState('');
     const [file, setFile] = useState<FileUploadHandlerEvent>();
+    const [pom, setPom] = useState();
+    const [allowed, setAllowed] = useState<boolean>(false);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -40,10 +42,15 @@ function Kolokvijum(){
         async function getKolokvijum(){
             const response = await kolokvijumService.getKolokvijum(Number((location.pathname).split('/').slice(2, -1).join('/')));
             if(response.status)
-                setKolokvijumi(response.data)
+            {
+                if(response.data[0].authorId !== 0)
+                    setKolokvijumi(response.data)
+                if(response.data[0].allowed && response.data[0].allowed === true)
+                    setAllowed(true);
+            }
         }
         getKolokvijum();
-    }, []);
+    }, [pom]);
 
     function handleAdd(){
         setVisible(true);
@@ -62,7 +69,7 @@ function Kolokvijum(){
         }        
     }
     return <>{!loader && <div className="d-flex align-items-center justify-content-center flex-column" style={{width: "100%"}}>
-        <Button label="Dodaj" icon="pi pi-plus" style={{width: "20vw"}} onClick={handleAdd} ></Button>
+        {allowed && <Button label="Dodaj" icon="pi pi-plus" style={{width: "20vw"}} onClick={handleAdd} ></Button>}
         {kolokvijumi?.length > 0 && kolokvijumi?.map(k => (
             <div style={{width: "80%", marginBottom: "1vh"}}><IspitKlkPanel info={k} flag={1}></IspitKlkPanel></div>
         ))}
