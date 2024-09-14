@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34031.279
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PMFWikipedia.API", "PMFWikipedia\PMFWikipedia.API.csproj", "{D008C0AA-DE44-4E59-9097-B92CDB66A63E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PMFWikipedia.API", "PMFWikipedia\PMFWikipedia.API.csproj", "{D008C0AA-DE44-4E59-9097-B92CDB66A63E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "API", "API", "{7E38455D-2BED-4963-9E63-6A9266C230BA}"
 EndProject
@@ -17,21 +17,24 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{411F4F
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{6555C6FA-291E-48D6-85E8-944C52E4B53A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PMFWikipedia.ImplementationsBL", "PMFWikipedia.ImplementationsBL\PMFWikipedia.ImplementationsBL.csproj", "{EB9F536A-12AA-4E78-B3C7-B7BA67650D75}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PMFWikipedia.ImplementationsBL", "PMFWikipedia.ImplementationsBL\PMFWikipedia.ImplementationsBL.csproj", "{EB9F536A-12AA-4E78-B3C7-B7BA67650D75}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PMFWikipedia.InterfacesBL", "PMFWikipedia.InterfacesBL\PMFWikipedia.InterfacesBL.csproj", "{3400313E-1611-4F1B-BBCC-B8BED6A0D247}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PMFWikipedia.InterfacesBL", "PMFWikipedia.InterfacesBL\PMFWikipedia.InterfacesBL.csproj", "{3400313E-1611-4F1B-BBCC-B8BED6A0D247}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PMFWikipedia.Common", "PMFWikipedia.Common\PMFWikipedia.Common.csproj", "{5758FCCF-C0FD-463E-A535-03A4FB92E26F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PMFWikipedia.Common", "PMFWikipedia.Common\PMFWikipedia.Common.csproj", "{5758FCCF-C0FD-463E-A535-03A4FB92E26F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PMFWikipedia.ServiceInitializer", "PMFWikipedia.ServiceInitializer\PMFWikipedia.ServiceInitializer.csproj", "{D16E67A4-7C41-45B7-92E3-AAD90FBAA7D8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PMFWikipedia.ServiceInitializer", "PMFWikipedia.ServiceInitializer\PMFWikipedia.ServiceInitializer.csproj", "{D16E67A4-7C41-45B7-92E3-AAD90FBAA7D8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PMFWikipedia.ImplementationsDAL", "PMFWikipedia.ImplementationsDAL\PMFWikipedia.ImplementationsDAL.csproj", "{F36548EB-7EF3-4D78-877A-D1AB94ADFBA0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PMFWikipedia.ImplementationsDAL", "PMFWikipedia.ImplementationsDAL\PMFWikipedia.ImplementationsDAL.csproj", "{F36548EB-7EF3-4D78-877A-D1AB94ADFBA0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PMFWikipedia.InterfacesDAL", "PMFWikipedia.InterfacesDAL\PMFWikipedia.InterfacesDAL.csproj", "{2E271EF4-9E22-44B2-90B1-59B33681335D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PMFWikipedia.InterfacesDAL", "PMFWikipedia.InterfacesDAL\PMFWikipedia.InterfacesDAL.csproj", "{2E271EF4-9E22-44B2-90B1-59B33681335D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PMFWikipedia.Models", "PMFWikipedia.Models\PMFWikipedia.Models.csproj", "{B798BC92-2606-4F95-90E2-1A3BFA985EEE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PMFWikipedia.Models", "PMFWikipedia.Models\PMFWikipedia.Models.csproj", "{B798BC92-2606-4F95-90E2-1A3BFA985EEE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PMFWikipedia.SignalR", "PMFWikipedia.SignalR\PMFWikipedia.SignalR.csproj", "{134CE4AE-C14A-4C20-A7EE-D7DDEF2D0F4E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PMFWikipedia.SignalR", "PMFWikipedia.SignalR\PMFWikipedia.SignalR.csproj", "{134CE4AE-C14A-4C20-A7EE-D7DDEF2D0F4E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{2E271EF4-9E22-44B2-90B1-59B33681335D} = {2E271EF4-9E22-44B2-90B1-59B33681335D}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
