@@ -16,8 +16,9 @@ class KolokvijumService{
         const data = await response.json();
         return(data);
     }
-    async addKolokvijum(title: any, file : any, authorId: any, subjectId: any){
+    async addKolokvijum(year: any, title: any, file : any, authorId: any, subjectId: any){
         const formData = new FormData();
+        formData.append("year", year);
         formData.append("title", title);
         formData.append("file", file);
         formData.append("authorId", authorId);

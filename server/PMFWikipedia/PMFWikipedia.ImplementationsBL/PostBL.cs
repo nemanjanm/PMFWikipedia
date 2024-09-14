@@ -5,6 +5,7 @@ using PMFWikipedia.InterfacesDAL;
 using PMFWikipedia.Models;
 using PMFWikipedia.Models.Entity;
 using PMFWikipedia.Models.ViewModels;
+using System.Diagnostics.Tracing;
 
 namespace PMFWikipedia.ImplementationsBL
 {
@@ -18,7 +19,8 @@ namespace PMFWikipedia.ImplementationsBL
         private IFavoriteSubjectDAL _favoriteSubjectDAL;
         private readonly ICommentDAL _commentDAL;
         private readonly IJWTService _jwtService;
-        public PostBL(IPostDAL postDAL, IMapper mapper, INotificationDAL notificationDAL, IUserDAL userDAL, ISubjectDAL subjectDAL, IFavoriteSubjectDAL favoriteSubjectDAL, IJWTService jWTService, ICommentDAL commentDAL)
+        private readonly IEditedPostDAL _editedPostDAL;
+        public PostBL(IPostDAL postDAL, IMapper mapper, INotificationDAL notificationDAL, IUserDAL userDAL, ISubjectDAL subjectDAL, IFavoriteSubjectDAL favoriteSubjectDAL, IJWTService jWTService, ICommentDAL commentDAL, IEditedPostDAL editedPostDAL)
         {
             _postDAL = postDAL;
             _mapper = mapper;
@@ -28,6 +30,7 @@ namespace PMFWikipedia.ImplementationsBL
             _favoriteSubjectDAL = favoriteSubjectDAL;
             _jwtService = jWTService;
             _commentDAL = commentDAL;
+            _editedPostDAL = editedPostDAL;
         }
 
         public async Task<ActionResultResponse<PostViewModel>> AddPost(PostModel post)
@@ -94,9 +97,26 @@ namespace PMFWikipedia.ImplementationsBL
                     pvm.SubjectId = (long)post.Subject;
                     pvm.AuthorId = (long)post.Author;
                     pvm.Allowed = allowed;
-                    pvm.TimeEdited = post.DateModified;
-                    pvm.EditorName = post.LastEditedByNavigation.FirstName + " " + post.LastEditedByNavigation.LastName;
-                    pvm.EditorId = post.LastEditedByNavigation.Id;
+
+                    List<EditPostViewModel> edits = new List<EditPostViewModel>();
+                    if (post.EditedPosts.Count > 0)
+                    {
+                        foreach(var ep in  post.EditedPosts)
+                        {
+                            EditPostViewModel epvm = new EditPostViewModel();
+                            epvm.Id = ep.Id;
+                            epvm.Title = ep.Title;
+                            epvm.Content = ep.Content;  
+                            epvm.Time = ep.Time;
+                            epvm.DateCreated = ep.DateCreated;
+                            var editor = await _userDAL.GetById(ep.AuthorId);
+                            epvm.EditorId = editor.Id;
+                            epvm.EditorName = editor.FirstName + " " + editor.LastName;
+                            
+                            edits.Add(epvm);
+                        }
+                    }
+                    pvm.editHistory = edits;
                     list.Add(pvm);
                 }
             }
@@ -130,9 +150,27 @@ namespace PMFWikipedia.ImplementationsBL
             pvm.SubjectId = (long)post.Subject;
             pvm.AuthorId = (long)post.Author;
             pvm.Allowed = allowed;
-            pvm.TimeEdited = post.DateModified;
-            pvm.EditorName = post.LastEditedByNavigation.FirstName + " " + post.LastEditedByNavigation.LastName;
-            pvm.EditorId = post.LastEditedByNavigation.Id;
+
+            List<EditPostViewModel> edits = new List<EditPostViewModel>();
+            if (post.EditedPosts.Count > 0)
+            {
+                foreach (var ep in post.EditedPosts)
+                {
+                    EditPostViewModel epvm = new EditPostViewModel();
+                    epvm.Id = ep.Id;
+                    epvm.Title = ep.Title;
+                    epvm.Content = ep.Content;
+                    epvm.Time = ep.Time;
+                    epvm.DateCreated = ep.DateCreated;
+                    var editor = await _userDAL.GetById(ep.AuthorId);
+                    epvm.EditorId = editor.Id;
+                    epvm.EditorName = editor.FirstName + " " + editor.LastName;
+
+                    edits.Add(epvm);
+                }
+            }
+            pvm.editHistory = edits;
+
 
             return new ActionResultResponse<PostViewModel>(pvm, true, "");
         }
@@ -164,9 +202,20 @@ namespace PMFWikipedia.ImplementationsBL
 
         public async Task<ActionResultResponse<Post>> EditPost(PostModel post)
         {
+            EditedPost ep = new EditedPost();
             var p = await _postDAL.GetById((long)post.Id);
             if (p == null)
                 return new ActionResultResponse<Post>(null, false, "Something went wrong");
+
+            ep.Title = p.Title;
+            ep.Content = p.Content;
+            ep.AuthorId = post.Author;
+            ep.PostId = p.Id;
+            ep.SubjectId = post.Subject;
+            ep.Time = post.Time;
+
+            await _editedPostDAL.Insert(ep);
+            await _editedPostDAL.SaveChangesAsync();
 
             p.Title = post.Title;
             p.Content = post.Content;

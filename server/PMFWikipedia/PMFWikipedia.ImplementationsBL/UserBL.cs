@@ -227,7 +227,7 @@ namespace PMFWikipedia.ImplementationsBL
             var id = long.Parse(_jwtService.GetUserId());
 
             List<UserViewModel> users = new List<UserViewModel>();
-            var realUsers = await _userDAL.GetAllByFilter(x => x.Program == programId && x.Id != id && x.Verified);
+            var realUsers = await _userDAL.GetAllByFilter(x => x.Program == programId && x.Id != id && x.Verified && x.Email != "admin@pmf.kg.ac.rs");
             if(realUsers == null)
                 return new ActionResultResponse<List<UserViewModel>>(null, false, "There aro no useres yet");
 

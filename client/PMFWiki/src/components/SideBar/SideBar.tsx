@@ -165,7 +165,7 @@ function SideBar(){
             {visible && 
                 <Sidebar className='sideBar' visible={visible} onHide={() => setVisible(false)}>
                     <h2 style={{color: 'white'}}>Obaveštenja</h2>
-                    <ListBox emptyMessage={"Nema obaveštenja"} style={{border: 0}} onChange={(e : any) => showPost(e.value)} options={notifications} itemTemplate={(option: any) => ( <><div className={option.isRead ? 'read-notification' : 'unread-notification'}>{option.authorName} je dodao {getNotName(option.notificationId)} {option.title!==undefined ? option.title : ""} u {option.subjectName}</div><span style={{fontSize: "2vh"}}>{returnDate(option.timeStamp)}</span></>)} className="w-full md:w-14rem" />
+                    <ListBox emptyMessage={"Nema obaveštenja"} style={{border: 0}} onChange={(e : any) => showPost(e.value)} options={notifications} itemTemplate={(option: any) => ( <><div className={option.isRead ? 'read-notification' : 'unread-notification'}>{option.authorName} {option.notificationId === 6 ? "je izmenio" : "je dodao"} {getNotName(option.notificationId)} {option.title!==undefined ? option.title : ""} u {option.subjectName}</div><span style={{fontSize: "2vh"}}>{returnDate(option.timeStamp)}</span></>)} className="w-full md:w-14rem" />
                 </Sidebar>}
             <div className='d-flex justify-content-centar' style={{flexShrink: 0,  position: "relative", overflow: 'auto', top: 0, bottom: 0, height: "auto", backgroundColor: "#374151"}}>
                 <PanelMenu style={{height:"100%", width:"100%", border: 0, borderRadius: "0", padding: "0", fontSize: "1vw"}} model={items}/>    

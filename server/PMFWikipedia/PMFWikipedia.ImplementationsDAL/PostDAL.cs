@@ -12,12 +12,12 @@ namespace PMFWikipedia.ImplementationsDAL
 
         public async Task<List<Post>> GetAllPostsBySubject(long subjectId)
         {
-            return await table.Include(c => c.AuthorNavigation).Include(c => c.SubjectNavigation).Include(c=>c.LastEditedByNavigation).Where(x => x.Subject == subjectId && x.IsDeleted==false).OrderByDescending(x=> x.DateCreated).ToListAsync();
+            return await table.Include(c => c.EditedPosts.OrderByDescending(c => c.DateCreated)).Include(c => c.AuthorNavigation).Include(c => c.SubjectNavigation).Include(c=>c.LastEditedByNavigation).Where(x => x.Subject == subjectId && x.IsDeleted==false).OrderByDescending(x=> x.DateCreated).ToListAsync();
         }
 
         public async Task<Post> GetPostById(long id)
         {
-            return await table.Include(c => c.AuthorNavigation).Include(c=>c.SubjectNavigation).Include(c => c.LastEditedByNavigation).Where(x => x.Id == id && x.IsDeleted == false).FirstOrDefaultAsync();
+            return await table.Include(c=>c.EditedPosts.OrderByDescending(c=>c.DateCreated)).Include(c => c.AuthorNavigation).Include(c=>c.SubjectNavigation).Include(c => c.LastEditedByNavigation).Where(x => x.Id == id && x.IsDeleted == false).FirstOrDefaultAsync();
         }
     }
 }

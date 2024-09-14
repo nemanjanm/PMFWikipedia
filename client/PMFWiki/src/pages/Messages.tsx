@@ -36,6 +36,7 @@ function Messages() {
     useEffect(() => {
         const handleNewMessage = (newMessage: MessageInfo) => {
             if(currentChatId === newMessage.chatId){
+                console.log("AAAAAAA");
                 setMessages(messages => [...messages, newMessage]);
                 const chat = chats?.find(c => c.id === newMessage.chatId)?.id
                 handleChat(chat);

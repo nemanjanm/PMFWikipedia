@@ -24,3 +24,10 @@ p.comments:hover{
 .p-panel-title{
     width: 100vw;
 }
+.change{
+    color: white;
+}
+.change:hover{
+    color: #60a5fa;
+    cursor: pointer;
+}

@@ -10,9 +10,10 @@
         public string Title { get; set; } = string.Empty;
         public string Content { get; set; } = string.Empty;
         public string PhotoPath { get; set; } = string.Empty;
-        public bool Allowed {  get; set; } 
-        public string EditorName {  get; set; }
+        public bool Allowed { get; set; }
+        public string EditorName { get; set; }
         public long EditorId { get; set; }
+        public List<EditPostViewModel> editHistory {get; set;} = new List<EditPostViewModel>();
         public DateTime TimeStamp { get; set; }
         public DateTime TimeEdited { get; set; }
     }

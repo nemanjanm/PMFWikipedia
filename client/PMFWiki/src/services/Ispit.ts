@@ -17,8 +17,9 @@ class IspitService{
         return(data);
     }
 
-    async addIspit(title: any, file : any, authorId: any, subjectId: any){
+    async addIspit(year: any, title: any, file : any, authorId: any, subjectId: any){
         const formData = new FormData();
+        formData.append("year", year);
         formData.append("title", title);
         formData.append("file", file);
         formData.append("authorId", authorId);

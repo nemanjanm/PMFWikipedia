@@ -12,6 +12,7 @@ namespace PMFWikipedia.Models.Entity
             ChatUser1Navigations = new HashSet<Chat>();
             ChatUser2Navigations = new HashSet<Chat>();
             Comments = new HashSet<Comment>();
+            EditedPosts = new HashSet<EditedPost>();
             FavoriteSubjects = new HashSet<FavoriteSubject>();
             IspitResenjes = new HashSet<IspitResenje>();
             Ispits = new HashSet<Ispit>();
@@ -44,6 +45,7 @@ namespace PMFWikipedia.Models.Entity
         public virtual ICollection<Chat> ChatUser1Navigations { get; set; }
         public virtual ICollection<Chat> ChatUser2Navigations { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }
+        public virtual ICollection<EditedPost> EditedPosts { get; set; }
         public virtual ICollection<FavoriteSubject> FavoriteSubjects { get; set; }
         public virtual ICollection<IspitResenje> IspitResenjes { get; set; }
         public virtual ICollection<Ispit> Ispits { get; set; }

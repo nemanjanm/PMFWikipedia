@@ -35,6 +35,7 @@ class SocketService{
         })
 
         this.conn.on("ReceiveSpecificMessage", (chatviewmodel) => {
+            console.log("SOCKET")
             if(chatviewmodel.data.chatId !== undefined)
             {
                 if(chatviewmodel.user !== null)
@@ -86,6 +87,7 @@ class SocketService{
     }                                                        
 
     async sendMessage(message : any, secondid: any, myid: any){
+        console.log("saljem");
         await this.conn.invoke("SendMessage",  {message, secondid, myid});
     }
 
@@ -93,9 +95,8 @@ class SocketService{
         await this.conn.invoke("SendNotfication", {title, content, author, subject});
     }
 
-    async editPostNotification(id : any, title : any, content : any, author : any, subject: any){
-        console.log('saljem');
-        await this.conn.invoke("SendNotficationForEditPost", {id, title, content, author, subject});
+    async editPostNotification(time: any, id : any, title : any, content : any, author : any, subject: any){
+        await this.conn.invoke("SendNotficationForEditPost", {time, id, title, content, author, subject});
     }
 
     async sendNotificationForComment(postId : any, userId : any, content : any){

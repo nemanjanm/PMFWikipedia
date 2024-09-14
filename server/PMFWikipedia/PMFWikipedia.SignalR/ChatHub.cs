@@ -153,17 +153,19 @@ namespace PMFWikipedia.SignalR
             await Clients.Client(me.ConnectionId).SendAsync("ReceiveData", response.Data); //saljem sebi
 
             var post = await _postDAL.GetPostById(info.PostId);
-            Notification n1 = new Notification();
-            n1.Author = (long)info.UserId;
-            n1.Post = post.Id;
-            n1.Subject = (long)post.Subject;
-            n1.Receiver = (long)post.Author;
-            n1.NotificationId = 4;
-            await _notificationDAL.Insert(n1);
-            await _notificationDAL.SaveChangesAsync();
 
-            await Clients.Client(post.AuthorNavigation.ConnectionId).SendAsync("ReceiveCommentNotification"); //poslato owneru
-
+            if (post.AuthorNavigation.Id != info.UserId)
+            {
+                Notification n1 = new Notification();
+                n1.Author = (long)info.UserId;
+                n1.Post = post.Id;
+                n1.Subject = (long)post.Subject;
+                n1.Receiver = (long)post.Author;
+                n1.NotificationId = 4;
+                await _notificationDAL.Insert(n1);
+                await _notificationDAL.SaveChangesAsync();
+                await Clients.Client(post.AuthorNavigation.ConnectionId).SendAsync("ReceiveCommentNotification"); //poslato owneru
+            }
             var users = await _commentDAL.GetAllUsers(info.PostId);
 
             foreach(var user in users)

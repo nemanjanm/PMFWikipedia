@@ -15,8 +15,10 @@ function HomePage(){
             <MenuBar></MenuBar>
             <div className="d-flex justify-content-center">
                 <div style={{textAlign: "center", fontFamily: ""}}>
-                    <p style={{color: "#374151", fontWeight: "bold"}}>{"PMF WIKIPEDIA"}</p>
-                    <img src="../src/assets/logo4.png" width="350px"></img>
+                    <p style={{color: "#374151", fontWeight: "bold"}}>{"DOBRO DOŠLI NA SAJT PMF WIKIPEDIA"}</p>
+                    <div className="d-flex justify-content-center" style={{width: "70vw", height: "70vh"}}>
+                        <img src="../src/assets/logo4.png" style={{width: "100%", height: "100%", objectFit: "contain", border: 0}}></img>
+                    </div>
                 </div>
             </div>
             </>)

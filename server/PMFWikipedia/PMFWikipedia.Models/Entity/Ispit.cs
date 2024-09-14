@@ -21,6 +21,7 @@ namespace PMFWikipedia.Models.Entity
         public DateTime DateCreated { get; set; }
         public DateTime DateModified { get; set; }
         public long LastModifiedBy { get; set; }
+        public string? Year { get; set; }
 
         public virtual User Author { get; set; } = null!;
         public virtual Subject Subject { get; set; } = null!;

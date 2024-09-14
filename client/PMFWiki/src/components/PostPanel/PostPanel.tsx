@@ -28,14 +28,19 @@ function PostPanel(props : any) {
     const [visible, setVisible] = useState<boolean>(false);
     const [dialog2Visible, setDialog2Visible] = useState<boolean>(false);
     const [isDialogVisible, setDialogVisible] = useState<boolean>(false);
+    const [isDialogCommentVisible, setDialogCommentVisible] = useState<boolean>(false);
     const [comment, setComment] = useState('');
     const [comments, setComments] = useState<Array<any>>([]);
     const [time, setTime] = useState<any>('');
     const [timeEdited, setTimeEdited]= useState<any>('');
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('')
-    const date1 = new Date(info.timeStamp);
-    const date2 = new Date(info.timeEdited);
+    const [startTime, setStartTime] = useState<any>();
+    const [changeTitle, setChangeTitle] = useState('');
+    const [changeContent, setChangeContent] = useState('');
+    const [commentDelete, setCommentDelete] = useState<number>(0);
+    
+    const [previewDialog, setPreviewDialog] = useState<boolean>(false);
     useEffect(() => {
         const checkDel = () =>{
             if(info.authorId === storageService.getUserInfo()?.id)
@@ -43,8 +48,8 @@ function PostPanel(props : any) {
         }
         
         setTime(returnDate(info.timeStamp));
-        if(info.timeEdited !== undefined)
-            setTimeEdited(returnDate(info.timeEdited));
+        if(info.editHistory.length > 0 && info.editHistory[0].dateCreated !== undefined)
+            setTimeEdited(returnDate(info.editHistory[0].dateCreated));
         checkDel();
     }, [del])
 
@@ -91,14 +96,35 @@ function PostPanel(props : any) {
             //napisi nesto za gresku
         }
     }
+
+    const acceptComment = async () =>{
+        console.log("Aa");
+        setLoader(true)
+        const response = await commentService.deleteComment(commentDelete, info.postId)
+        if(response.status)
+            navigate(0);
+        else
+            console.log("doslo je do greske");
+    }
+
     const editPost = () => {
+        setStartTime(new Date());
         setTitle(info.title);
         setContent(info.content);
         setDialog2Visible(true);
     };
 
+    function deleteComment(commentId: any){
+        setCommentDelete(commentId);
+        setDialogCommentVisible(true);
+    }
     async function sendToEdit(){
-        socketService.editPostNotification(info.postId, title, content, Number(storageService.getUserInfo()?.id), info.subjectId);
+        let time = returnDate(startTime);
+        if(time === "sada")
+            time = "1 minut"
+        else
+            time = time.split(' ').slice(1).join(' ');
+        socketService.editPostNotification(time, info.postId, title, content, Number(storageService.getUserInfo()?.id), info.subjectId);
         navigate(0);
     }
     const confirmDelete = () => {
@@ -107,6 +133,9 @@ function PostPanel(props : any) {
     const handleReject = () => {
         setDialogVisible(false);
     };
+    const handleRejectComment = () => {
+        setDialogCommentVisible(false);
+    }
     function showUser(e: any){
         navigate("/profilna-strana/"+e);
     }
@@ -172,7 +201,8 @@ function PostPanel(props : any) {
                                         <span style={{marginLeft: "1vh" }}>{c.userName}</span>
                                 </a> : <span style={{marginLeft: "1vh" }}>{c.userName}</span>} 
                                 </div>
-                                {c.userId === storageService.getUserInfo()?.id && <Button style={{border: 0}} icon="pi pi-trash"></Button>}
+                                <ConfirmDialog visible={isDialogCommentVisible}onHide={handleRejectComment}message="Da li ste sigurni da želite da obrišete komentar?"header="Obriši komentar"icon="pi pi-info-circle"acceptClassName="p-button-danger"rejectLabel="Odustani"acceptLabel="Potvrdi" accept={() => acceptComment()}reject={handleRejectComment}/>
+                                {c.userId === storageService.getUserInfo()?.id && <Button onClick={() => deleteComment(c.id)} style={{border: 0}} icon="pi pi-trash"></Button>}
                             </div></>}>
                         <p style={{fontSize: "3vh", color: "white"}} className="m-0">
                             {c.content}
@@ -183,7 +213,23 @@ function PostPanel(props : any) {
             </div>
         );
     };
+    function showChanges(title : any, content: any){
+        setChangeContent(content);
+        setChangeTitle(title);
+        setPreviewDialog(true);
+    }
     return (<>
+
+        {previewDialog && <Dialog visible={previewDialog} header={"Istorija izmena"} onHide={() => {if (!previewDialog) return; setPreviewDialog(false); }}
+            style={{ width: '70vw', textAlign: "center", height: "90vh"}}>
+                <div className="d-flex align-items-center flex-column">
+                    <div className="d-flex justify-content-center flex-column">
+                        <h2 style={{color: "white", marginBottom: "0.3rem"}}>{changeTitle}</h2>
+                        <span style={{marginBottom: "0.3rem"}} id="description">{changeContent}</span>
+                    </div>
+                </div>
+        </Dialog>}
+
         {dialog2Visible && <Dialog visible={dialog2Visible} header={"Izmeni post"} onHide={() => {if (!dialog2Visible) return; setDialog2Visible(false); }}
             style={{ width: '70vw', textAlign: "center", height: "90vh"}}>
                 <div className="d-flex align-items-center flex-column">
@@ -199,13 +245,17 @@ function PostPanel(props : any) {
         
         <ConfirmDialog visible={isDialogVisible}onHide={handleReject}message="Da li ste sigurni da želite da obrišete post?"header="Obriši post"icon="pi pi-info-circle"acceptClassName="p-button-danger"rejectLabel="Odustani"acceptLabel="Potvrdi"accept={accept}reject={handleReject}/>
         <Panel  header="Header" headerTemplate={headerTemplate} footerTemplate={footerTemplate} toggleable>
-            <h1 style={{color: "white"}}>{info.title}</h1>
-            <p className='post' onClick={navigateToPostPage} style={{color: "white"}}>
-                {info.content}
-            </p>
+            <div className='post' onClick={navigateToPostPage} >
+                <h1 style={{color: "white"}}>{info.title}</h1>
+                <p style={{color: "white"}}>
+                    {info.content}
+                </p>
+            </div>
             <div className='d-flex flex-column'>
             <span className="p-text-secondary">{"kreirano " +time}</span>
-            {timeEdited!==undefined && ((date2.getTime() - date1.getTime()) / (1000 * 60) ) > 1 && <div><span className="p-text-secondary">{"izmenjeno " +timeEdited + " od "}</span><a style={{fontWeight: "bold", textDecoration: "underline"}} href={"/profile-page/"+info.editorId}>{info.editorName}</a></div>}
+            {info.editHistory?.length > 0 && info.editHistory?.map((e : any) => (
+                <div><span className="p-text-secondary">{"izmenjeno " + returnDate(e.dateCreated)==="sada" ? "1 minut" : returnDate(e.dateCreated) + " od "}</span><a style={{textDecoration: "underline"}} href={"/profile-page/"+e.editorId}>{e.editorName}</a>.<span className="p-text-secondary">Trajanje izmene {e.time}. </span><span className="change p-text-secondary" style={{fontWeight: "bold", textDecoration: "underline"}} onClick={() => showChanges(e.title, e.content)}>Pogledaj post pre izmene.</span></div>
+            ))}
             </div>
         </Panel>
         </>

@@ -20,9 +20,9 @@ export function getNotName(id : any) : any{
         case 4:
             return "Komentar na tvoj post";
         case 5:
-            return "Komentar gde si ti komentarisao";
+            return "Komentar na post koji si ti komentarisao";
         case 6:
-            return "Izmenjen je tvoj post";
+            return "tvoj post";
         case 7:
             return "Resenje Kolokvijuma";
         case 8:

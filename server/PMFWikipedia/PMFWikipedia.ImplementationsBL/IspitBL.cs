@@ -37,16 +37,21 @@ namespace PMFWikipedia.ImplementationsBL
 
             var author = await _userDAL.GetById(ispit.AuthorId);
             if (author == null)
-                return new ActionResultResponse<long>(0, false, "Something went wrong");
+                return new ActionResultResponse<long>(0, false, "Došlo je do greške");
 
             var subject = await _subjectDAL.GetById(ispit.SubjectId);
             if (subject == null)
-                return new ActionResultResponse<long>(0, false, "Something went wrong");
+                return new ActionResultResponse<long>(0, false, "Došlo je do greške");
+
+            var isp = await _ispitDAL.GetByTitle(ispit.Title);
+            if (isp != null)
+                return new ActionResultResponse<long>(0, false, "Ispit već postoji");
 
             i.AuthorId = ispit.AuthorId;
             i.SubjectId = ispit.SubjectId;
             i.Title = ispit.Title;
             i.FilePath = "";
+            i.Year = ispit.Year;
             await _ispitDAL.Insert(i);
             await _ispitDAL.SaveChangesAsync();
 

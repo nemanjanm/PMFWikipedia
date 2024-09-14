@@ -29,9 +29,9 @@ namespace PMFWikipedia.API.Controllers
             return Ok(await _commentBL.GetPostComments(postId));
         }
         [HttpPost("Delete")]
-        public async Task<IActionResult> DeleteComment(long commentId)
+        public async Task<IActionResult> DeleteComment(DeleteCommentModel model)
         {
-            return Ok(await _commentBL.DeleteComment(commentId));
+            return Ok(await _commentBL.DeleteComment(model));
         }
     }
 }

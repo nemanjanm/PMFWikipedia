@@ -13,13 +13,6 @@ export default function MenuBar() {
     
     const items = [
         {
-            label: "Wikipedia",
-            icon: 'pi pi-book',
-            command: () => {
-                navigate("/Wikipedia")
-            }
-        },
-        {
             label: 'Registracija',
             icon: 'pi pi-user-plus',
             command: () => {
@@ -35,7 +28,7 @@ export default function MenuBar() {
         }
     ];
     
-    const start = <div className=""><p style={{fontSize: "40px", float:"left", textAlign:"center", fontFamily: "sans-serif", color:"rgb(255, 255, 255, 0.87)"}} className="d-flex justify-content-center"><Link to="/">PMFWiki</Link></p></div>
+    const start = <div className=""><p style={{fontSize: "40px", float:"left", textAlign:"center", fontFamily: "sans-serif", color:"rgb(255, 255, 255, 0.87)"}} className="d-flex justify-content-center">PMFWiki</p></div>
     return (
         <>
             <div>

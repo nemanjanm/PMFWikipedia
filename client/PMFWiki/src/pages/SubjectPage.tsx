@@ -60,28 +60,27 @@ function SubjectPage(){
         else
             console.log("Neka greska");
     }
-    return <>{!loader && <div className="celina" style={{height: "100vh", display: "flex", flexDirection: "column"}}>
+    return <><div className="celina" style={{height: "100vh", display: "flex", flexDirection: "column"}}>
     <NavBar></NavBar>
     <div className="d-flex justify-content-between" style={{height: "100vh", overflow: "hidden", display: "flex"}}>
         <SideBar></SideBar>
-            <div className="sredina" style={{width: "100%", overflowY: "auto", overflowX: "hidden", flex: 1}}>
+            {!loader && <div className="sredina" style={{width: "100%", overflowY: "auto", overflowX: "hidden", flex: 1}}>
                 <div className="d-flex justify-content around">
                 <div style={{width: "30%"}}></div>
                 <h2 className="justify-content-center" style={{textAlign: "center", fontWeight: "bold", margin: "1vh", width: "100%", height: "auto"}}>{subject?.name}</h2>
                 <div style={{width: "30%", marginTop:"0.3rem", marginBottom:"0.3rem"}}>
-                    {storageService.getUserInfo()?.program === subject?.programId ? subject?.allowed ? <Button onClick={removeFromFavorites} label="Ukloni iz omiljenih" icon="pi pi-star-fill"></Button> : <Button onClick={addToFavorites} label="Dodaj u omiljene" icon="pi pi-star"></Button> : <></>}</div>
+                    {storageService.getUserInfo()?.program === subject?.programId || subject?.programId === 8 ? subject?.allowed ? <Button onClick={removeFromFavorites} label="Ukloni iz omiljenih" icon="pi pi-star-fill"></Button> : <Button onClick={addToFavorites} label="Dodaj u omiljene" icon="pi pi-star"></Button> : <></>}</div>
                 </div>
                 <div style={{marginBottom: "0.5vh"}}>
-                    <SubjectNavBar></SubjectNavBar>
+                    {subject?.programId !== 8 && <SubjectNavBar></SubjectNavBar>}
                     <Outlet></Outlet>
                 </div>
-            </div>
-            
-        <div>
+            </div>}
+            <div>
         </div>
     </div>
     
-    </div>}
+    </div>
     {loader && <div className="d-flex justify-content-center" style={{marginTop: "50px"}}><ClipLoader color="#111827" loading={loader} size={150}></ClipLoader></div>}
     </>
 }

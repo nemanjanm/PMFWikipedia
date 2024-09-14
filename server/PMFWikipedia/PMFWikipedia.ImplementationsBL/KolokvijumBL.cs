@@ -37,12 +37,17 @@ namespace PMFWikipedia.ImplementationsBL
 
             var author = await _userDAL.GetById(kolokvijum.AuthorId);
             if(author==null)
-                return new ActionResultResponse<long>(0, false, "Something went wrong");
+                return new ActionResultResponse<long>(0, false, "Došlo je do greške");
 
             var subject = await _subjectDAL.GetById(kolokvijum.SubjectId);
             if (subject == null)
-                return new ActionResultResponse<long>(0, false, "Something went wrong");
+                return new ActionResultResponse<long>(0, false, "Došlo je do greške");
 
+            var klk = await _kolokvijumDAL.GetByTitle(kolokvijum.Title);
+            if (klk != null)
+                return new ActionResultResponse<long>(0, false, "Kolokvijum već postoji");
+
+            k.Year = kolokvijum.Year;
             k.AuthorId = kolokvijum.AuthorId;
             k.SubjectId = kolokvijum.SubjectId;
             k.Title = kolokvijum.Title;

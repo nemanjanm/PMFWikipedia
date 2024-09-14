@@ -21,6 +21,7 @@ namespace PMFWikipedia.ImplementationsDAL
 
         public virtual DbSet<Chat> Chats { get; set; } = null!;
         public virtual DbSet<Comment> Comments { get; set; } = null!;
+        public virtual DbSet<EditedPost> EditedPosts { get; set; } = null!;
         public virtual DbSet<FavoriteSubject> FavoriteSubjects { get; set; } = null!;
         public virtual DbSet<Ispit> Ispits { get; set; } = null!;
         public virtual DbSet<IspitResenje> IspitResenjes { get; set; } = null!;
@@ -77,6 +78,43 @@ namespace PMFWikipedia.ImplementationsDAL
                     .HasConstraintName("FK_Comment_UserId");
             });
 
+            modelBuilder.Entity<EditedPost>(entity =>
+            {
+                entity.ToTable("EditedPost");
+
+                entity.Property(e => e.Content).IsUnicode(false);
+
+                entity.Property(e => e.DateCreated).HasColumnType("datetime");
+
+                entity.Property(e => e.DateModified).HasColumnType("datetime");
+
+                entity.Property(e => e.Time)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Title)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.Author)
+                    .WithMany(p => p.EditedPosts)
+                    .HasForeignKey(d => d.AuthorId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_EditedPost_AuthorId");
+
+                entity.HasOne(d => d.Post)
+                    .WithMany(p => p.EditedPosts)
+                    .HasForeignKey(d => d.PostId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_EditedPost_PostId");
+
+                entity.HasOne(d => d.Subject)
+                    .WithMany(p => p.EditedPosts)
+                    .HasForeignKey(d => d.SubjectId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_SubjectId_IspitId");
+            });
+
             modelBuilder.Entity<FavoriteSubject>(entity =>
             {
                 entity.ToTable("FavoriteSubject");
@@ -111,6 +149,10 @@ namespace PMFWikipedia.ImplementationsDAL
                     .IsUnicode(false);
 
                 entity.Property(e => e.Title).IsUnicode(false);
+
+                entity.Property(e => e.Year)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
 
                 entity.HasOne(d => d.Author)
                     .WithMany(p => p.Ispits)
@@ -169,6 +211,10 @@ namespace PMFWikipedia.ImplementationsDAL
                     .IsUnicode(false);
 
                 entity.Property(e => e.Title).IsUnicode(false);
+
+                entity.Property(e => e.Year)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
 
                 entity.HasOne(d => d.Author)
                     .WithMany(p => p.Kolokvijums)

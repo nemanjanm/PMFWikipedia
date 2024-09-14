@@ -36,10 +36,6 @@ const router = createBrowserRouter([
     element: isAuthenticated() ? <Navigate to = "/pocetna" /> : <HomePage/>,
     children: [
       {    
-        path: "/Wikipedia",
-        element: <Proba/>
-      },
-      {    
         path: "/Registracija",
         element: <Register/>
       },

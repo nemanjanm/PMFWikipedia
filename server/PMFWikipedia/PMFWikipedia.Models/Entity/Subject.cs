@@ -9,6 +9,7 @@ namespace PMFWikipedia.Models.Entity
     {
         public Subject()
         {
+            EditedPosts = new HashSet<EditedPost>();
             FavoriteSubjects = new HashSet<FavoriteSubject>();
             IspitResenjes = new HashSet<IspitResenje>();
             Ispits = new HashSet<Ispit>();
@@ -28,6 +29,7 @@ namespace PMFWikipedia.Models.Entity
         public DateTime? DateModified { get; set; }
         public long? LastModifiedBy { get; set; }
 
+        public virtual ICollection<EditedPost> EditedPosts { get; set; }
         public virtual ICollection<FavoriteSubject> FavoriteSubjects { get; set; }
         public virtual ICollection<IspitResenje> IspitResenjes { get; set; }
         public virtual ICollection<Ispit> Ispits { get; set; }

@@ -8,6 +8,6 @@ namespace PMFWikipedia.InterfacesBL
     {
         public Task<ActionResultResponse<CommentViewModel>> AddComment(AddCommentInfo info);
         public Task<ActionResultResponse<List<CommentViewModel>>> GetPostComments(long postId);
-        public Task<ActionResultResponse<bool>> DeleteComment(long commentId);
+        public Task<ActionResultResponse<bool>> DeleteComment(DeleteCommentModel model);
     }
 }

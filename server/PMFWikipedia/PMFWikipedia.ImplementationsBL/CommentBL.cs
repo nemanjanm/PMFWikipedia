@@ -13,13 +13,15 @@ namespace PMFWikipedia.ImplementationsBL
         private readonly ICommentDAL _commentDAL;
         private readonly IUserDAL _userDAL;
         private readonly IPostDAL _postDAL;
+        private readonly INotificationDAL _notificationDAL;
 
-        public CommentBL(IJWTService jWTService, ICommentDAL commentDAL, IUserDAL userDAL, IPostDAL postDAL)
+        public CommentBL(IJWTService jWTService, ICommentDAL commentDAL, IUserDAL userDAL, IPostDAL postDAL, INotificationDAL notificationDAL)
         {
             _jWTService = jWTService;
             _commentDAL = commentDAL;
             _userDAL = userDAL;
-            _postDAL = postDAL; 
+            _postDAL = postDAL;
+            _notificationDAL = notificationDAL;
         }
 
         public async Task<ActionResultResponse<CommentViewModel>> AddComment(AddCommentInfo info)
@@ -54,17 +56,24 @@ namespace PMFWikipedia.ImplementationsBL
             return new ActionResultResponse<CommentViewModel>(cvm, true, "Succesfully Added Comment");
         }
 
-        public async Task<ActionResultResponse<bool>> DeleteComment(long commentId)
+        public async Task<ActionResultResponse<bool>> DeleteComment(DeleteCommentModel model)
         {
             var id = long.Parse(_jWTService.GetUserId());
-            var comment = await _commentDAL.GetById(commentId);
+            var comment = await _commentDAL.GetById(model.CommentId);
             if(comment!=null && comment.UserId != id)
                 return new ActionResultResponse<bool>(false, false, "Something went wrong");
 
-            await _commentDAL.Delete(commentId);
+            await _commentDAL.Delete(model.CommentId);
             await _commentDAL.SaveChangesAsync();
 
-            var c = await _commentDAL.GetById(commentId);
+            /*var notts = await _notificationDAL.GetAllByFilter(x=>x.Post == model.PostId && (x.NotificationId == 4 || x.NotificationId == 5));
+            foreach(var n in notts)
+            {
+                await _notificationDAL.Delete(n.Id);
+                await _notificationDAL.SaveChangesAsync();
+            }*/
+
+            var c = await _commentDAL.GetById(model.CommentId);
             if (c != null && c.IsDeleted == true)
                 return new ActionResultResponse<bool>(true, true, "Successfully deleted");
             return new ActionResultResponse<bool>(false, false, "Something went wrong");

@@ -10,6 +10,7 @@ namespace PMFWikipedia.Models.Entity
         public Post()
         {
             Comments = new HashSet<Comment>();
+            EditedPosts = new HashSet<EditedPost>();
             Notifications = new HashSet<Notification>();
         }
 
@@ -28,6 +29,7 @@ namespace PMFWikipedia.Models.Entity
         public virtual User? LastEditedByNavigation { get; set; }
         public virtual Subject? SubjectNavigation { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }
+        public virtual ICollection<EditedPost> EditedPosts { get; set; }
         public virtual ICollection<Notification> Notifications { get; set; }
     }
 }

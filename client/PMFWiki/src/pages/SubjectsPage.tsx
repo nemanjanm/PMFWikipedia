@@ -140,13 +140,13 @@ function SubjectsPage(){
                         <h1 style={{textAlign: "center", fontWeight: "bold", margin: "1vh", width: "100%", height: "auto"}}>{program}</h1>
                     </div>
                     <div className="d-flex justify-content-around" style={{width: "100%", height: "auto", flexGrow: 1}}>
-                        <div className="d-flex flex-column" style={{width: "70vh"}}>
+                        <div className="d-flex flex-column" style={{width: "40vw"}}>
                             <h2 style={{textAlign: "center", fontWeight: "bold"}}>Predmeti</h2>
                             {storageService.getUserInfo()?.firstName === "Admin" && <Button onClick={handleVisible} label="Dodaj predmet"></Button>}
                             <Tree style={{maxHeight: "70vh", overflowY: "scroll", fontSize: "3vh"}} value={tree} filterPlaceholder="Lenient Filter" className="w-full md:w-14rem" />
                         </div>
-                        <div style={{width: "30vh"}}></div>
-                        <div style={{width: "70vh", position: "relative", overflow: 'inherit', top: 0, bottom: 0}}>
+                        <div style={{width: "5vw"}}></div>
+                        <div style={{width: "25vw", position: "relative", overflow: 'inherit', top: 0, bottom: 0}}>
                             <h2 style={{textAlign: "center", fontWeight: "bold"}}>Kolege</h2>
                             <ListBox filter emptyFilterMessage={"Nema rezultata"} emptyMessage={"Nema rezultata"} itemTemplate={userTemplate} value={selectedUser} onChange={(e: ListBoxChangeEvent) => handleUser(e.value)} options={users} optionLabel="fullName" listStyle={{maxHeight: "50vh", fontSize: "3vh"}}/>
                         </div>

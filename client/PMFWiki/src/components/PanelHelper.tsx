@@ -19,7 +19,11 @@ export function PanelHelper()
     const items : any = [];
     programmes.forEach((p: any, index: number) => {
         const item = {label: p.name, id: p.id, icon: "pi pi-book", command: () => {
-            navigate(`/predmeti/${p.id}`);
+            if(p.id === 8)
+                navigate(`/predmet/20008/wiki`);
+            else{
+                navigate(`/predmeti/${p.id}`);
+            }
         }}
         if(p.id !== storageService.getUserInfo()?.program)
             items.push(item);
