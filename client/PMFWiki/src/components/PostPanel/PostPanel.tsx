@@ -254,7 +254,7 @@ function PostPanel(props : any) {
             <div className='d-flex flex-column'>
             <span className="p-text-secondary">{"kreirano " +time}</span>
             {info.editHistory?.length > 0 && info.editHistory?.map((e : any) => (
-                <div><span className="p-text-secondary">{"izmenjeno " + returnDate(e.dateCreated)==="sada" ? "1 minut" : returnDate(e.dateCreated) + " od "}</span><a style={{textDecoration: "underline"}} href={"/profile-page/"+e.editorId}>{e.editorName}</a>.<span className="p-text-secondary">Trajanje izmene {e.time}. </span><span className="change p-text-secondary" style={{fontWeight: "bold", textDecoration: "underline"}} onClick={() => showChanges(e.title, e.content)}>Pogledaj post pre izmene.</span></div>
+                <div><span className="p-text-secondary">{"izmenjeno " + returnDate(e.dateCreated)==="sada" ? "1 minut" : returnDate(e.dateCreated) + " od "}</span><a style={{textDecoration: "underline"}} href={"/profilna-strana/"+e.editorId}>{e.editorName}</a>.<span className="p-text-secondary">Trajanje izmene {e.time}. </span><span className="change p-text-secondary" style={{fontWeight: "bold", textDecoration: "underline"}} onClick={() => showChanges(e.title, e.content)}>Pogledaj post pre izmene.</span></div>
             ))}
             </div>
         </Panel>

@@ -20,7 +20,10 @@ export function PanelHelper()
     programmes.forEach((p: any, index: number) => {
         const item = {label: p.name, id: p.id, icon: "pi pi-book", command: () => {
             if(p.id === 8)
+            {
                 navigate(`/predmet/20008/wiki`);
+                location.reload();
+            }
             else{
                 navigate(`/predmeti/${p.id}`);
             }
