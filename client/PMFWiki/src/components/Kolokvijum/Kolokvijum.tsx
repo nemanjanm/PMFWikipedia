@@ -26,6 +26,7 @@ function Kolokvijum(){
     const [file, setFile] = useState<FileUploadHandlerEvent>();
     const [pom, setPom] = useState();
     const [allowed, setAllowed] = useState<boolean>(false);
+    const [show, setShow] = useState<boolean>(false)
     const toast = useRef<Toast>(null);
     const navigate = useNavigate();
 
@@ -101,6 +102,8 @@ function Kolokvijum(){
             {
                 if(response.data[0].authorId !== 0)
                     setKolokvijumi(response.data)
+                else
+                    setShow(true);
                 if(response.data[0].allowed && response.data[0].allowed === true)
                     setAllowed(true);
             }
@@ -138,7 +141,7 @@ function Kolokvijum(){
         {kolokvijumi?.length > 0 && kolokvijumi?.map(k => (
             <div style={{width: "80%", marginBottom: "1vh"}}><IspitKlkPanel info={k} flag={1}></IspitKlkPanel></div>
         ))}
-        {kolokvijumi?.length === 0 && <p style={{fontSize: "3vw", color: "#374151", textAlign: "center"}}>Trenutno nema kolokvijuma na ovom predmetu</p>}
+        {show && <p style={{fontSize: "3vw", color: "#374151", textAlign: "center"}}>Trenutno nema kolokvijuma na ovom predmetu</p>}
         {visible && <Dialog visible={visible} header={"Dodaj postavku kolokvijuma"} onHide={() => {if (!visible) return; setVisible(false); }}
             style={{ width: '70vw', textAlign: "center", height: "50vh"}}>
                 <div className="d-flex align-items-center flex-column"> 

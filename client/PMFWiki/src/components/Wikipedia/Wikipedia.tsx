@@ -22,6 +22,7 @@ function Wikipedia(){
     const [visible, setVisible] = useState<boolean>(false)
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('')
+    const [show, setShow] = useState<boolean>(false)
     const navigate = useNavigate();
     
     useEffect(() => {
@@ -48,6 +49,8 @@ function Wikipedia(){
             {
                 if(response.data[0].authorId !== 0)
                     setPosts(response.data)
+                else
+                    setShow(true);
                 if(response.data[0].allowed && response.data[0].allowed === true)
                     setAllowed(true);
             }
@@ -69,7 +72,7 @@ function Wikipedia(){
         {posts?.length > 0 && posts?.map(s => (
             <div style={{width: "80%", marginBottom: "1vh"}}><PostPanel info={s} subjectId={Number((location.pathname).split('/').slice(2, -1).join('/'))}></PostPanel></div>
         ))}
-        {posts?.length === 0 && <p style={{fontSize: "3vw", color: "#374151", textAlign: "center"}}>Trenutno nema postova na ovom predmetu</p>}
+        {show && <p style={{fontSize: "3vw", color: "#374151", textAlign: "center"}}>Trenutno nema postova na ovom predmetu</p>}
         {visible && <Dialog visible={visible} header={"Dodaj novi post"} onHide={() => {if (!visible) return; setVisible(false); }}
             style={{ width: '70vw', textAlign: "center", height: "90vh"}}>
                 <div className="d-flex align-items-center flex-column">

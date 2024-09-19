@@ -232,7 +232,7 @@ function PostPanel(props : any) {
 
         {dialog2Visible && <Dialog visible={dialog2Visible} header={"Izmeni post"} onHide={() => {if (!dialog2Visible) return; setDialog2Visible(false); }}
             style={{ width: '70vw', textAlign: "center", height: "90vh"}}>
-                <div className="d-flex align-items-center flex-column">
+                <div className="">
                     <div className="d-flex justify-content-center flex-column">
                         <InputText style={{marginBottom: "0.3rem"}} placeholder="Naslov" value={title} onChange={(e) => setTitle(e.target.value)} />
                         <InputTextarea style={{marginBottom: "0.3rem"}} placeholder="Post" id="description" value={content} onChange={(e) => setContent(e.target.value)} rows={12} cols={80} />

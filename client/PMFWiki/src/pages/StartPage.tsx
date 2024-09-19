@@ -22,6 +22,7 @@ function StartPage(){
     const [temp, setTemp] = useState(false)
     const [loader, setLoader] = useState<boolean>(false);
     const [name, setName] = useState<any>();
+    const [show, setShow] = useState<boolean>(false)
     const id = storageService.getUserInfo()?.id;
     useEffect(() => {
         socketService.reconnect();
@@ -45,6 +46,8 @@ function StartPage(){
             const response = await favoriteSubjectService.getFavoriteSubjects(id as number);
             if(response.status)
                 setFavoriteSubjcets(response.data);
+            else 
+                setShow(true);
             setLoader(false);
         }
         getFavoriteSubjects()
@@ -107,7 +110,7 @@ function StartPage(){
             {!storageService.getUserInfo()?.email.includes("admin") && !loader && <div style={{width: "100vh"}}>
                 <h1 style={{textAlign: "center", fontWeight: "bold", marginTop: "10px"}}>Moji predmeti</h1>
                 {favoriteSubjects && <ListBox value={selectedSubject} onChange={(e: ListBoxChangeEvent) => handleSubject(e)} options={favoriteSubjects} itemTemplate={(option: any) => (<div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}> <span>{option.name}</span> <Button style={{border: 0, fontSize: "1rem"}} label="Ukloni" onClick={(e) => {e.stopPropagation(); confirm(option);}} /></div>)} className="w-full md:w-14rem" listStyle={{maxHeight: "70vh", fontSize: "1.5rem"}}/>}
-                {!favoriteSubjects && <p style={{fontSize: "3vw", color: "#374151", textAlign: "center"}}>Trenutno nemate omiljene predmete</p>}
+                {show && <p style={{fontSize: "3vw", color: "#374151", textAlign: "center"}}>Trenutno nemate omiljene predmete</p>}
             </div>}
             {loader && <div style={{marginTop: "50px"}}><ClipLoader color="#374151" loading={loader} size={150}></ClipLoader></div>}
             <div></div>

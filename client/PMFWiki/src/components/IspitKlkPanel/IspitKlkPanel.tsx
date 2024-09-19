@@ -144,7 +144,6 @@ function IspitKlkPanel(props: any){
             style={{ width: '50vw', textAlign: "center", height: "50vh"}}>
                 <div className="d-flex align-items-center flex-column">
                     <div style={{width: "20vw"}} className="d-flex justify-content-center flex-column">
-                        <InputText style={{marginBottom: "0.3rem"}} placeholder="Naslov" value={title} onChange={(e) => setTitle(e.target.value)} />
                         <FileUpload style={{marginBottom: "0.3rem", width: "100%"}} chooseLabel="Dodaj file" mode="basic" name="demo[]" accept="*" customUpload onSelect={(e) => test(e)}  />
                     </div>
                     <div>

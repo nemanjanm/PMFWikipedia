@@ -24,6 +24,7 @@ function Ispit(){
     const [year, setYear] = useState('');
     const [month, setMonth] = useState('');
     const [group, setGroup] = useState('');
+    const [show, setShow] = useState<boolean>(false)
     const toast = useRef<Toast>(null);
 
     const years = [
@@ -86,14 +87,18 @@ function Ispit(){
 
     useEffect(() => {
         async function getIspiti(){
+            setLoader(true);
             const response = await ispitService.getIspit(Number((location.pathname).split('/').slice(2, -1).join('/')));
             if(response.status)
             {
                 if(response.data[0].authorId !== 0)
                     setIspiti(response.data)
+                else
+                    setShow(true);
                 if(response.data[0].allowed && response.data[0].allowed === true)
                     setAllowed(true);
             }
+            setLoader(false);
         }
         getIspiti();
     }, []);
@@ -125,7 +130,7 @@ function Ispit(){
         {ispiti?.length > 0 && ispiti?.map(k => (
             <div style={{width: "80%", marginBottom: "1vh"}}><IspitKlkPanel info={k} flag={2}></IspitKlkPanel></div>
         ))}
-        {ispiti?.length === 0 && <p style={{fontSize: "3vw", color: "#374151", textAlign: "center"}}>Trenutno nema ispita na ovom predmetu</p>}
+        {show && <p style={{fontSize: "3vw", color: "#374151", textAlign: "center"}}>Trenutno nema ispita na ovom predmetu</p>}
         {visible && <Dialog visible={visible} header={"Dodaj postavku kolokvijuma"} onHide={() => {if (!visible) return; setVisible(false); }}
             style={{ width: '70vw', textAlign: "center", height: "50vh"}}>
                 <div className="d-flex align-items-center flex-column">

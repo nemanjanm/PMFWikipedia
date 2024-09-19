@@ -118,7 +118,6 @@ function SubjectsPage(){
             navigate(0);
     }
     function handleVisible(){
-        console.log(visible2);
         setVisible2(true);
     }
     const userTemplate = (option: LoginInfo) => {

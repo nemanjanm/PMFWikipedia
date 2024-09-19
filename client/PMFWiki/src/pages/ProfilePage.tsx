@@ -93,7 +93,7 @@ function ProfilePage(){
                             <h2 style={{fontWeight: "bold", margin: 0}}>Informacije o korisniku</h2>
                             <p style={{fontSize: "3vh", margin: 0}}><b>Email</b>: {user?.email}</p>
                             <p style={{fontSize: "3vh", margin: 0}}><b>Broj dodatih rešenja kolokvijuma</b>: {user?.kolokvijums}</p>
-                            <p style={{fontSize: "3vh"}}><b>Broj dodatih resenja kolokvijuma</b>: {user?.ispits}</p>
+                            <p style={{fontSize: "3vh"}}><b>Broj dodatih resenja ispita</b>: {user?.ispits}</p>
                             <h2>Omiljeni predmeti</h2>
                             {user?.favoriteSubjects.length>0 && user?.favoriteSubjects?.map((fs: any) => (
                                 <div className="d-flex justify-content-centar">
